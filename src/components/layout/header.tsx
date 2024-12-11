@@ -2,6 +2,7 @@ import { useCart } from '@/context/CartContext'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
+import Image from 'next/image'
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -69,7 +70,55 @@ const Header: React.FC = () => {
       <div
         className={`fixed top-0 right-0 h-full bg-black text-white p-4 z-50 transform transition-transform duration-300 ${filtersOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <h2 className="text-xl font-bold mb-4 text-white">Carrinho</h2>
+        <div className="overflow-auto h-full">
+          <h2 className="text-xl font-bold mb-4 text-white">Carrinho</h2>
+          {cart.length === 0 ? (
+            <p className="text-white">Seu carrinho está vazio.</p>
+          ) : (
+            <div className="">
+              <table className="min-w-full text-white mb-4">
+                <thead>
+                  <tr>
+                    <th className="py-2 px-4 border-b border-gray-700">
+                      Imagem
+                    </th>
+                    <th className="py-2 px-4 border-b border-gray-700">
+                      Preço
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.map((item, index) => (
+                    <tr key={index} className="hover:bg-gray-700">
+                      <td className="py-2 px-4 border-b border-gray-700">
+                        <div className="relative w-24 h-24">
+                          <Image
+                            src={item.imageUrl}
+                            alt={item.name}
+                            fill
+                            objectFit="contain"
+                            className="rounded-md"
+                          />
+                        </div>
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-700">
+                        {item.price}€
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <Link href="/cart">
+                <div
+                  className="flex items-center space-x-2 relative"
+                  onClick={() => setFiltersOpen(false)}
+                >
+                  Ver Carrinho
+                </div>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   )

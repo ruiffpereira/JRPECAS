@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
 import Image from 'next/image'
+import { Fragment } from 'react'
 
 const Cart: React.FC = () => {
   const { cart } = useCart()
 
   return (
-    <div className="bg-gray-900" style={{ backgroundColor: '#131616' }}>
+    <Fragment>
       <h1 className="text-3xl font-bold text-white mb-8">
         Carrinho de Compras
       </h1>
@@ -59,7 +60,7 @@ const Cart: React.FC = () => {
           Continuar Comprando
         </Link>
       </div>
-    </div>
+    </Fragment>
   )
 }
 

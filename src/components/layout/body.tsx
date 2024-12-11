@@ -9,10 +9,7 @@ interface BodyProps {
 
 const Body: React.FC<BodyProps> = ({ children }) => {
   return (
-    <div
-      className="min-h-screen bg-gray-900 flex flex-col"
-      style={{ backgroundColor: '#131616' }}
-    >
+    <div className="min-h-screen bg-gray-900 flex flex-col">
       <Header />
       <section className="relative h-96">
         <Image

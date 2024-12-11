@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react'
+import { useState, Suspense, Fragment } from 'react'
 import ProductCard from '@/components/productCard'
 
 const products = [
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
   })
 
   return (
-    <div className="bg-gray-900" style={{ backgroundColor: '#131616' }}>
+    <Fragment>
       <h2 className="text-xxl font-bold text-white">Produtos</h2>
       <main className="container mx-auto py-8">
         <div className="flex gap-8">
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
               </Suspense>
             ))}
           </div>
-          <div className="hidden md:block w-1/3 p-4 bg-gray-900 rounded-lg shadow-md">
+          <div className="hidden md:block w-1/3 p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-bold mb-4 text-white">Filtros</h2>
             <div className="mb-4">
               <label className="block text-gray-400">Categoria</label>
@@ -94,7 +94,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </main>
-    </div>
+    </Fragment>
   )
 }
 

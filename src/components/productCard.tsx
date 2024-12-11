@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { FaShoppingCart } from 'react-icons/fa'
 import { useCart } from '../context/CartContext'
 
 interface ProductCardProps {
