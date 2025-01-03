@@ -26,32 +26,32 @@ export default NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      // Enviar dados para o endpoint externo
-      // const response = await fetch(
-      //   'https://your-endpoint-url.com/api/saveUser',
-      //   {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify({
-      //       user,
-      //       account,
-      //       profile,
-      //       email,
-      //       credentials,
-      //     }),
-      //   },
-      // )
+    // async signIn({ user, account, profile, email, credentials }) {
+    //   // Enviar dados para o endpoint externo
+    //   // const response = await fetch(
+    //   //   'https://your-endpoint-url.com/api/saveUser',
+    //   //   {
+    //   //     method: 'POST',
+    //   //     headers: {
+    //   //       'Content-Type': 'application/json',
+    //   //     },
+    //   //     body: JSON.stringify({
+    //   //       user,
+    //   //       account,
+    //   //       profile,
+    //   //       email,
+    //   //       credentials,
+    //   //     }),
+    //   //   },
+    //   // )
 
-      // if (!response.ok) {
-      //   console.error('Failed to send data to the endpoint')
-      //   return false
-      // }
+    //   // if (!response.ok) {
+    //   //   console.error('Failed to send data to the endpoint')
+    //   //   return false
+    //   // }
 
-      return true
-    },
+    //   return true
+    // },
     async session({ session, token, user }) {
       console.log('session', session, token, user)
       return session
