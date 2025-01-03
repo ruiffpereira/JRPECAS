@@ -3,12 +3,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
 import Image from 'next/image'
+import { useSession, signIn } from 'next-auth/react'
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   const { cart } = useCart()
+  const { data: session } = useSession()
 
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-10">
@@ -23,11 +25,22 @@ const Header: React.FC = () => {
           <Link href="/">Home</Link>
           <Link href="/">Contacto</Link>
           <Link href="/">Onde Estamos</Link>
-          <Link href="/user">
-            <div className="flex items-center space-x-2">
-              <FiUser />
-            </div>
-          </Link>
+          {session ? (
+            <Link href="/user">
+              {session.user?.image && (
+                <Image
+                  src={session.user?.image}
+                  alt={session.user?.name || 'No name provided'}
+                  width={20}
+                  height={20}
+                  className="rounded-full"
+                />
+              )}
+            </Link>
+          ) : (
+            <button onClick={() => signIn('google')}>Login</button>
+          )}
+
           <Link href="/cart">
             <div className="flex items-center space-x-2 relative">
               <FiShoppingCart />
