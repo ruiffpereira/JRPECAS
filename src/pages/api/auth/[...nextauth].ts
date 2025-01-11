@@ -1,18 +1,6 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
-declare module 'next-auth' {
-  interface User {
-    token?: string
-  }
-
-  interface Session {
-    user: {
-      token?: string
-    }
-  }
-}
-
 export default NextAuth({
   providers: [
     GoogleProvider({
