@@ -1,16 +1,19 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  throw new Error(
-    'Missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET environment variables',
-  )
+declare module 'next-auth' {
+  interface User {
+    token?: string
+  }
+
+  interface Session {
+    user: {
+      token?: string
+    }
+  }
 }
 
 export default NextAuth({
-  session: {
-    strategy: 'jwt',
-  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -26,35 +29,58 @@ export default NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    // async signIn({ user, account, profile, email, credentials }) {
-    //   // Enviar dados para o endpoint externo
-    //   // const response = await fetch(
-    //   //   'https://your-endpoint-url.com/api/saveUser',
-    //   //   {
-    //   //     method: 'POST',
-    //   //     headers: {
-    //   //       'Content-Type': 'application/json',
-    //   //     },
-    //   //     body: JSON.stringify({
-    //   //       user,
-    //   //       account,
-    //   //       profile,
-    //   //       email,
-    //   //       credentials,
-    //   //     }),
-    //   //   },
-    //   // )
+    async signIn({ user, account }) {
+      if (account?.provider === 'google') {
+        try {
+          const res = await fetch(`${process.env.API_BASE_URL}/customers`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${process.env.API_SECRET_TOKEN}`,
+            },
+            body: JSON.stringify({
+              user,
+              secretkeysite: process.env.WEBSITE_KEY,
+            }),
+          })
 
-    //   // if (!response.ok) {
-    //   //   console.error('Failed to send data to the endpoint')
-    //   //   return false
-    //   // }
+          const data = await res.json()
 
-    //   return true
-    // },
-    async session({ session, token, user }) {
-      console.log('session', session, token, user)
+          if (res.ok && data) {
+            user.token = data.token
+            return true
+          } else {
+            console.error('Failed to authenticate user')
+            return false
+          }
+        } catch (error) {
+          console.error('Error during signIn callback:', error)
+          return false
+        }
+      }
+
+      return true
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.name = user.name
+        token.email = user.email
+        token.acessToken = user.token
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.token = token.acessToken as string
+      }
       return session
     },
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 5 * 24 * 60 * 60, // 6 dias
   },
 })
