@@ -11,7 +11,6 @@ const Header: React.FC = () => {
 
   const { cart } = useCart()
   const { data: session } = useSession()
-
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-10">
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -27,10 +26,10 @@ const Header: React.FC = () => {
           <Link href="/">Onde Estamos</Link>
           {session ? (
             <Link href="/user">
-              {session.user?.image && (
+              {session.user.image && (
                 <Image
-                  src={session.user?.image}
-                  alt={session.user?.name || 'No name provided'}
+                  src={session.user.image}
+                  alt={session.user.name || 'No name provided'}
                   width={20}
                   height={20}
                   className="rounded-full"
@@ -38,9 +37,14 @@ const Header: React.FC = () => {
               )}
             </Link>
           ) : (
-            <button onClick={() => signIn('google')}>Login</button>
+            <button
+              className="flex gap-2 items-center"
+              onClick={() => signIn('google')}
+            >
+              <FiUser />
+              <p>Login</p>
+            </button>
           )}
-
           <Link href="/cart">
             <div className="flex items-center space-x-2 relative">
               <FiShoppingCart />
@@ -67,14 +71,28 @@ const Header: React.FC = () => {
       <nav
         className={`fixed top-0 left-0 h-full bg-black text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <Link
-          href="/user"
-          className=" py-2 flex items-center space-x-2"
-          onClick={() => setMenuOpen(false)}
-        >
-          <FiUser />
-          <span>Login</span>
-        </Link>
+        {session ? (
+          <Link href="/user" className="flex gap-2 items-center">
+            <p>ola</p>
+            {session.user.image && (
+              <Image
+                src={session.user.image}
+                alt={session.user.name || 'No name provided'}
+                width={20}
+                height={20}
+                className="rounded-full"
+              />
+            )}
+          </Link>
+        ) : (
+          <button
+            className="flex gap-2 items-center"
+            onClick={() => signIn('google')}
+          >
+            <FiUser />
+            <p>Login</p>
+          </button>
+        )}
       </nav>
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${filtersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
