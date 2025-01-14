@@ -1,5 +1,5 @@
 import { useState, Suspense, Fragment } from 'react'
-import ProductCard from '@/components/productCard'
+import ProductCard from '@/components/products/productCard'
 
 const products = [
   {
