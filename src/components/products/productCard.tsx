@@ -17,6 +17,7 @@ const ProductCard: React.FC<Product> = ({
   // }
   const modifiedPhotoUrl = photos[0].slice(2)
 
+  console.log(modifiedPhotoUrl)
   return (
     <div className="border border-gray-700 rounded-lg p-4 shadow-md relative bg-gray-800 flex flex-col">
       <div className="relative w-full h-32">

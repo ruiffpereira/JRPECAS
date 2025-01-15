@@ -25,7 +25,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
       <h2 className="text-xxl font-bold text-white">Produtos</h2>
       <main className="container mx-auto py-8">
         <div className="flex gap-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full md:w-2/3">
+          <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 w-full md:w-2/3">
             {/* {filteredProducts.map((product, index) => (
               <Suspense fallback={<div>Loading...</div>} key={index}>
                 <ProductCard
