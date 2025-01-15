@@ -25,7 +25,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
     setCart((prevCart) => [...prevCart, item])
   }
 
-  console.log(cart)
+  console.log('cart:', cart)
 
   return (
     <CartContext.Provider value={{ cart, addToCart }}>

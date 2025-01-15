@@ -1,0 +1,106 @@
+import { useState, Suspense, Fragment } from 'react'
+import ProductCard from '@/components/products/productCard'
+import { Product } from '@/types/types'
+
+// Defina a interface para as propriedades
+interface ProductGridProps {
+  products: Product[]
+}
+
+const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [priceRange, setPriceRange] = useState(500)
+  const [selectedCondition, setSelectedCondition] = useState('')
+
+  // const filteredProducts = products.filter((product) => {
+  //   return (
+  //     (selectedCategory === '' || product.category === selectedCategory) &&
+  //     product.price <= priceRange &&
+  //     (selectedCondition === '' || product.condition === selectedCondition)
+  //   )
+  // })
+
+  return (
+    <Fragment>
+      <h2 className="text-xxl font-bold text-white">Produtos</h2>
+      <main className="container mx-auto py-8">
+        <div className="flex gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full md:w-2/3">
+            {/* {filteredProducts.map((product, index) => (
+              <Suspense fallback={<div>Loading...</div>} key={index}>
+                <ProductCard
+                  name={product.name}
+                  price={product.price}
+                  category={product.category}
+                  description={product.description}
+                  imageUrl={product.imageUrl}
+                  condition={product.condition}
+                />
+              </Suspense>
+            ))} */}
+            {products.length > 0 ? (
+              products.map((product) => (
+                <Suspense
+                  fallback={<div>Loading...</div>}
+                  key={product.productId}
+                >
+                  <ProductCard
+                    productId={product.productId}
+                    name={product.name}
+                    price={product.price}
+                    description={product.description}
+                    photos={product.photos}
+                  />
+                </Suspense>
+              ))
+            ) : (
+              <div>No products available</div>
+            )}
+          </div>
+          <div className="hidden md:block w-1/3 p-4 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold mb-4 text-white">Filtros</h2>
+            <div className="mb-4">
+              <label className="block text-gray-400">Categoria</label>
+              <select
+                className="w-full p-2 border rounded bg-gray-800 text-white"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Todas</option>
+                <option value="Categoria 1">Categoria 1</option>
+                <option value="Categoria 2">Categoria 2</option>
+                {/* Adicione mais opções conforme necessário */}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-400">Preço até</label>
+              <input
+                type="range"
+                className="w-full"
+                min="0"
+                max="1000"
+                value={priceRange}
+                onChange={(e) => setPriceRange(Number(e.target.value))}
+              />
+              <div className="text-gray-400">R$ {priceRange},00</div>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-400">Condição</label>
+              <select
+                className="w-full p-2 border rounded bg-gray-800 text-white"
+                value={selectedCondition}
+                onChange={(e) => setSelectedCondition(e.target.value)}
+              >
+                <option value="">Todas</option>
+                <option value="Novo">Novo</option>
+                <option value="Usado">Usado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </main>
+    </Fragment>
+  )
+}
+
+export default ProductGrid
