@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useCart } from '../../context/CartContext'
+import { useProducts } from '../../context/ProductsContext'
 import { Product } from '@/types/types'
 
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
@@ -11,14 +11,13 @@ const ProductCard: React.FC<Product> = ({
   description,
   photos,
 }) => {
-  const { addToCart } = useCart()
+  const { addToCart } = useProducts()
 
   const handleAddToCart = () => {
-    addToCart({ productId: productId.toString() })
+    addToCart({ productId, name, price, description, photos })
   }
   const modifiedPhotoUrl = photos[0].slice(2)
 
-  console.log(modifiedPhotoUrl)
   return (
     <div className="border border-gray-700 rounded-lg p-4 shadow-md relative bg-gray-800 flex flex-col">
       <div className="relative w-full h-32" id={`${productId}`}>

@@ -1,4 +1,4 @@
-import { useCart } from '@/context/CartContext'
+import { useProducts } from '@/context/ProductsContext'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
 
-  const { cart } = useCart()
+  const { cart } = useProducts()
   const { data: session } = useSession()
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-10">
@@ -143,7 +143,7 @@ const Header: React.FC = () => {
                       <td className="py-2 px-4 border-b border-gray-700">
                         <div className="relative w-24 h-24">
                           <Image
-                            src={item.imageUrl}
+                            src={item.photos[0]}
                             alt={item.name}
                             fill
                             objectFit="contain"

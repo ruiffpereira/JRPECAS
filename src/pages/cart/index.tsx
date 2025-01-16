@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { useCart } from '@/context/CartContext'
+import { useProducts } from '@/context/ProductsContext'
 import Image from 'next/image'
 import { Fragment } from 'react'
 
 const Cart: React.FC = () => {
-  const { cart } = useCart()
+  const { cart } = useProducts()
 
   return (
     <Fragment>
@@ -32,7 +32,7 @@ const Cart: React.FC = () => {
                   <td className="py-2 px-4 border-b border-gray-700">
                     <div className="relative w-24 h-24">
                       <Image
-                        src={item.imageUrl}
+                        src={item.photos[0]}
                         alt={item.name}
                         fill
                         objectFit="contain"

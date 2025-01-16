@@ -4,6 +4,8 @@ import { Product } from '@/types/types'
 interface ProductsContextProps {
   products: Product[]
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>
+  cart: Product[]
+  addToCart: (item: Product) => void
 }
 
 const ProductsContext = createContext<ProductsContextProps | undefined>(
@@ -14,9 +16,16 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useState<Product[]>([])
+  const [cart, setCart] = useState<Product[]>([])
+
+  const addToCart = (item: Product) => {
+    setCart((prevCart) => [...prevCart, item])
+  }
 
   return (
-    <ProductsContext.Provider value={{ products, setProducts }}>
+    <ProductsContext.Provider
+      value={{ products, setProducts, cart, addToCart }}
+    >
       {children}
     </ProductsContext.Provider>
   )

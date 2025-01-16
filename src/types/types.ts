@@ -5,3 +5,18 @@ export interface Product {
   price: number
   photos: string[]
 }
+
+declare module 'next-auth' {
+  interface User {
+    token?: string
+  }
+
+  interface Session {
+    user: {
+      image: string
+      name: string
+      token?: string
+      email: string
+    }
+  }
+}

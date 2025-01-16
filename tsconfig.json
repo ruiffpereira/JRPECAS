@@ -23,7 +23,7 @@
       ]
     },
     "target": "ES2017",
-    "types": ["next-auth"]
+    "types": []
   },
   "include": [
     "next-env.d.ts",
