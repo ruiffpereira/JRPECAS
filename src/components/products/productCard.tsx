@@ -1,26 +1,27 @@
 import Image from 'next/image'
-// import { useCart } from '../../context/CartContext'
+import { useCart } from '../../context/CartContext'
 import { Product } from '@/types/types'
 
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 
 const ProductCard: React.FC<Product> = ({
+  productId,
   name,
   price,
   description,
   photos,
 }) => {
-  // const { addToCart } = useCart()
+  const { addToCart } = useCart()
 
-  // const handleAddToCart = () => {
-  //   addToCart({ name, price, description })
-  // }
+  const handleAddToCart = () => {
+    addToCart({ productId: productId.toString() })
+  }
   const modifiedPhotoUrl = photos[0].slice(2)
 
   console.log(modifiedPhotoUrl)
   return (
     <div className="border border-gray-700 rounded-lg p-4 shadow-md relative bg-gray-800 flex flex-col">
-      <div className="relative w-full h-32">
+      <div className="relative w-full h-32" id={`${productId}`}>
         {Array.isArray(photos) && photos.length > 0 ? (
           <Image
             src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
@@ -39,7 +40,7 @@ const ProductCard: React.FC<Product> = ({
         <p className="text-xl text-white">{price}€</p>
         <button
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          // onClick={handleAddToCart}
+          onClick={handleAddToCart}
         >
           Adicionar ao Carrinho
         </button>

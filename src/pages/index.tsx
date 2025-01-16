@@ -3,12 +3,15 @@ import { GetServerSideProps } from 'next'
 import ProductGrid from '@/components/products/productGrid'
 import { getAllProducts } from './api/products'
 import { Product } from '@/types/types'
+import { useProducts } from '@/context/ProductsContext'
 
 interface HomeProps {
-  products: Product[]
+  initialProducts: Product[]
 }
 
-const Home: React.FC<HomeProps> = ({ products }) => {
+const Home: React.FC<HomeProps> = ({ initialProducts }) => {
+  const { products, setProducts } = useProducts({ initialProducts })
+  console.log('products2: ', initialProducts)
   return (
     <Fragment>
       <ProductGrid products={products} />
@@ -28,12 +31,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     }
   }
-  console.log('token: ', token)
   const products = await getAllProducts(token)
-  console.log('products: ', products)
+  console.log('products1: ', products)
   return {
     props: {
-      products,
+      initialProducts: products,
     },
   }
 }

@@ -71,37 +71,47 @@ const Header: React.FC = () => {
       <nav
         className={`fixed top-0 left-0 w-2/4 h-full bg-black text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        {session ? (
-          <Link href="/user" onClick={() => setMenuOpen(false)} className="flex gap-2 flex-col justify-start">
-            <p>Bem Vindo</p>
-            <div className='flex gap-2 items-center'>
-              {session.user.image && (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || 'No name provided'}
-                  width={20}
-                  height={20}
-                  className="rounded-full"
-                />
-              )}
-              <p>{session.user.name}</p>
-            </div>
-          <Link           
-            onClick={() => setMenuOpen(false)}
-            href="/">Home</Link>
-          <Link onClick={() => setMenuOpen(false)} href="/">Contacto</Link>
-          <Link onClick={() => setMenuOpen(false)} href="/">Onde Estamos</Link>
+        <div className="flex gap-2 flex-col">
+          {session ? (
+            <Link
+              href="/user"
+              onClick={() => setMenuOpen(false)}
+              className="flex gap-2 flex-col justify-start"
+            >
+              <p>Bem Vindo</p>
+              <div className="flex gap-2 items-center">
+                {session.user.image && (
+                  <Image
+                    src={session.user.image}
+                    alt={session.user.name || 'No name provided'}
+                    width={20}
+                    height={20}
+                    className="rounded-full"
+                  />
+                )}
+                <p>{session.user.name}</p>
+              </div>
+            </Link>
+          ) : (
+            <button
+              className="flex gap-2 items-center"
+              onClick={() => signIn('google')}
+            >
+              <FiUser />
+              <p>Login</p>
+            </button>
+          )}
+
+          <Link onClick={() => setMenuOpen(false)} href="/">
+            Home
           </Link>
-        ) : (
-          <button
-            className="flex gap-2 items-center"
-            onClick={() => signIn('google')}
-          >
-            <FiUser />
-            <p>Login</p>
-          </button>
-        )}
-        
+          <Link onClick={() => setMenuOpen(false)} href="/">
+            Contacto
+          </Link>
+          <Link onClick={() => setMenuOpen(false)} href="/">
+            Onde Estamos
+          </Link>
+        </div>
       </nav>
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${filtersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
