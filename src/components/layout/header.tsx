@@ -5,6 +5,8 @@ import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
 import Image from 'next/image'
 import { useSession, signIn } from 'next-auth/react'
 
+const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
+
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
@@ -138,24 +140,28 @@ const Header: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart.map((item, index) => (
-                    <tr key={index} className="hover:bg-gray-700">
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <div className="relative w-24 h-24">
-                          <Image
-                            src={item.photos[0]}
-                            alt={item.name}
-                            fill
-                            objectFit="contain"
-                            className="rounded-md"
-                          />
-                        </div>
-                      </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        {item.price}€
-                      </td>
-                    </tr>
-                  ))}
+                  {cart.map((item, index) => {
+                    const modifiedPhotoUrl = item.photos.slice(2)
+
+                    return (
+                      <tr key={index} className="hover:bg-gray-700">
+                        <td className="py-2 px-4 border-b border-gray-700">
+                          <div className="relative w-24 h-24">
+                            <Image
+                              src={`${URL_RAIZ}${modifiedPhotoUrl}`}
+                              alt={item.name}
+                              fill
+                              objectFit="contain"
+                              className="rounded-md"
+                            />
+                          </div>
+                        </td>
+                        <td className="py-2 px-4 border-b border-gray-700">
+                          {item.price}€
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
               <Link href="/cart">

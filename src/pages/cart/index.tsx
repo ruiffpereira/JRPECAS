@@ -3,9 +3,10 @@ import { useProducts } from '@/context/ProductsContext'
 import Image from 'next/image'
 import { Fragment } from 'react'
 
+const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
+
 const Cart: React.FC = () => {
   const { cart } = useProducts()
-
   return (
     <Fragment>
       <h1 className="text-3xl font-bold text-white mb-8">
@@ -27,30 +28,34 @@ const Cart: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((item, index) => (
-                <tr key={index} className="hover:bg-gray-700">
-                  <td className="py-2 px-4 border-b border-gray-700">
-                    <div className="relative w-24 h-24">
-                      <Image
-                        src={item.photos[0]}
-                        alt={item.name}
-                        fill
-                        objectFit="contain"
-                        className="rounded-md"
-                      />
-                    </div>
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-700">
-                    {item.name}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-700">
-                    {item.description}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-700">
-                    {item.price}€
-                  </td>
-                </tr>
-              ))}
+              {cart.map((item, index) => {
+                const modifiedPhotoUrl = item.photos[0].slice(2)
+                console.log('item: ', item)
+                return (
+                  <tr key={index} className="hover:bg-gray-700">
+                    <td className="py-2 px-4 border-b border-gray-700">
+                      <div className="relative w-24 h-24">
+                        <Image
+                          src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
+                          alt={item.name}
+                          fill
+                          objectFit="contain"
+                          className="rounded-md"
+                        />
+                      </div>
+                    </td>
+                    <td className="py-2 px-4 border-b border-gray-700">
+                      {item.name}
+                    </td>
+                    <td className="py-2 px-4 border-b border-gray-700">
+                      {item.description}
+                    </td>
+                    <td className="py-2 px-4 border-b border-gray-700">
+                      {item.price}€
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

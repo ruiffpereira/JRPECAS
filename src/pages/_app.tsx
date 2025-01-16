@@ -6,20 +6,15 @@ import { ProductsProvider } from '@/context/ProductsContext'
 
 export default function App({
   Component,
-  pageProps: { ...pageProps },
+  pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <div>
-      <Component {...pageProps} />
-    </div>
+    <SessionProvider session={session}>
+      <ProductsProvider>
+        <Body>
+          <Component {...pageProps} />
+        </Body>
+      </ProductsProvider>
+    </SessionProvider>
   )
-  // return (
-  //   <SessionProvider session={session}>
-  //     <ProductsProvider>
-  //       <Body>
-  //         <Component {...pageProps} />
-  //       </Body>
-  //     </ProductsProvider>
-  //   </SessionProvider>
-  // )
 }
