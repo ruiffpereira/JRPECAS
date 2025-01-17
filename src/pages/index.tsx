@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 
   const products = await getAllProducts(token)
-  // console.log('products1: ', products)
+
   return {
     props: { products },
   }

@@ -39,7 +39,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
       </div>
 
       <main className="container mx-auto py-8">
-        <div className="flex gap-8">
+        <div className="flex gap-10">
           <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 w-full md:w-2/3">
             {products.length > 0 ? (
               filteredProducts.map((product, index) => (
@@ -59,8 +59,15 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
               <div>No products available</div>
             )}
           </div>
-          <div className="hidden md:block w-1/3 p-4 rounded-lg shadow-md">
+          <div className="hidden md:block w-1/3 rounded-lg">
             <h2 className="text-xl font-bold mb-4 text-white">Filtros</h2>
+            <label className="block text-gray-400">Nome do Produto</label>
+            <input
+              type="text"
+              className="w-full p-2 mb-4 border rounded bg-gray-800 text-white"
+              // value={productName}
+              // onChange={(e) => setProductName(e.target.value)}
+            />
             <div className="mb-4">
               <label className="block text-gray-400">Categoria</label>
               <select

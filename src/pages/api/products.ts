@@ -10,6 +10,6 @@ export const getAllProducts = async (token: string) => {
     return data
   } catch (error) {
     console.error('Error fetching products:', error)
-    throw new Error('An error occurred while fetching products')
+    // throw new Error('An error occurred while fetching products')
   }
 }
