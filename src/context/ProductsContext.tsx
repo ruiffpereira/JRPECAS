@@ -6,8 +6,8 @@ interface ProductsContextProps {
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>
   cart: Product[]
   addToCart: (item: Product) => void
-  activeSearch: boolean
-  setActiveSearch: React.Dispatch<React.SetStateAction<boolean>>
+  searchProduct: string
+  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const ProductsContext = createContext<ProductsContextProps | undefined>(
@@ -19,10 +19,14 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [products, setProducts] = useState<Product[]>([])
   const [cart, setCart] = useState<Product[]>([])
-  const [activeSearch, setActiveSearch] = useState(false)
+  const [searchProduct, setSearchProduct] = useState('')
 
   const addToCart = (item: Product) => {
     setCart((prevCart) => [...prevCart, item])
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchProduct(e.target.value)
   }
 
   return (
@@ -32,8 +36,8 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
         setProducts,
         cart,
         addToCart,
-        activeSearch,
-        setActiveSearch,
+        searchProduct,
+        handleSearchChange,
       }}
     >
       {children}

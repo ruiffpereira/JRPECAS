@@ -1,6 +1,7 @@
 import { useState, Suspense, Fragment } from 'react'
 import ProductCard from '@/components/products/productCard'
 import { Product } from '@/types/types'
+import { useProducts } from '@/context/ProductsContext'
 
 // Defina a interface para as propriedades
 interface ProductGridProps {
@@ -11,6 +12,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [priceRange, setPriceRange] = useState(1000)
   let categories = [] as string[]
+  const { searchProduct } = useProducts()
 
   const category = new Set<string>()
   products.forEach((product) => {
@@ -22,7 +24,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
     return (
       (selectedCategory === '' ||
         (product.category && product.category.name === selectedCategory)) &&
-      product.price <= priceRange
+      product.price <= priceRange &&
+      (searchProduct === '' ||
+        product.name.toLowerCase().includes(searchProduct.toLowerCase()))
     )
   })
 
@@ -33,7 +37,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
     <Fragment>
       <div className="flex gap-2">
         <h2 className="text-xxl font-bold text-white">Produtos</h2>
-        {(selectedCategory !== '' || priceRange < 1000) && (
+        {filteredProducts.length < products.length && (
           <h2 className="text-xxl font-bold text-green-600">Filtros ativos</h2>
         )}
       </div>
@@ -61,13 +65,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
           </div>
           <div className="hidden md:block w-1/3 rounded-lg">
             <h2 className="text-xl font-bold mb-4 text-white">Filtros</h2>
-            <label className="block text-gray-400">Nome do Produto</label>
-            <input
-              type="text"
-              className="w-full p-2 mb-4 border rounded bg-gray-800 text-white"
-              // value={productName}
-              // onChange={(e) => setProductName(e.target.value)}
-            />
             <div className="mb-4">
               <label className="block text-gray-400">Categoria</label>
               <select

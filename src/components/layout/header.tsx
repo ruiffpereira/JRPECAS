@@ -11,7 +11,7 @@ const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
 
-  const { cart } = useProducts()
+  const { cart, handleSearchChange, searchProduct } = useProducts()
   const { data: session } = useSession()
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-10">
@@ -22,6 +22,13 @@ const Header: React.FC = () => {
         <Link href="/">
           <h1 className="text-3xl font-bold text-red-500">JRPECASCOMPLETE</h1>
         </Link>
+        <input
+          type="text"
+          className="p-2 rounded bg-gray-800 text-white hidden lg:block"
+          placeholder="Pesquisar por um artigo"
+          value={searchProduct}
+          onChange={handleSearchChange}
+        />
         <nav className="hidden md:flex space-x-4 items-center">
           <Link href="/">Home</Link>
           <Link href="/">Contacto</Link>
@@ -56,15 +63,40 @@ const Header: React.FC = () => {
             </div>
           </Link>
         </nav>
-        <button
-          className="md:hidden relative"
-          onClick={() => setFiltersOpen(!filtersOpen)}
-        >
-          <FiShoppingCart />
-          <div className="absolute -top-2 -right-3 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
-            {cart.length}
-          </div>
-        </button>
+        <div className="flex gap-2 items-center md:hidden">
+          {session ? (
+            <Link href="/user">
+              {session.user.image && (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name || 'No name provided'}
+                  width={20}
+                  height={20}
+                  className="rounded-full"
+                />
+              )}
+            </Link>
+          ) : (
+            <button
+              className="flex gap-2 items-center"
+              onClick={() => signIn('google')}
+            >
+              <FiUser />
+              <p>Login</p>
+            </button>
+          )}
+          <button
+            className="relative mr-2"
+            onClick={() => setFiltersOpen(!filtersOpen)}
+          >
+            <FiShoppingCart />
+            {cart.length > 0 && (
+              <div className="absolute -top-2 -right-3 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
+                {cart.length}
+              </div>
+            )}
+          </button>
+        </div>
       </div>
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -142,7 +174,6 @@ const Header: React.FC = () => {
                 <tbody>
                   {cart.map((item, index) => {
                     const modifiedPhotoUrl = item.photos.slice(2)
-
                     return (
                       <tr key={index} className="hover:bg-gray-700">
                         <td className="py-2 px-4 border-b border-gray-700">
@@ -175,6 +206,15 @@ const Header: React.FC = () => {
             </div>
           )}
         </div>
+      </div>
+      <div className="container mx-auto px-4 lg:hidden mt-2">
+        <input
+          type="text"
+          className="p-2 rounded bg-gray-800 text-white w-full"
+          placeholder="Pesquisar por um artigo"
+          value={searchProduct}
+          onChange={handleSearchChange}
+        />
       </div>
     </header>
   )
