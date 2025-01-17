@@ -20,7 +20,9 @@ const Header: React.FC = () => {
           {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
         <Link href="/">
-          <h1 className="text-3xl font-bold text-red-500">JRPECASCOMPLETE</h1>
+          <h1 className="text-xl md:text-3xl font-bold text-red-500">
+            JRPECASCOMPLETE
+          </h1>
         </Link>
         <input
           type="text"
