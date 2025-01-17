@@ -1,9 +1,21 @@
+export interface ProductCategory {
+  name: string
+  category: string
+}
+
+export interface ProductSubCategory {
+  name: string
+  subcategory: string
+}
+
 export interface Product {
   productId: number
   name: string
   description: string
   price: number
-  photos: string[]
+  photos: string
+  category: ProductCategory
+  subcategory: ProductSubCategory
 }
 
 declare module 'next-auth' {

@@ -9,47 +9,49 @@ interface ProductGridProps {
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [priceRange, setPriceRange] = useState(500)
-  const [selectedCondition, setSelectedCondition] = useState('')
+  const [priceRange, setPriceRange] = useState(1000)
+  const [filtersActive, setFiltersActive] = useState(false)
+  let categories = [] as string[]
 
-  // const filteredProducts = products.filter((product) => {
-  //   return (
-  //     (selectedCategory === '' || product.category === selectedCategory) &&
-  //     product.price <= priceRange &&
-  //     (selectedCondition === '' || product.condition === selectedCondition)
-  //   )
-  // })
+  const category = new Set<string>()
+  products.forEach((product) => {
+    category.add(product.category.name)
+  })
+  categories = Array.from(category)
+
+  const filteredProducts = products.filter((product) => {
+    return (
+      (selectedCategory === '' ||
+        (product.category && product.category.name === selectedCategory)) &&
+      product.price <= priceRange
+    )
+  })
+
+  console.log(selectedCategory)
 
   return (
     <Fragment>
-      <h2 className="text-xxl font-bold text-white">Produtos</h2>
+      <div className="flex gap-2">
+        <h2 className="text-xxl font-bold text-white">Produtos</h2>
+        {(selectedCategory !== '' || priceRange < 1000) && (
+          <h2 className="text-xxl font-bold text-green-600">Filtros ativos</h2>
+        )}
+      </div>
+
       <main className="container mx-auto py-8">
         <div className="flex gap-8">
           <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 w-full md:w-2/3">
-            {/* {filteredProducts.map((product, index) => (
-              <Suspense fallback={<div>Loading...</div>} key={index}>
-                <ProductCard
-                  name={product.name}
-                  price={product.price}
-                  category={product.category}
-                  description={product.description}
-                  imageUrl={product.imageUrl}
-                  condition={product.condition}
-                />
-              </Suspense>
-            ))} */}
             {products.length > 0 ? (
-              products.map((product) => (
-                <Suspense
-                  fallback={<div>Loading...</div>}
-                  key={product.productId}
-                >
+              filteredProducts.map((product, index) => (
+                <Suspense fallback={<div>Loading...</div>} key={index}>
                   <ProductCard
                     productId={product.productId}
                     name={product.name}
                     price={product.price}
                     description={product.description}
                     photos={product.photos}
+                    category={product.category}
+                    subcategory={product.subcategory}
                   />
                 </Suspense>
               ))
@@ -67,9 +69,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
                 <option value="">Todas</option>
-                <option value="Categoria 1">Categoria 1</option>
-                <option value="Categoria 2">Categoria 2</option>
-                {/* Adicione mais opções conforme necessário */}
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="mb-4">
@@ -82,19 +86,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
               />
-              <div className="text-gray-400">R$ {priceRange},00</div>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-400">Condição</label>
-              <select
-                className="w-full p-2 border rounded bg-gray-800 text-white"
-                value={selectedCondition}
-                onChange={(e) => setSelectedCondition(e.target.value)}
-              >
-                <option value="">Todas</option>
-                <option value="Novo">Novo</option>
-                <option value="Usado">Usado</option>
-              </select>
+              <div className="text-gray-400">{priceRange} €</div>
             </div>
           </div>
         </div>

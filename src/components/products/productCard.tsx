@@ -10,11 +10,21 @@ const ProductCard: React.FC<Product> = ({
   price,
   description,
   photos,
+  category,
+  subcategory,
 }) => {
   const { addToCart } = useProducts()
 
   const handleAddToCart = () => {
-    addToCart({ productId, name, price, description, photos })
+    addToCart({
+      productId,
+      name,
+      price,
+      description,
+      photos,
+      category,
+      subcategory,
+    })
   }
   const modifiedPhotoUrl = photos[0].slice(2)
 
@@ -25,8 +35,9 @@ const ProductCard: React.FC<Product> = ({
           <Image
             src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
             alt={name}
-            fill
-            objectFit="contain"
+            width={200}
+            height={200}
+            style={{ objectFit: 'contain', width: '100%', height: '100%' }}
             className="rounded-md"
           />
         ) : (

@@ -15,8 +15,8 @@ const Body: React.FC<BodyProps> = ({ children }) => {
         <Image
           src="/3.jpg"
           alt="Banner"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           className="w-full h-full"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
