@@ -26,7 +26,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
     )
   })
 
-  console.log(selectedCategory)
+  // podia filtra  por aqui tambem
+  // console.log('aqiu: ', filteredProducts.length)
 
   return (
     <Fragment>
