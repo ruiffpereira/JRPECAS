@@ -10,7 +10,6 @@ interface ProductGridProps {
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [priceRange, setPriceRange] = useState(1000)
-  const [filtersActive, setFiltersActive] = useState(false)
   let categories = [] as string[]
 
   const category = new Set<string>()
