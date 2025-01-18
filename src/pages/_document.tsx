@@ -3,7 +3,15 @@ import { Html, Head, Main, NextScript } from 'next/document'
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        {/* Meta tags para mudar a cor da barra de status e da barra de ferramentas para preto */}
+        <meta name="theme-color" content="#000000" />
+        <meta name="msapplication-navbutton-color" content="#000000" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+      </Head>
       <body className="antialiased">
         <Main />
         <NextScript />

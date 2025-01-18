@@ -2,8 +2,10 @@ import { useProducts } from '@/context/ProductsContext'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
+import { FaBox } from 'react-icons/fa'
+
 import Image from 'next/image'
-import { useSession, signIn } from 'next-auth/react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 
@@ -35,9 +37,7 @@ const Header: React.FC = () => {
           onChange={handleSearchChange}
         />
         <nav className="hidden md:flex space-x-4 items-center">
-          <Link href="/">Home</Link>
-          <Link href="/">Contacto</Link>
-          <Link href="/">Onde Estamos</Link>
+          <Link href="/us">Sobre Nós</Link>
           {session ? (
             <Link href="/user">
               {session.user.image && (
@@ -113,27 +113,43 @@ const Header: React.FC = () => {
       <nav
         className={`md:hidden fixed top-0 left-0 w-2/4 h-full bg-gray-900 text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex gap-2 flex-col">
+        <div className="flex gap-4 flex-col h-full">
           {session ? (
-            <Link
-              href="/user"
-              onClick={() => setMenuOpen(false)}
-              className="flex gap-2 flex-col justify-start"
-            >
-              <p>Bem Vindo</p>
-              <div className="flex gap-2 items-center">
-                {session.user.image && (
-                  <Image
-                    src={session.user.image}
-                    alt={session.user.name || 'No name provided'}
-                    width={20}
-                    height={20}
-                    className="rounded-full"
-                  />
-                )}
-                <p>{session.user.name}</p>
-              </div>
-            </Link>
+            <div className="flex gap-4 flex-col">
+              <Link
+                href="/user"
+                onClick={() => setMenuOpen(false)}
+                className="flex gap-2 flex-col justify-start"
+              >
+                <p>Bem Vindo</p>
+                <div className="flex gap-2 items-center mb-4">
+                  {session.user.image && (
+                    <Image
+                      src={session.user.image}
+                      alt={session.user.name || 'No name provided'}
+                      width={20}
+                      height={20}
+                      className="rounded-full"
+                    />
+                  )}
+                  <p>{session.user.name}</p>
+                </div>
+              </Link>
+              <Link
+                className="flex gap-2 items-center"
+                onClick={() => setMenuOpen(false)}
+                href="/us"
+              >
+                <FaBox className="text-red-500" />
+                As minhas encomendas
+              </Link>
+              <button
+                onClick={() => signOut()}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <button
               className="flex gap-2 items-center"
@@ -144,14 +160,12 @@ const Header: React.FC = () => {
             </button>
           )}
 
-          <Link onClick={() => setMenuOpen(false)} href="/">
-            Home
-          </Link>
-          <Link onClick={() => setMenuOpen(false)} href="/">
-            Contacto
-          </Link>
-          <Link onClick={() => setMenuOpen(false)} href="/">
-            Onde Estamos
+          <Link
+            className="mt-auto"
+            onClick={() => setMenuOpen(false)}
+            href="/us"
+          >
+            Sobre Nós
           </Link>
         </div>
       </nav>
