@@ -111,7 +111,7 @@ const Header: React.FC = () => {
         }}
       ></div>
       <nav
-        className={`md:hidden fixed top-0 left-0 w-2/4 h-full bg-gray-900 text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`md:hidden fixed top-0 left-0 w-3/4 h-full bg-gray-900 text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex gap-4 flex-col h-full">
           {session ? (
@@ -170,7 +170,7 @@ const Header: React.FC = () => {
         </div>
       </nav>
       <nav
-        className={`md:hidden fixed top-0 right-0 h-full bg-gray-900 w-2/4 text-white p-4 z-50 transform transition-transform duration-300 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`md:hidden fixed top-0 right-0 h-full bg-gray-900 w-3/4 text-white p-4 z-50 transform transition-transform duration-300 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="overflow-auto h-full">
           <h2 className="text-xl font-bold mb-4 text-white">Carrinho</h2>
