@@ -8,7 +8,7 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-white p-4 flex flex-col gap-4 mt-auto">
+    <footer className="bg-black text-white p-4 flex flex-col gap-4 mt-auto flex-shrink-0">
       <section className="text-white rounded-lg container mx-auto">
         <h2 className="text-2xl font-bold mb-4">
           Inscreva-se na nossa Newsletter

@@ -12,7 +12,7 @@ export default function Document() {
           content="black-translucent"
         />
       </Head>
-      <body className="antialiased">
+      <body className="antialiased overflow-hidden">
         <Main />
         <NextScript />
       </body>

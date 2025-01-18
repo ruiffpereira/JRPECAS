@@ -16,11 +16,13 @@ const Header: React.FC = () => {
   const { data: session } = useSession()
 
   return (
-    <header className="bg-black text-white py-4 sticky top-0 z-10">
+    <header className="bg-black text-white py-4 sticky top-0 z-10 flex-shrink-0">
       <div className="container mx-auto px-4 flex md:justify-between items-center gap-4">
         <button
           className="md:hidden mr-2"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => {
+            setMenuOpen(!menuOpen)
+          }}
         >
           {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
@@ -92,7 +94,9 @@ const Header: React.FC = () => {
           )}
           <button
             className="relative mr-2"
-            onClick={() => setCartOpen(!cartOpen)}
+            onClick={() => {
+              setCartOpen(!cartOpen)
+            }}
           >
             <FiShoppingCart />
             {cart.length > 0 && (
@@ -137,7 +141,9 @@ const Header: React.FC = () => {
               </Link>
               <Link
                 className="flex gap-2 items-center"
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {
+                  setMenuOpen(false)
+                }}
                 href="/us"
               >
                 <FaBox className="text-red-500" />
@@ -162,7 +168,9 @@ const Header: React.FC = () => {
 
           <Link
             className="mt-auto"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              setMenuOpen(false)
+            }}
             href="/us"
           >
             Sobre Nós
@@ -217,7 +225,9 @@ const Header: React.FC = () => {
               <Link href="/cart">
                 <div
                   className="flex items-center space-x-2 relative"
-                  onClick={() => setCartOpen(false)}
+                  onClick={() => {
+                    setCartOpen(false)
+                  }}
                 >
                   Ver Carrinho
                 </div>
