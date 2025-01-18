@@ -15,12 +15,15 @@ const Header: React.FC = () => {
   const { data: session } = useSession()
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-10">
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+      <div className="container mx-auto px-4 flex md:justify-between items-center">
+        <button
+          className="md:hidden mr-2"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
           {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
         <Link href="/">
-          <h1 className="text-xl md:text-3xl font-bold text-red-500">
+          <h1 className="text-2xl md:text-3xl font-bold text-red-500">
             JRPECASCOMPLETE
           </h1>
         </Link>
@@ -65,7 +68,7 @@ const Header: React.FC = () => {
             </div>
           </Link>
         </nav>
-        <div className="flex gap-2 items-center md:hidden">
+        <div className="flex gap-4 items-center ml-auto md:hidden">
           {session ? (
             <Link href="/user">
               {session.user.image && (
@@ -93,7 +96,7 @@ const Header: React.FC = () => {
           >
             <FiShoppingCart />
             {cart.length > 0 && (
-              <div className="absolute -top-2 -right-3 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
+              <div className="absolute -top-3 -right-4 text-xs bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full">
                 {cart.length}
               </div>
             )}
@@ -105,7 +108,7 @@ const Header: React.FC = () => {
         onClick={() => setMenuOpen(false)}
       ></div>
       <nav
-        className={`fixed top-0 left-0 w-2/4 h-full bg-black text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 w-2/4 h-full bg-gray-900 text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex gap-2 flex-col">
           {session ? (
@@ -153,8 +156,8 @@ const Header: React.FC = () => {
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${filtersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setFiltersOpen(false)}
       ></div>
-      <div
-        className={`fixed top-0 right-0 h-full bg-black text-white p-4 z-50 transform transition-transform duration-300 ${filtersOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      <nav
+        className={`fixed top-0 right-0  h-full bg-gray-900 w-2/4 text-white p-4 z-50 transform transition-transform duration-300 ${filtersOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="overflow-auto h-full">
           <h2 className="text-xl font-bold mb-4 text-white">Carrinho</h2>
@@ -208,7 +211,7 @@ const Header: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
+      </nav>
       <div className="container mx-auto px-4 lg:hidden mt-2">
         <input
           type="text"

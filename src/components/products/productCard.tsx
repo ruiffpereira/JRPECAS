@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useProducts } from '../../context/ProductsContext'
 import { Product } from '@/types/types'
+import { FiShoppingCart } from 'react-icons/fi'
 
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 
@@ -46,13 +47,13 @@ const ProductCard: React.FC<Product> = ({
       </div>
       <h2 className="text-sm text-white">{name}</h2>
       <p className="text-gray-300 text-sm">{description}</p>
-      <div className="flex justify-between items-center mt-auto">
-        <p className="text-xl text-white">{price}€</p>
+      <div className="flex justify-between items-center mt-auto pt-8">
+        <p className="text-xl text-white font-bold">{price}€</p>
         <button
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
           onClick={handleAddToCart}
         >
-          Adicionar ao Carrinho
+          <FiShoppingCart />
         </button>
       </div>
     </div>
