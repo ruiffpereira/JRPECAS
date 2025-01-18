@@ -15,7 +15,7 @@ const Body: React.FC<BodyProps> = ({ children }) => {
     <div className="min-h-screen bg-gray-900 flex flex-col">
       <Header />
       <section
-        className={`relative h-96 mb-4 ${searchProduct.length > 0 && 'hidden mb:block'}`}
+        className={`relative h-96 mb-4 ${searchProduct.length > 0 && 'hidden md:block'}`}
       >
         <Image
           src="/3.jpg"
@@ -31,7 +31,7 @@ const Body: React.FC<BodyProps> = ({ children }) => {
           </h2>
         </div>
       </section>
-      <main className="container mx-auto p-4 flex flex-col gap-4">
+      <main className="container mx-auto p-4 flex flex-col gap-4 mb-4">
         {children}
       </main>
       <Footer />
