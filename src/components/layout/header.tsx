@@ -9,13 +9,13 @@ const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [filtersOpen, setFiltersOpen] = useState(false)
-
+  const [cartOpen, setCartOpen] = useState(false)
   const { cart, handleSearchChange, searchProduct } = useProducts()
   const { data: session } = useSession()
+
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-10">
-      <div className="container mx-auto px-4 flex md:justify-between items-center">
+      <div className="container mx-auto px-4 flex md:justify-between items-center gap-4">
         <button
           className="md:hidden mr-2"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
         </Link>
         <input
           type="text"
-          className="p-2 rounded bg-gray-800 text-white hidden lg:block"
+          className="py-2 px-4 flex-grow rounded md:max-w-sm bg-gray-800 text-white hidden lg:block"
           placeholder="Pesquisar por um artigo"
           value={searchProduct}
           onChange={handleSearchChange}
@@ -92,7 +92,7 @@ const Header: React.FC = () => {
           )}
           <button
             className="relative mr-2"
-            onClick={() => setFiltersOpen(!filtersOpen)}
+            onClick={() => setCartOpen(!cartOpen)}
           >
             <FiShoppingCart />
             {cart.length > 0 && (
@@ -104,11 +104,14 @@ const Header: React.FC = () => {
         </div>
       </div>
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setMenuOpen(false)}
+        className={`md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${menuOpen || cartOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => {
+          setCartOpen(false)
+          setMenuOpen(false)
+        }}
       ></div>
       <nav
-        className={`fixed top-0 left-0 w-2/4 h-full bg-gray-900 text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`md:hidden fixed top-0 left-0 w-2/4 h-full bg-gray-900 text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex gap-2 flex-col">
           {session ? (
@@ -152,12 +155,8 @@ const Header: React.FC = () => {
           </Link>
         </div>
       </nav>
-      <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${filtersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setFiltersOpen(false)}
-      ></div>
       <nav
-        className={`fixed top-0 right-0  h-full bg-gray-900 w-2/4 text-white p-4 z-50 transform transition-transform duration-300 ${filtersOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`md:hidden fixed top-0 right-0 h-full bg-gray-900 w-2/4 text-white p-4 z-50 transform transition-transform duration-300 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="overflow-auto h-full">
           <h2 className="text-xl font-bold mb-4 text-white">Carrinho</h2>
@@ -178,13 +177,14 @@ const Header: React.FC = () => {
                 </thead>
                 <tbody>
                   {cart.map((item, index) => {
-                    const modifiedPhotoUrl = item.photos.slice(2)
+                    const modifiedPhotoUrl = item.photos[0].slice(2)
+                    console.log(modifiedPhotoUrl)
                     return (
                       <tr key={index} className="hover:bg-gray-700">
                         <td className="py-2 px-4 border-b border-gray-700">
                           <div className="relative w-24 h-24">
                             <Image
-                              src={`${URL_RAIZ}${modifiedPhotoUrl}`}
+                              src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
                               alt={item.name}
                               fill
                               objectFit="contain"
@@ -203,7 +203,7 @@ const Header: React.FC = () => {
               <Link href="/cart">
                 <div
                   className="flex items-center space-x-2 relative"
-                  onClick={() => setFiltersOpen(false)}
+                  onClick={() => setCartOpen(false)}
                 >
                   Ver Carrinho
                 </div>
@@ -215,8 +215,8 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 lg:hidden mt-2">
         <input
           type="text"
-          className="p-2 rounded bg-gray-800 text-white w-full"
-          placeholder="Pesquisar por um artigo"
+          className="py-2 px-4 rounded bg-gray-800 text-white w-full"
+          placeholder="Pesquise por um artigo"
           value={searchProduct}
           onChange={handleSearchChange}
         />

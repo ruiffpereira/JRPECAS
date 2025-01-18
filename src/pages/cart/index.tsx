@@ -30,7 +30,6 @@ const Cart: React.FC = () => {
             <tbody>
               {cart.map((item, index) => {
                 const modifiedPhotoUrl = item.photos[0].slice(2)
-                console.log('item: ', item)
                 return (
                   <tr key={index} className="hover:bg-gray-700">
                     <td className="py-2 px-4 border-b border-gray-700">
@@ -38,8 +37,13 @@ const Cart: React.FC = () => {
                         <Image
                           src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
                           alt={item.name}
-                          fill
-                          objectFit="contain"
+                          width={200}
+                          height={200}
+                          style={{
+                            objectFit: 'contain',
+                            width: '100%',
+                            height: '100%',
+                          }}
                           className="rounded-md"
                         />
                       </div>
