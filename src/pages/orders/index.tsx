@@ -1,7 +1,7 @@
 const orders = () => {
   return (
     <div>
-      <h1>Orders</h1>
+      <h1>Nenhuma encomenda disponivel</h1>
     </div>
   )
 }

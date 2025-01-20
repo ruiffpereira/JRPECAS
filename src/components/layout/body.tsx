@@ -26,7 +26,7 @@ const Body: React.FC<BodyProps> = ({ children }) => {
           className="w-full h-full"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <h2 className="text-white text-4xl font-bold">
+          <h2 className="text-white text-4xl font-bold px-4 text-center">
             Peças de Carros à Venda
           </h2>
         </div>

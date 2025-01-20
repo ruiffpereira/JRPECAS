@@ -26,8 +26,8 @@ const Header: React.FC = () => {
         >
           {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
-        <Link href="/">
-          <h1 className="text-2xl md:text-3xl font-bold text-red-500">
+        <Link className="truncate" href="/">
+          <h1 className="text-xl md:text-3xl font-bold text-red-500 truncate">
             JRPECASCOMPLETE
           </h1>
         </Link>
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
           onChange={handleSearchChange}
         />
         <nav className="hidden md:flex space-x-4 items-center">
-          <Link href="/us">Sobre Nós</Link>
+          <Link href="/about">Sobre Nós</Link>
           {session ? (
             <Link href="/user">
               {session.user.image && (
@@ -144,7 +144,7 @@ const Header: React.FC = () => {
                 onClick={() => {
                   setMenuOpen(false)
                 }}
-                href="/us"
+                href="/orders"
               >
                 <FaBox className="text-red-500" />
                 As minhas encomendas
@@ -171,7 +171,7 @@ const Header: React.FC = () => {
             onClick={() => {
               setMenuOpen(false)
             }}
-            href="/us"
+            href="/about"
           >
             Sobre Nós
           </Link>
@@ -180,49 +180,42 @@ const Header: React.FC = () => {
       <nav
         className={`md:hidden fixed top-0 right-0 h-full bg-gray-900 w-3/4 text-white p-4 z-50 transform transition-transform duration-300 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <div className="overflow-auto h-full">
-          <h2 className="text-xl font-bold mb-4 text-white">Carrinho</h2>
+        <div className="overflow-auto h-full flex flex-col gap-2">
+          <h2 className="text-xl font-bold mb-4 text-white flex-shrink-0">
+            Carrinho
+          </h2>
           {cart.length === 0 ? (
             <p className="text-white">Seu carrinho está vazio.</p>
           ) : (
-            <div className="">
-              <table className="min-w-full text-white mb-4">
-                <thead>
-                  <tr>
-                    <th className="py-2 px-4 border-b border-gray-700">
-                      Imagem
-                    </th>
-                    <th className="py-2 px-4 border-b border-gray-700">
-                      Preço
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cart.map((item, index) => {
-                    const modifiedPhotoUrl = item.photos[0].slice(2)
-                    console.log(modifiedPhotoUrl)
-                    return (
-                      <tr key={index} className="hover:bg-gray-700">
-                        <td className="py-2 px-4 border-b border-gray-700">
-                          <div className="relative w-24 h-24">
-                            <Image
-                              src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
-                              alt={item.name}
-                              fill
-                              objectFit="contain"
-                              className="rounded-md"
-                            />
-                          </div>
-                        </td>
-                        <td className="py-2 px-4 border-b border-gray-700">
-                          {item.price}€
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-              <Link href="/cart">
+            <div className="flex flex-col gap-4 overflow-hidden flex-grow h-full">
+              <div className="flex flex-col gap-4 overflow-auto">
+                {cart.map((item, index) => {
+                  const modifiedPhotoUrl = item.photos[0].slice(2)
+                  return (
+                    <div
+                      key={index}
+                      className="rounded-md flex gap-4 items-center p-4 bg-slate-800"
+                    >
+                      <div className="w-20 h-20 overflow-hidden relative flex-shrink-0">
+                        <Image
+                          src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
+                          alt={item.name}
+                          fill
+                          objectFit="contain"
+                        />
+                      </div>
+                      <div className="flex gap-2 flex-col">
+                        <p>{item.name}</p>
+                        <div className="text-red-700">{item.price}€</div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+              <Link
+                className={`flex-shrink-0 ${cart.length === 0 && 'hidden'}`}
+                href="/cart"
+              >
                 <div
                   className="flex items-center space-x-2 relative"
                   onClick={() => {
