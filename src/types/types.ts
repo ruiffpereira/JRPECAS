@@ -18,17 +18,25 @@ export interface Product {
   subcategory: ProductSubCategory
 }
 
+export interface Cart {
+  cartId: string
+  productId: string
+  quantity: number
+}
+
 declare module 'next-auth' {
   interface User {
-    token?: string
+    token: string
+    customerId: string
   }
 
   interface Session {
     user: {
       image: string
       name: string
-      token?: string
+      token: string
       email: string
+      customerId: string
     }
   }
 }

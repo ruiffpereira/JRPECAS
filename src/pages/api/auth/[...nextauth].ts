@@ -33,9 +33,9 @@ export default NextAuth({
           })
 
           const data = await res.json()
-
           if (res.ok && data) {
             user.token = data.token
+            user.customerId = data.customer.customerId
             return true
           } else {
             console.error('Failed to authenticate user')
@@ -54,12 +54,14 @@ export default NextAuth({
         token.name = user.name
         token.email = user.email
         token.acessToken = user.token
+        token.customerId = user.customerId
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.token = token.acessToken as string
+        session.user.customerId = token.customerId as string
       }
       return session
     },

@@ -14,13 +14,14 @@ export const getAllProducts = async (token: string) => {
   }
 }
 
-export const getUserInfo = async (token: string) => {
+export const getCartProducts = async (token: string) => {
   try {
     const response = await fetchWithAuth(
-      `${process.env.API_BASE_URL}/customers`,
+      `${process.env.API_BASE_URL}/carts`,
       token,
     )
     const data = await response.json()
+    // console.log('data:', data)
     return data
   } catch (error) {
     console.error('Error fetching products:', error)

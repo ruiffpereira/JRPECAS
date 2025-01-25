@@ -6,7 +6,8 @@ import { Fragment } from 'react'
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 
 const Cart: React.FC = () => {
-  const { cart } = useProducts()
+  const { cart, products } = useProducts()
+
   return (
     <Fragment>
       <h1 className="text-3xl font-bold text-white mb-8">
@@ -24,17 +25,20 @@ const Cart: React.FC = () => {
                 <th className="py-2 px-4 border-b border-gray-700">
                   Descrição
                 </th>
+                <th className="py-2 px-4 border-b border-gray-700">
+                  Quantidade
+                </th>
                 <th className="py-2 px-4 border-b border-gray-700">Preço</th>
               </tr>
             </thead>
             <tbody>
               {cart.map((item, index) => {
-                const modifiedPhotoUrl = item.photos[0].slice(2)
+                // const modifiedPhotoUrl = item.photos[0].slice(2)
                 return (
                   <tr key={index} className="hover:bg-gray-700">
                     <td className="py-2 px-4 border-b border-gray-700">
                       <div className="relative w-24 h-24">
-                        <Image
+                        {/* <Image
                           src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
                           alt={item.name}
                           width={200}
@@ -45,17 +49,20 @@ const Cart: React.FC = () => {
                             height: '100%',
                           }}
                           className="rounded-md"
-                        />
+                        /> */}
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b border-gray-700">
-                      {item.name}
+                      {/* {item.name} */}
                     </td>
                     <td className="py-2 px-4 border-b border-gray-700">
-                      {item.description}
+                      {/* {item.description} */}
                     </td>
                     <td className="py-2 px-4 border-b border-gray-700">
-                      {item.price}€
+                      {/* {item.price}€ */}
+                    </td>
+                    <td className="py-2 px-4 border-b border-gray-700">
+                      {/* {item.price}€ */}
                     </td>
                   </tr>
                 )

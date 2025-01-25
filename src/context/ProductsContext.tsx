@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react'
-import { Product } from '@/types/types'
+import { Cart, Product } from '@/types/types'
 
 interface ProductsContextProps {
   products: Product[]
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>
-  cart: Product[]
-  addToCart: (item: Product) => void
+  cart: Cart[]
+  setCart: React.Dispatch<React.SetStateAction<Cart[]>>
+  addToCart: (item: Cart) => void
   searchProduct: string
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -18,11 +19,12 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useState<Product[]>([])
-  const [cart, setCart] = useState<Product[]>([])
+  const [cart, setCart] = useState<Cart[]>([])
   const [searchProduct, setSearchProduct] = useState('')
 
-  const addToCart = (item: Product) => {
-    setCart((prevCart) => [...prevCart, item])
+  const addToCart = (item: Cart) => {
+    // setCart((prevCart) => [...prevCart, item])
+    console.log('item: ', item)
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +37,7 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
         products,
         setProducts,
         cart,
+        setCart,
         addToCart,
         searchProduct,
         handleSearchChange,

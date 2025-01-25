@@ -8,7 +8,7 @@ export const fetchWithAuth = async (
   options: FetchOptions = {},
 ): Promise<Response> => {
   const headers: HeadersInit = {
-    secretkey: token,
+    Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
     ...options.headers,
   }
