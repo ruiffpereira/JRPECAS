@@ -9,7 +9,7 @@ export interface ProductSubCategory {
 }
 
 export interface Product {
-  productId: number
+  productId: string
   name: string
   description: string
   price: number
@@ -19,6 +19,15 @@ export interface Product {
 }
 
 export interface Cart {
+  cartId: string
+  productId: string
+  name: string
+  photo: string
+  price: number
+  quantity: number
+}
+
+export interface dbCart {
   cartId: string
   productId: string
   quantity: number

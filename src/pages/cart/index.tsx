@@ -6,7 +6,7 @@ import { Fragment } from 'react'
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 
 const Cart: React.FC = () => {
-  const { cart, products } = useProducts()
+  const { cart } = useProducts()
 
   return (
     <Fragment>
@@ -23,9 +23,6 @@ const Cart: React.FC = () => {
                 <th className="py-2 px-4 border-b border-gray-700">Imagem</th>
                 <th className="py-2 px-4 border-b border-gray-700">Nome</th>
                 <th className="py-2 px-4 border-b border-gray-700">
-                  Descrição
-                </th>
-                <th className="py-2 px-4 border-b border-gray-700">
                   Quantidade
                 </th>
                 <th className="py-2 px-4 border-b border-gray-700">Preço</th>
@@ -33,13 +30,12 @@ const Cart: React.FC = () => {
             </thead>
             <tbody>
               {cart.map((item, index) => {
-                // const modifiedPhotoUrl = item.photos[0].slice(2)
                 return (
                   <tr key={index} className="hover:bg-gray-700">
                     <td className="py-2 px-4 border-b border-gray-700">
                       <div className="relative w-24 h-24">
-                        {/* <Image
-                          src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
+                        <Image
+                          src={`${URL_RAIZ}/${item.photo}`}
                           alt={item.name}
                           width={200}
                           height={200}
@@ -49,20 +45,17 @@ const Cart: React.FC = () => {
                             height: '100%',
                           }}
                           className="rounded-md"
-                        /> */}
+                        />
                       </div>
                     </td>
                     <td className="py-2 px-4 border-b border-gray-700">
-                      {/* {item.name} */}
+                      {item.name}
                     </td>
                     <td className="py-2 px-4 border-b border-gray-700">
-                      {/* {item.description} */}
+                      {item.quantity}€
                     </td>
                     <td className="py-2 px-4 border-b border-gray-700">
-                      {/* {item.price}€ */}
-                    </td>
-                    <td className="py-2 px-4 border-b border-gray-700">
-                      {/* {item.price}€ */}
+                      {item.price}€
                     </td>
                   </tr>
                 )

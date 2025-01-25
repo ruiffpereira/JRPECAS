@@ -14,7 +14,9 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ products, cartProducts }) => {
   const { setCart } = useProducts()
 
-  setCart(cartProducts)
+  if (cartProducts && cartProducts.length > 0) {
+    setCart(cartProducts)
+  }
 
   return (
     <Fragment>
