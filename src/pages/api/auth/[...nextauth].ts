@@ -20,17 +20,20 @@ export default NextAuth({
     async signIn({ user, account }) {
       if (account?.provider === 'google') {
         try {
-          const res = await fetch(`${process.env.API_BASE_URL}/customers`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${process.env.API_SECRET_TOKEN}`,
+          const res = await fetch(
+            `${process.env.API_BASE_URL}/customers/login`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env.API_SECRET_TOKEN}`,
+              },
+              body: JSON.stringify({
+                user,
+                secretkeysite: process.env.WEBSITE_KEY,
+              }),
             },
-            body: JSON.stringify({
-              user,
-              secretkeysite: process.env.WEBSITE_KEY,
-            }),
-          })
+          )
 
           const data = await res.json()
           if (res.ok && data) {
