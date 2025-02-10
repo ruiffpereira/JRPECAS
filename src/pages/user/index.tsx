@@ -1,4 +1,5 @@
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { LoginAndAddToCart } from '@/components/auth'
+import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 
 const User = () => {
@@ -7,7 +8,14 @@ const User = () => {
   if (!session) {
     return (
       <div>
-        <button onClick={() => signIn('google')}>Login</button>
+        <button
+          onClick={(event) => {
+            LoginAndAddToCart(event)
+            console.log('LoginAndAddToCart function called')
+          }}
+        >
+          Login
+        </button>
       </div>
     )
   }

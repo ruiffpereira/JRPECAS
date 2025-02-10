@@ -3,11 +3,9 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
 import { FaBox } from 'react-icons/fa'
-
+import { LoginAndAddToCart } from '@/components/auth'
 import Image from 'next/image'
-import { useSession, signIn, signOut } from 'next-auth/react'
-
-const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
+import { useSession, signOut } from 'next-auth/react'
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -55,7 +53,9 @@ const Header: React.FC = () => {
           ) : (
             <button
               className="flex gap-2 items-center"
-              onClick={() => signIn('google')}
+              onClick={(event) => {
+                LoginAndAddToCart(event)
+              }}
             >
               <FiUser />
               <p>Login</p>
@@ -86,7 +86,9 @@ const Header: React.FC = () => {
           ) : (
             <button
               className="flex gap-2 items-center"
-              onClick={() => signIn('google')}
+              onClick={(event) => {
+                LoginAndAddToCart(event)
+              }}
             >
               <FiUser />
               <p>Login</p>
@@ -159,7 +161,9 @@ const Header: React.FC = () => {
           ) : (
             <button
               className="flex gap-2 items-center"
-              onClick={() => signIn('google')}
+              onClick={(event) => {
+                LoginAndAddToCart(event)
+              }}
             >
               <FiUser />
               <p>Login</p>
