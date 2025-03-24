@@ -5,13 +5,30 @@ import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
 import { FaBox } from 'react-icons/fa'
 import { LoginAndAddToCart } from '@/components/auth'
 import Image from 'next/image'
-import { useSession, signOut } from 'next-auth/react'
+import { useSession, signOut, signIn } from 'next-auth/react'
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const { cart, handleSearchChange, searchProduct } = useProducts()
   const { data: session } = useSession()
+
+  interface SignInResult {
+    error?: string | null
+  }
+
+  const handleSignIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    const result: SignInResult =
+      (await signIn('google', { redirect: false })) || {}
+    // Adicione qualquer lógica adicional aqui
+    if (result.error) {
+      console.error('Erro ao fazer login:', result.error)
+    } else {
+      console.log('Login bem-sucedido:', result)
+      // Redirecionar ou atualizar o estado conforme necessário
+    }
+  }
 
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-10 flex-shrink-0">
@@ -51,12 +68,7 @@ const Header: React.FC = () => {
               )}
             </Link>
           ) : (
-            <button
-              className="flex gap-2 items-center"
-              onClick={(event) => {
-                LoginAndAddToCart(event)
-              }}
-            >
+            <button className="flex gap-2 items-center" onClick={handleSignIn}>
               <FiUser />
               <p>Login</p>
             </button>

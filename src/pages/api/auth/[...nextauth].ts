@@ -52,6 +52,9 @@ export default NextAuth({
 
       return true
     },
+    async redirect({ baseUrl }) {
+      return baseUrl
+    },
     async jwt({ token, user }) {
       if (user) {
         token.name = user.name

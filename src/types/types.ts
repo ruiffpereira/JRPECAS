@@ -27,12 +27,6 @@ export interface Cart {
   quantity: number
 }
 
-export interface dbCart {
-  cartId: string
-  productId: string
-  quantity: number
-}
-
 declare module 'next-auth' {
   interface User {
     token: string

@@ -2,21 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-      },
-      {
-        protocol: 'https',
-        hostname: 'api.code-fullstack.com',
-      },
+    domains: [
+      'localhost',
+      'api.code-fullstack.com',
+      'lh3.googleusercontent.com',
     ],
   },
 }

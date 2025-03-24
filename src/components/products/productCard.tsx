@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useProducts } from '../../context/ProductsContext'
-import { Cart, Product } from '@/types/types'
+import { Product } from '@/types/types'
 import { FiShoppingCart } from 'react-icons/fi'
 
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
@@ -14,21 +14,14 @@ const ProductCard: React.FC<Product> = ({
 }) => {
   const { addToCart } = useProducts()
 
-  const handleAddToCart = () => {
-    addToCart({
-      productId,
-      name,
-      price,
-      quantity,
-    })
-  }
+  const imageUrl = `${URL_RAIZ}/${photos[0].slice(2)}`
 
   return (
     <div className="border border-gray-700 rounded-lg p-4 shadow-md relative bg-gray-800 flex flex-col">
       <div className="relative w-full h-32" id={`${productId}`}>
         {Array.isArray(photos) && photos.length > 0 ? (
           <Image
-            src={`${URL_RAIZ}/${photos[0].slice(2)}`}
+            src={imageUrl}
             alt={name}
             width={200}
             height={200}
@@ -45,7 +38,15 @@ const ProductCard: React.FC<Product> = ({
         <p className="text-xl text-white font-bold">{price}€</p>
         <button
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          onClick={handleAddToCart}
+          onClick={() =>
+            addToCart({
+              productId,
+              name,
+              price,
+              quantity: 1,
+              photo: photos[0],
+            })
+          }
         >
           <FiShoppingCart />
         </button>
