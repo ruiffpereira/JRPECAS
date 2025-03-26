@@ -5,17 +5,16 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react'
-import { Cart, Product } from '@/types/types'
+import { Cart, Product, AddCart } from '@/types/types'
 import { useSession } from 'next-auth/react'
-import { getCartProducts } from '@/pages/api/products'
+import { addCartProducts, getCartProducts } from '@/pages/api/products'
 
 interface ProductsContextProps {
   products: Product[]
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>
-  setDBCart: React.Dispatch<React.SetStateAction<Product[]>>
   cart: Cart[]
   setCart: React.Dispatch<React.SetStateAction<Cart[]>>
-  addToCart: (item: Cart) => void
+  addToCart: (item: AddCart) => void
   searchProduct: string
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -28,52 +27,56 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useState<Product[]>([])
-  const [dbCart, setDBCart] = useState<Cart[]>([])
   const [cart, setCart] = useState<Cart[]>([])
   const [searchProduct, setSearchProduct] = useState('')
   const { data: session } = useSession()
 
-  if (dbCart.length > 0 && products.length > 0) {
-    const updatedCart: Cart[] = dbCart.map((item) => {
-      const product = products.find(
-        (product) => product.productId === item.productId,
-      )
-      return {
-        ...item,
-        name: product?.name || '',
-        photo: product?.photos[0].slice(2) || '',
-        price: product?.price || 0,
-        quantity: 1,
-      }
-    })
-    setCart(updatedCart)
-  }
-
   useEffect(() => {
-    console.log('session:', session)
     const fetchCartProducts = async () => {
-      console.log('session:', session)
       if (session) {
-        const token = session.user.token // Substitua pelo token correto
+        const token = session.user.token
         if (token) {
-          const cartProducts = await getCartProducts(token)
-          console.log('cartProducts:', cartProducts)
-
-          if (cartProducts.length > 0) {
-            cartProducts.map((product) => {
-              console.log(product)
-              return true
-            })
+          try {
+            const response = await getCartProducts(token)
+            if ((response as Response).ok) {
+              const cartProducts = await (response as Response).json()
+              setCart(cartProducts)
+            } else {
+              console.error(
+                'Failed to fetch cart products:',
+                (response as Response).statusText,
+              )
+              setCart([])
+            }
+          } catch (error) {
+            console.error('Error fetching cart products:', error)
+            setCart([])
           }
-          setDBCart(cartProducts)
         }
       }
     }
     fetchCartProducts()
   }, [session])
 
-  const addToCart = (item: Cart) => {
-    setCart((prevCart) => [...prevCart, item])
+  const addToCart = async (item: AddCart) => {
+    if (session) {
+      const token = session.user.token
+      if (token) {
+        try {
+          const response = await addCartProducts(token, item) // Passa o item como um array
+          console.log('cart2:', response)
+          if (response.ok) {
+            const cartProducts = await response.json()
+            setCart(cartProducts)
+            console.log('cart:', cart)
+          } else {
+            console.error('Failed to add product to cart:', response.statusText)
+          }
+        } catch (error) {
+          console.error('Error adding product to cart:', error)
+        }
+      }
+    }
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +90,6 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
         setProducts,
         cart,
         setCart,
-        setDBCart,
         addToCart,
         searchProduct,
         handleSearchChange,

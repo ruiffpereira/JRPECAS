@@ -29,9 +29,16 @@ export const getServerSideProps: GetServerSideProps = async () => {
     }
   }
 
-  const products = await getAllProducts(token)
+  const getProducts = await getAllProducts(token)
 
-  return {
-    props: { products },
+  if (getProducts && getProducts.ok) {
+    const products = await getProducts.json()
+    return {
+      props: { products },
+    }
+  } else {
+    return {
+      props: { products: [] },
+    }
   }
 }

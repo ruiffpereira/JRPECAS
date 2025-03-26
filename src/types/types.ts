@@ -19,11 +19,15 @@ export interface Product {
 }
 
 export interface Cart {
-  cartId: string
   productId: string
   name: string
-  photo: string
+  photos: string
   price: number
+  quantity: number
+}
+
+export interface AddCart {
+  productId: string
   quantity: number
 }
 

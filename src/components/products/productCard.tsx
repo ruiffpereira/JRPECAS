@@ -14,14 +14,12 @@ const ProductCard: React.FC<Product> = ({
 }) => {
   const { addToCart } = useProducts()
 
-  const imageUrl = `${URL_RAIZ}/${photos[0].slice(2)}`
-
   return (
     <div className="border border-gray-700 rounded-lg p-4 shadow-md relative bg-gray-800 flex flex-col">
       <div className="relative w-full h-32" id={`${productId}`}>
         {Array.isArray(photos) && photos.length > 0 ? (
           <Image
-            src={imageUrl}
+            src={`${URL_RAIZ}/${photos[0].slice(2)}`}
             alt={name}
             width={200}
             height={200}
@@ -41,10 +39,7 @@ const ProductCard: React.FC<Product> = ({
           onClick={() =>
             addToCart({
               productId,
-              name,
-              price,
               quantity: 1,
-              photo: photos[0],
             })
           }
         >

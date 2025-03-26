@@ -14,8 +14,8 @@ export const fetchWithAuth = async (
   }
 
   const response = await fetch(url, {
-    ...options,
     headers,
+    ...options,
   })
   return response
 }

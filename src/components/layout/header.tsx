@@ -13,6 +13,8 @@ const Header: React.FC = () => {
   const { cart, handleSearchChange, searchProduct } = useProducts()
   const { data: session } = useSession()
 
+  const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
+
   interface SignInResult {
     error?: string | null
   }
@@ -206,23 +208,25 @@ const Header: React.FC = () => {
             <div className="flex flex-col gap-4 overflow-hidden flex-grow h-full">
               <div className="flex flex-col gap-4 overflow-auto">
                 {cart.map((item, index) => {
-                  // const modifiedPhotoUrl = item.photos[0].slice(2)
                   return (
                     <div
                       key={index}
                       className="rounded-md flex gap-4 items-center p-4 bg-slate-800"
                     >
                       <div className="w-20 h-20 overflow-hidden relative flex-shrink-0">
-                        {/* <Image
-                          src={`${URL_RAIZ}/${modifiedPhotoUrl}`}
+                        <Image
+                          src={`${URL_RAIZ}/${item.photos[0]}`}
                           alt={item.name}
                           fill
                           objectFit="contain"
-                        /> */}
+                        />
                       </div>
-                      <div className="flex gap-2 flex-col">
-                        {/* <p>{item.name}</p>
-                        <div className="text-red-700">{item.price}€</div> */}
+                      <div className="flex gap-2 flex-col flex-grow">
+                        <p>{item.name}</p>
+                        <div className="flex gap-2 justify-between">
+                          <div>{item.price}€</div>
+                          <div>{item.quantity}€</div>
+                        </div>
                       </div>
                     </div>
                   )

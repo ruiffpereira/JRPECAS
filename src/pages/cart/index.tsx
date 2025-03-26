@@ -16,53 +16,57 @@ const Cart: React.FC = () => {
       {cart.length === 0 ? (
         <p className="text-white">Seu carrinho está vazio.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-gray-800 text-white">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b border-gray-700">Imagem</th>
-                <th className="py-2 px-4 border-b border-gray-700">Nome</th>
-                <th className="py-2 px-4 border-b border-gray-700">
-                  Quantidade
-                </th>
-                <th className="py-2 px-4 border-b border-gray-700">Preço</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart.map((item, index) => {
-                return (
-                  <tr key={index} className="hover:bg-gray-700">
-                    <td className="py-2 px-4 border-b border-gray-700">
-                      <div className="relative w-24 h-24">
-                        <Image
-                          src={`${URL_RAIZ}/${item.photo}`}
-                          alt={item.name}
-                          width={200}
-                          height={200}
-                          style={{
-                            objectFit: 'contain',
-                            width: '100%',
-                            height: '100%',
-                          }}
-                          className="rounded-md"
-                        />
-                      </div>
-                    </td>
-                    <td className="py-2 px-4 border-b border-gray-700">
-                      {item.name}
-                    </td>
-                    <td className="py-2 px-4 border-b border-gray-700">
-                      {item.quantity}€
-                    </td>
-                    <td className="py-2 px-4 border-b border-gray-700">
-                      {item.price}€
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        <table className="min-w-full bg-gray-800 text-white overflow-hidden rounded-md">
+          <thead>
+            <tr>
+              <th className="py-2 px-2 border-b text-start border-gray-700">
+                Imagem
+              </th>
+              <th className="py-2 px-2 border-b text-start border-gray-700">
+                Nome
+              </th>
+              <th className="py-2 px-2 border-b text-start border-gray-700">
+                Quantidade
+              </th>
+              <th className="py-4 px-2 border-b text-start border-gray-700">
+                Preço
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {cart.map((item, index) => {
+              return (
+                <tr key={index} className="hover:bg-gray-700">
+                  <td className="py-2 px-4 border-b border-gray-700">
+                    <div className="relative w-24 h-24">
+                      <Image
+                        src={`${URL_RAIZ}/${item.photos[0]}`}
+                        alt={item.name}
+                        width={200}
+                        height={200}
+                        style={{
+                          objectFit: 'contain',
+                          width: '100%',
+                          height: '100%',
+                        }}
+                        className="rounded-md"
+                      />
+                    </div>
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-700">
+                    {item.name}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-700">
+                    {item.quantity}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-700">
+                    {item.price}€
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       )}
       <div className="mt-8">
         <Link href="/" className="text-red-500 hover:underline">
