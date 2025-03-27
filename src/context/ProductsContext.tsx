@@ -12,8 +12,8 @@ import { addCartProducts, getCartProducts } from '@/pages/api/products'
 interface ProductsContextProps {
   products: Product[]
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>
-  cart: Cart[]
-  setCart: React.Dispatch<React.SetStateAction<Cart[]>>
+  cart: Cart
+  setCart: React.Dispatch<React.SetStateAction<Cart>>
   addToCart: (item: AddCart) => void
   searchProduct: string
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -27,7 +27,7 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useState<Product[]>([])
-  const [cart, setCart] = useState<Cart[]>([])
+  const [cart, setCart] = useState<Cart>({ products: [], shipPrice: 0 })
   const [searchProduct, setSearchProduct] = useState('')
   const { data: session } = useSession()
 
@@ -46,11 +46,11 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
                 'Failed to fetch cart products:',
                 (response as Response).statusText,
               )
-              setCart([])
+              setCart({ products: [], shipPrice: 0 })
             }
           } catch (error) {
             console.error('Error fetching cart products:', error)
-            setCart([])
+            setCart({ products: [], shipPrice: 0 })
           }
         }
       }
@@ -63,12 +63,10 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
       const token = session.user.token
       if (token) {
         try {
-          const response = await addCartProducts(token, item) // Passa o item como um array
-          console.log('cart2:', response)
+          const response = await addCartProducts(token, item)
           if (response.ok) {
             const cartProducts = await response.json()
             setCart(cartProducts)
-            console.log('cart:', cart)
           } else {
             console.error('Failed to add product to cart:', response.statusText)
           }

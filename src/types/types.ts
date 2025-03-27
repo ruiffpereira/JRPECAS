@@ -18,12 +18,17 @@ export interface Product {
   subcategory: ProductSubCategory
 }
 
-export interface Cart {
+export interface CartProduct {
   productId: string
   name: string
-  photos: string
-  price: number
+  price: string // Se o preço for uma string, mantenha assim; caso contrário, use `number`
+  photos: string[]
   quantity: number
+}
+
+export interface Cart {
+  products: CartProduct[]
+  shipPrice: number
 }
 
 export interface AddCart {

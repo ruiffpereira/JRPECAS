@@ -32,8 +32,10 @@ const Header: React.FC = () => {
     }
   }
 
+  const totalCart = cart.products.reduce((acc, item) => acc + item.quantity, 0)
+
   return (
-    <header className="bg-black text-white py-4 sticky top-0 z-10 flex-shrink-0">
+    <header className="bg-black text-white py-4 sticky top-0 z-20 flex-shrink-0">
       <div className="container mx-auto px-4 flex md:justify-between items-center gap-4">
         <button
           className="md:hidden mr-2"
@@ -79,7 +81,7 @@ const Header: React.FC = () => {
             <div className="flex items-center space-x-2 relative">
               <FiShoppingCart />
               <div className="absolute -top-2 -right-3 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
-                {cart.length}
+                {totalCart}
               </div>
             </div>
           </Link>
@@ -115,9 +117,9 @@ const Header: React.FC = () => {
             }}
           >
             <FiShoppingCart />
-            {cart.length > 0 && (
+            {cart.products.length > 0 && (
               <div className="absolute -top-3 -right-4 text-xs bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full">
-                {cart.length}
+                {cart.products.length}
               </div>
             )}
           </button>
@@ -202,12 +204,12 @@ const Header: React.FC = () => {
           <h2 className="text-xl font-bold mb-4 text-white flex-shrink-0">
             Carrinho
           </h2>
-          {cart.length === 0 ? (
+          {cart.products.length === 0 ? (
             <p className="text-white">Seu carrinho está vazio.</p>
           ) : (
             <div className="flex flex-col gap-4 overflow-hidden flex-grow h-full">
               <div className="flex flex-col gap-4 overflow-auto">
-                {cart.map((item, index) => {
+                {cart.products.map((item, index) => {
                   return (
                     <div
                       key={index}
@@ -233,7 +235,7 @@ const Header: React.FC = () => {
                 })}
               </div>
               <Link
-                className={`flex-shrink-0 ${cart.length === 0 && 'hidden'}`}
+                className={`flex-shrink-0 ${cart.products.length === 0 && 'hidden'}`}
                 href="/cart"
               >
                 <div
