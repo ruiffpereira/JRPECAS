@@ -55,12 +55,7 @@ const Cart: React.FC = () => {
                             alt={item.name}
                             width={200}
                             height={200}
-                            style={{
-                              objectFit: 'contain',
-                              width: '100%',
-                              height: '100%',
-                            }}
-                            className="rounded-md"
+                            className="rounded-md w-full h-full"
                           />
                         </div>
                       </td>

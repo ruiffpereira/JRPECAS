@@ -208,7 +208,6 @@ const Header: React.FC = () => {
                           src={`${URL_RAIZ}/${item.photos[0]}`}
                           alt={item.name}
                           fill
-                          objectFit="contain"
                         />
                       </div>
                       <div className="flex gap-2 flex-col flex-grow">
