@@ -9,6 +9,10 @@ const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 const Cart: React.FC = () => {
   const { cart, addToCart } = useProducts()
 
+  function buy() {
+    console.log('Comprando')
+  }
+
   return (
     <Fragment>
       <h1 className="text-3xl font-bold text-white mb-8">
@@ -101,6 +105,9 @@ const Cart: React.FC = () => {
           </div>
         </Fragment>
       )}
+      <button onClick={buy} className="text-end text-red-500 text-2xl">
+        Comprar
+      </button>
       <div className="mt-8">
         <Link href="/" className="text-red-500 hover:underline">
           Continuar Comprando

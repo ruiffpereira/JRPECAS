@@ -11,6 +11,7 @@ export default function Document() {
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        {/* Title should be defined at the page level using <Head> from next/head */}
       </Head>
       <body className="antialiased overflow-hidden">
         <Main />

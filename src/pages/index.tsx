@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import ProductGrid from '@/components/products/productGrid'
 import { Product } from '@/types/types'
 import { getAllProducts } from './api/products'
+import Head from 'next/head'
 
 interface HomeProps {
   products: Product[]
@@ -11,6 +12,10 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ products }) => {
   return (
     <Fragment>
+      <Head>
+        <title>Complete Comercio de Peças Usadas</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <ProductGrid products={products} />
     </Fragment>
   )

@@ -8,8 +8,8 @@ export const getAllProducts = async (token: string) => {
       token,
     )
     return response
-  } catch (error) {
-    console.error('Error fetching products:', error)
+  } catch {
+    // console.error('Error fetching products:', error)
     // throw new Error('An error occurred while fetching products')
   }
 }
@@ -22,7 +22,7 @@ export const getCartProducts = async (token: string) => {
     )
     return response
   } catch (error) {
-    console.error('Error fetching products:', error)
+    // console.error('Error fetching products:', error)
     return error
     // throw new Error('An error occurred while fetching products')
   }
@@ -42,8 +42,8 @@ export const addCartProducts = async (token: string, data: AddCart) => {
       },
     )
     return response
-  } catch (error) {
-    console.error('Error adding products to cart:', error)
+  } catch {
+    // console.error('Error adding products to cart:', error)
     throw new Error('An error occurred while adding products to cart')
   }
 }

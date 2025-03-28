@@ -15,21 +15,9 @@ const Header: React.FC = () => {
 
   const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 
-  interface SignInResult {
-    error?: string | null
-  }
-
   const handleSignIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    const result: SignInResult =
-      (await signIn('google', { redirect: false })) || {}
-    // Adicione qualquer lógica adicional aqui
-    if (result.error) {
-      console.error('Erro ao fazer login:', result.error)
-    } else {
-      console.log('Login bem-sucedido:', result)
-      // Redirecionar ou atualizar o estado conforme necessário
-    }
+    await signIn('google', { redirect: false })
   }
 
   const totalCart = cart.products.reduce((acc, item) => acc + item.quantity, 0)
@@ -52,7 +40,7 @@ const Header: React.FC = () => {
         </Link>
         <input
           type="text"
-          className="py-2 px-4 flex-grow rounded md:max-w-sm bg-gray-800 text-white hidden lg:block"
+          className="text-center py-2 px-4 flex-grow rounded md:max-w-sm bg-gray-800 text-white hidden lg:block"
           placeholder="Pesquisar por um artigo"
           value={searchProduct}
           onChange={handleSearchChange}

@@ -8,12 +8,11 @@ export const LoginAndAddToCart = async (
 
   const result = await signIn('google', { redirect: false })
   if (result?.error) {
-    console.error('Login failed:', result.error)
+    // console.error('Login failed:', result.error)
   }
-  console.log('result', result)
   const session = await getSession()
   if (session) {
-    const cartProducts = await getCartProducts(session.user.token)
-    console.log('cartProducts', cartProducts)
+    await getCartProducts(session.user.token)
+    // console.log('cartProducts', cartProducts)
   }
 }

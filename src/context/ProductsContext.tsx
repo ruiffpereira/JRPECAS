@@ -42,14 +42,9 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
               const cartProducts = await (response as Response).json()
               setCart(cartProducts)
             } else {
-              console.error(
-                'Failed to fetch cart products:',
-                (response as Response).statusText,
-              )
               setCart({ products: [], shipPrice: 0 })
             }
-          } catch (error) {
-            console.error('Error fetching cart products:', error)
+          } catch {
             setCart({ products: [], shipPrice: 0 })
           }
         }
@@ -68,10 +63,10 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
             const cartProducts = await response.json()
             setCart(cartProducts)
           } else {
-            console.error('Failed to add product to cart:', response.statusText)
+            // console.error('Failed kto add product to cart:', response.statusText)
           }
-        } catch (error) {
-          console.error('Error adding product to cart:', error)
+        } catch {
+          // console.error('Error adding product to cart:', error)
         }
       }
     }
