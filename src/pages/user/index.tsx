@@ -11,7 +11,6 @@ const User = () => {
         <button
           onClick={(event) => {
             LoginAndAddToCart(event)
-            console.log('LoginAndAddToCart function called')
           }}
         >
           Login
