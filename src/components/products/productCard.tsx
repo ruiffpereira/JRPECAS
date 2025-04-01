@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useProducts } from '../../context/ProductsContext'
-import { Product } from '@/types/types'
 import { FiShoppingCart } from 'react-icons/fi'
+import { Product } from '@/server/ecommerce'
 
 const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 

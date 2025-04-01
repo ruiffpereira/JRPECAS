@@ -1,7 +1,7 @@
 import { useState, Suspense, Fragment } from 'react'
 import ProductCard from '@/components/products/productCard'
-import { Product } from '@/types/types'
 import { useProducts } from '@/context/ProductsContext'
+import { Product } from '@/server/ecommerce'
 
 // Defina a interface para as propriedades
 interface ProductGridProps {
@@ -17,7 +17,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
 
   const category = new Set<string>()
   products.forEach((product) => {
-    category.add(product.category.name)
+    category.add(product.category?.name || '')
   })
   categories = Array.from(category)
 

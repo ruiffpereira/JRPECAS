@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import { GetServerSideProps } from 'next'
 import ProductGrid from '@/components/products/productGrid'
-import { Product } from '@/types/types'
-import { getAllProducts } from './api/products'
 import Head from 'next/head'
+import { getWebsitesEcommerceProducts } from '@/server/ecommerce/hooks/useGetWebsitesEcommerceProducts'
+import { GetWebsitesEcommerceProductsQueryResponse } from '@/server/ecommerce/types/GetWebsitesEcommerceProducts'
 
 interface HomeProps {
-  products: Product[]
+  products: GetWebsitesEcommerceProductsQueryResponse
 }
 
 const Home: React.FC<HomeProps> = ({ products }) => {
@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = ({ products }) => {
 export default Home
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const token = process.env.WEBSITE_KEY
+  const token = process.env.NEXT_PUBLIC_TOKEN
 
   if (!token) {
     return {
@@ -34,14 +34,23 @@ export const getServerSideProps: GetServerSideProps = async () => {
     }
   }
 
-  const getProducts = await getAllProducts(token)
+  try {
+    const products = await getWebsitesEcommerceProducts({
+      authorization: `Bearer ${token}`,
+    })
 
-  if (getProducts && getProducts.ok) {
-    const products = await getProducts.json()
-    return {
-      props: { products },
+    if (products && Array.isArray(products) && products.length > 0) {
+      return {
+        props: { products },
+      }
+    } else {
+      console.warn('Nenhum produto encontrado.')
+      return {
+        props: { products: [] },
+      }
     }
-  } else {
+  } catch (error) {
+    console.error('Erro ao buscar produtos:', error)
     return {
       props: { products: [] },
     }

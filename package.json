@@ -3,12 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "set PORT=3001 && next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "kubb generate && prettier --write ./src && eslint --fix ./src && next dev --turbopack",
+    "build": "kubb generate && prettier --write ./src && eslint --fix ./src && next build",
+    "start": "kubb generate && prettier --write ./src && eslint --fix ./src && next start",
+    "lint": "next lint",
+    "generate": "kubb generate && prettier --write ./src && eslint --fix ./src"
   },
   "dependencies": {
+    "@kubb/cli": "^3.7.2",
+    "@kubb/plugin-client": "^3.7.2",
+    "@kubb/plugin-react-query": "^3.7.2",
+    "@kubb/swagger": "^2.28.4",
+    "@tanstack/react-query": "^5.71.0",
+    "axios": "^1.8.4",
+    "dotenv": "^16.4.7",
     "git": "^0.1.5",
     "next": "15.0.2",
     "next-auth": "^4.24.11",

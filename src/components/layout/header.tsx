@@ -20,7 +20,10 @@ const Header: React.FC = () => {
     await signIn('google', { redirect: false })
   }
 
-  const totalCart = cart.products.reduce((acc, item) => acc + item.quantity, 0)
+  const totalCart = cart.products.reduce(
+    (acc, item) => acc + (item.quantity || 0),
+    0,
+  )
 
   return (
     <header className="bg-black text-white py-4 sticky top-0 z-20 flex-shrink-0">
@@ -205,8 +208,8 @@ const Header: React.FC = () => {
                     >
                       <div className="w-20 h-20 overflow-hidden relative flex-shrink-0">
                         <Image
-                          src={`${URL_RAIZ}/${item.photos[0]}`}
-                          alt={item.name}
+                          src={`${URL_RAIZ}/${item.photos?.[0] || ''}`}
+                          alt={item.name || 'Product image'}
                           fill
                         />
                       </div>

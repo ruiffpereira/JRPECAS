@@ -5,16 +5,22 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react'
-import { Cart, Product, AddCart } from '@/types/types'
 import { useSession } from 'next-auth/react'
-import { addCartProducts, getCartProducts } from '@/pages/api/products'
+import { getWebsitesEcommerceCarts } from '@/server/ecommerce/hooks/useGetWebsitesEcommerceCarts'
+import {
+  Cart,
+  GetWebsitesEcommerceCarts200,
+  PostWebsitesEcommerceCartsMutationRequest,
+  Product,
+} from '@/server/ecommerce'
+import { postWebsitesEcommerceCarts } from '@/server/ecommerce/hooks/usePostWebsitesEcommerceCarts'
 
 interface ProductsContextProps {
   products: Product[]
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>
   cart: Cart
   setCart: React.Dispatch<React.SetStateAction<Cart>>
-  addToCart: (item: AddCart) => void
+  addToCart: (item: PostWebsitesEcommerceCartsMutationRequest) => Promise<void>
   searchProduct: string
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -27,25 +33,50 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useState<Product[]>([])
-  const [cart, setCart] = useState<Cart>({ products: [], shipPrice: 0 })
+  const [cart, setCart] = useState<Cart>({
+    cartId: '',
+    customerId: '',
+    products: [],
+    shipPrice: 0,
+  })
   const [searchProduct, setSearchProduct] = useState('')
   const { data: session } = useSession()
 
   useEffect(() => {
     const fetchCartProducts = async () => {
-      if (session) {
+      if (session?.user?.token) {
         const token = session.user.token
         if (token) {
           try {
-            const response = await getCartProducts(token)
-            if ((response as Response).ok) {
-              const cartProducts = await (response as Response).json()
+            const getCartProducts: GetWebsitesEcommerceCarts200 =
+              await getWebsitesEcommerceCarts({
+                authorization: `Bearer ${token}`,
+              })
+            // Transforme os dados, se necessário
+            const cartProducts: Cart = {
+              cartId: getCartProducts.cartId,
+              customerId: getCartProducts.customerId,
+              products: getCartProducts.products,
+              shipPrice: getCartProducts.shipPrice,
+            }
+            if (cartProducts && cartProducts.products) {
               setCart(cartProducts)
             } else {
-              setCart({ products: [], shipPrice: 0 })
+              setCart({
+                cartId: '',
+                customerId: '',
+                products: [],
+                shipPrice: 0,
+              }) // Valor padrão se a resposta não for válida
             }
-          } catch {
-            setCart({ products: [], shipPrice: 0 })
+          } catch (error) {
+            console.error('Erro ao buscar produtos do carrinho:', error)
+            setCart({
+              cartId: '',
+              customerId: '',
+              products: [],
+              shipPrice: 0,
+            }) // Valor padrão em caso de erro
           }
         }
       }
@@ -53,17 +84,31 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
     fetchCartProducts()
   }, [session])
 
-  const addToCart = async (item: AddCart) => {
+  const addToCart = async (item: PostWebsitesEcommerceCartsMutationRequest) => {
     if (session) {
       const token = session.user.token
       if (token) {
         try {
-          const response = await addCartProducts(token, item)
-          if (response.ok) {
-            const cartProducts = await response.json()
-            setCart(cartProducts)
+          const response = await postWebsitesEcommerceCarts(
+            {
+              productId: item.productId,
+              quantity: item.quantity,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          )
+          if (response && response.products) {
+            setCart({
+              cartId: response.cartId || '',
+              customerId: response.customerId || '',
+              products: response.products || [],
+              shipPrice: response.shipPrice || 0,
+            })
           } else {
-            // console.error('Failed kto add product to cart:', response.statusText)
+            console.error('Failed to add product to cart')
           }
         } catch {
           // console.error('Error adding product to cart:', error)

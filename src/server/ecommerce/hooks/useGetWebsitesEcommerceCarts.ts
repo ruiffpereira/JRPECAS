@@ -1,0 +1,119 @@
+import client from "@kubb/plugin-client/clients/axios";
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
+  QueryKey,
+  QueryObserverOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
+import type {
+  GetWebsitesEcommerceCartsQueryResponse,
+  GetWebsitesEcommerceCartsHeaderParams,
+  GetWebsitesEcommerceCarts404,
+  GetWebsitesEcommerceCarts500,
+} from "../types/GetWebsitesEcommerceCarts.js";
+import { queryOptions, useQuery } from "@tanstack/react-query";
+
+export const getWebsitesEcommerceCartsQueryKey = () =>
+  [{ url: "/websites/ecommerce/carts" }] as const;
+
+export type GetWebsitesEcommerceCartsQueryKey = ReturnType<
+  typeof getWebsitesEcommerceCartsQueryKey
+>;
+
+/**
+ * @summary Get all items in the cart
+ * {@link /websites/ecommerce/carts}
+ */
+export async function getWebsitesEcommerceCarts(
+  headers: GetWebsitesEcommerceCartsHeaderParams,
+  config: Partial<RequestConfig> & { client?: typeof client } = {},
+) {
+  const { client: request = client, ...requestConfig } = config;
+
+  const res = await request<
+    GetWebsitesEcommerceCartsQueryResponse,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >,
+    unknown
+  >({
+    method: "GET",
+    url: `/websites/ecommerce/carts`,
+    baseURL: "http://localhost:2001/api",
+    ...requestConfig,
+    headers: { ...headers, ...requestConfig.headers },
+  });
+  return res.data;
+}
+
+export function getWebsitesEcommerceCartsQueryOptions(
+  headers: GetWebsitesEcommerceCartsHeaderParams,
+  config: Partial<RequestConfig> & { client?: typeof client } = {},
+) {
+  const queryKey = getWebsitesEcommerceCartsQueryKey();
+  return queryOptions<
+    GetWebsitesEcommerceCartsQueryResponse,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >,
+    GetWebsitesEcommerceCartsQueryResponse,
+    typeof queryKey
+  >({
+    queryKey,
+    queryFn: async ({ signal }) => {
+      config.signal = signal;
+      return getWebsitesEcommerceCarts(headers, config);
+    },
+  });
+}
+
+/**
+ * @summary Get all items in the cart
+ * {@link /websites/ecommerce/carts}
+ */
+export function useGetWebsitesEcommerceCarts<
+  TData = GetWebsitesEcommerceCartsQueryResponse,
+  TQueryData = GetWebsitesEcommerceCartsQueryResponse,
+  TQueryKey extends QueryKey = GetWebsitesEcommerceCartsQueryKey,
+>(
+  headers: GetWebsitesEcommerceCartsHeaderParams,
+  options: {
+    query?: Partial<
+      QueryObserverOptions<
+        GetWebsitesEcommerceCartsQueryResponse,
+        ResponseErrorConfig<
+          GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+        >,
+        TData,
+        TQueryData,
+        TQueryKey
+      >
+    >;
+    client?: Partial<RequestConfig> & { client?: typeof client };
+  } = {},
+) {
+  const { query: queryOptions, client: config = {} } = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesEcommerceCartsQueryKey();
+
+  const query = useQuery({
+    ...(getWebsitesEcommerceCartsQueryOptions(
+      headers,
+      config,
+    ) as unknown as QueryObserverOptions),
+    queryKey,
+    ...(queryOptions as unknown as Omit<QueryObserverOptions, "queryKey">),
+  }) as UseQueryResult<
+    TData,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >
+  > & { queryKey: TQueryKey };
+
+  query.queryKey = queryKey as TQueryKey;
+
+  return query;
+}

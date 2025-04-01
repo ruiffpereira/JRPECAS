@@ -9,7 +9,7 @@ const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
 const Cart: React.FC = () => {
   const { cart, addToCart } = useProducts()
 
-  function buy() {
+  const buy = async () => {
     console.log('Comprando')
   }
 
@@ -24,7 +24,7 @@ const Cart: React.FC = () => {
         <Fragment>
           <div className="text-end mb-4  text-lg">
             Total:
-            <span className="ml-2 font-bold text-2xl">${cart.shipPrice}€</span>
+            <span className="ml-2 font-bold text-2xl">{cart.shipPrice}€</span>
           </div>
           <div className="overflow-auto">
             <table className="min-w-full bg-gray-800 text-white rounded-md">
@@ -51,8 +51,8 @@ const Cart: React.FC = () => {
                       <td className="py-2 px-4 border-b border-gray-700">
                         <div className="relative w-24 h-24">
                           <Image
-                            src={`${URL_RAIZ}/${item.photos[0]}`}
-                            alt={item.name}
+                            src={`${URL_RAIZ}/${item.photos?.[0] ?? ''} `}
+                            alt={item.name || ''}
                             width={200}
                             height={200}
                             className="rounded-md w-full h-full"
@@ -68,7 +68,7 @@ const Cart: React.FC = () => {
                             className="text-4xl"
                             onClick={() =>
                               addToCart({
-                                productId: item.productId,
+                                productId: item.productId ?? '',
                                 quantity: 0,
                               })
                             }
@@ -80,7 +80,7 @@ const Cart: React.FC = () => {
                             className="text-4xl"
                             onClick={() =>
                               addToCart({
-                                productId: item.productId,
+                                productId: item.productId ?? '',
                                 quantity: 1,
                               })
                             }

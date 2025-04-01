@@ -1,5 +1,23 @@
-import NextAuth from 'next-auth'
+import { postWebsitesCustomersLogin } from '@/server/customers/hooks/usePostWebsitesCustomersLogin'
+import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
+
+declare module 'next-auth' {
+  interface User {
+    token: string
+    customerId: string
+  }
+
+  interface Session {
+    user: {
+      image: string
+      name: string
+      token: string
+      email: string
+      customerId: string
+    }
+  }
+}
 
 export default NextAuth({
   providers: [
@@ -20,25 +38,21 @@ export default NextAuth({
     async signIn({ user, account }) {
       if (account?.provider === 'google') {
         try {
-          const res = await fetch(
-            `${process.env.API_BASE_URL}/customers/login`,
+          if (!account.id_token) return false
+
+          const customer = await postWebsitesCustomersLogin(
             {
-              method: 'POST',
+              idToken: account.id_token,
+            },
+            {
               headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env.API_SECRET_TOKEN}`,
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
               },
-              body: JSON.stringify({
-                user,
-                secretkeysite: process.env.WEBSITE_KEY,
-              }),
             },
           )
-
-          const data = await res.json()
-          if (res.ok && data) {
-            user.token = data.token
-            user.customerId = data.customer.customerId
+          if (user && customer && customer.customerId) {
+            user.token = customer.token || ''
+            user.customerId = customer.customerId
             return true
           } else {
             console.error('Failed to authenticate user')
@@ -57,20 +71,14 @@ export default NextAuth({
     },
     async jwt({ token, user }) {
       if (user) {
-        token.name = user.name
-        token.email = user.email
-        token.acessToken = user.token
+        token.token = user.token
         token.customerId = user.customerId
       }
       return token
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.token = token.acessToken as string
-        session.user.customerId = token.customerId as string
-      }
-
-      // console.log('session', session)
+      session.user.token = token.token as string
+      session.user.customerId = token.customerId as string
       return session
     },
   },

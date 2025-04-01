@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "customerId": { "type": "string", "description": "ID of the customer" },
+    "name": { "type": "string", "description": "Name of the customer" },
+    "email": { "type": "string", "description": "Email of the customer" },
+    "contact": {
+      "type": "string",
+      "description": "Contact information of the customer (E.164 format)",
+      "example": "+1234567890"
+    },
+    "photo": { "type": "string", "description": "Photo URL of the customer" }
+  },
+  "required": ["customerId", "name", "email"],
+  "x-readme-ref-name": "Customer"
+}
