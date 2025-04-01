@@ -9,7 +9,7 @@ const configs = [
     name: 'Customers',
     root: '.',
     input: {
-      path: 'http://localhost:2001/api-docs/websites/customers.json', // URL do Swagger ou OpenAPI
+      path: `${process.env.NEXT_PUBLIC_API_BASE_URL}-docs/websites/customers.json`, // URL do Swagger ou OpenAPI
     },
     output: {
       path: './src/server/customers',
@@ -31,7 +31,7 @@ const configs = [
     name: 'Ecommerce',
     root: '.',
     input: {
-      path: 'http://localhost:2001/api-docs/websites/ecommerce.json', // URL do Swagger ou OpenAPI
+      path: `${process.env.NEXT_PUBLIC_API_BASE_URL}-docs/websites/ecommerce.json`, // URL do Swagger ou OpenAPI
     },
     output: {
       path: './src/server/ecommerce',
