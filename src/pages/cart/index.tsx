@@ -4,8 +4,6 @@ import Image from 'next/image'
 import { Fragment } from 'react'
 import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci'
 
-const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
-
 const Cart: React.FC = () => {
   const { cart, addToCart } = useProducts()
 
@@ -51,7 +49,7 @@ const Cart: React.FC = () => {
                       <td className="py-2 px-4 border-b border-gray-700">
                         <div className="relative w-24 h-24">
                           <Image
-                            src={`${URL_RAIZ}/${item.photos?.[0] ?? ''} `}
+                            src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${item.photos?.[0].slice(2) ?? ''}`}
                             alt={item.name || ''}
                             width={200}
                             height={200}
@@ -98,11 +96,12 @@ const Cart: React.FC = () => {
               </tbody>
             </table>
           </div>
+          <button onClick={buy} className="text-end text-red-500 text-xl">
+            Finalizar Encomenda
+          </button>
         </Fragment>
       )}
-      <button onClick={buy} className="text-end text-red-500 text-2xl">
-        Comprar
-      </button>
+
       <div className="mt-8">
         <Link href="/" className="text-red-500 hover:underline">
           Continuar Comprando

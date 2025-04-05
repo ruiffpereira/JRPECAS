@@ -1,4 +1,4 @@
-import { postWebsitesCustomersLogin } from '@/server/customers/hooks/usePostWebsitesCustomersLogin'
+import { postWebsitesCustomerslogin } from '@/server/customers/hooks/usePostWebsitesCustomersLogin'
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
 
@@ -40,7 +40,7 @@ export default NextAuth({
         try {
           if (!account.id_token) return false
 
-          const customer = await postWebsitesCustomersLogin(
+          const customer = await postWebsitesCustomerslogin(
             {
               idToken: account.id_token,
             },

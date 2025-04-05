@@ -3,8 +3,6 @@ import { useProducts } from '../../context/ProductsContext'
 import { FiShoppingCart } from 'react-icons/fi'
 import { Product } from '@/server/ecommerce'
 
-const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
-
 const ProductCard: React.FC<Product> = ({
   productId,
   name,
@@ -19,7 +17,7 @@ const ProductCard: React.FC<Product> = ({
       <div className="relative w-full h-32" id={`${productId}`}>
         {Array.isArray(photos) && photos.length > 0 ? (
           <Image
-            src={`${URL_RAIZ}/${photos[0].slice(2)}`}
+            src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${photos?.[0].slice(2) ?? ''}`}
             alt={name}
             width={200}
             height={200}

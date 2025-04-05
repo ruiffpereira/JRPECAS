@@ -13,8 +13,6 @@ const Header: React.FC = () => {
   const { cart, handleSearchChange, searchProduct } = useProducts()
   const { data: session } = useSession()
 
-  const URL_RAIZ = process.env.NEXT_PUBLIC_CONTAINERRAIZ
-
   const handleSignIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     await signIn('google', { redirect: false })
@@ -153,9 +151,19 @@ const Header: React.FC = () => {
                 onClick={() => {
                   setMenuOpen(false)
                 }}
-                href="/orders"
+                href="/cart"
               >
                 <FaBox className="text-red-500" />
+                Carrinho
+              </Link>
+              <Link
+                className="flex gap-2 items-center"
+                onClick={() => {
+                  setMenuOpen(false)
+                }}
+                href="/orders"
+              >
+                <FiShoppingCart className="text-red-500" />
                 As minhas encomendas
               </Link>
               <button
@@ -208,7 +216,7 @@ const Header: React.FC = () => {
                     >
                       <div className="w-20 h-20 overflow-hidden relative flex-shrink-0">
                         <Image
-                          src={`${URL_RAIZ}/${item.photos?.[0] || ''}`}
+                          src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${item.photos?.[0].slice(2) ?? ''}`}
                           alt={item.name || 'Product image'}
                           fill
                         />
