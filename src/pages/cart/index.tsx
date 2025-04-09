@@ -3,13 +3,10 @@ import { useProducts } from '@/context/ProductsContext'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci'
+import router from 'next/router'
 
 const Cart: React.FC = () => {
   const { cart, addToCart } = useProducts()
-
-  const buy = async () => {
-    console.log('Comprando')
-  }
 
   return (
     <Fragment>
@@ -96,7 +93,10 @@ const Cart: React.FC = () => {
               </tbody>
             </table>
           </div>
-          <button onClick={buy} className="text-end text-red-500 text-xl">
+          <button
+            onClick={() => router.push('/cart/checkout')}
+            className="text-end text-red-500 text-xl"
+          >
             Finalizar Encomenda
           </button>
         </Fragment>
