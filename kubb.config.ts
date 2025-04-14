@@ -14,7 +14,7 @@ const configs = [
     output: {
       path: './src/server/customers',
       extension: {
-        '.ts': '.js',
+        '.ts': '.ts',
       },
     },
     plugins: [
@@ -24,6 +24,7 @@ const configs = [
         client: {
           baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
         },
+        // Removed namingConvention as it is not supported by Options
       }), // Gera hooks para React Query
     ],
   }),
@@ -36,7 +37,7 @@ const configs = [
     output: {
       path: './src/server/ecommerce',
       extension: {
-        '.ts': '.js',
+        '.ts': '.ts',
       },
     },
     plugins: [

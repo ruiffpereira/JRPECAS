@@ -42,7 +42,6 @@ const AdressContainer = ({
   adresss: Address[]
   session: { user: { token: string } }
 }) => {
-  const successMessage = useState<boolean>(false) // Estado para a mensagem de sucesso
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [isAdding, setIsAdding] = useState(false) // Estado para controlar se o formulário de adição está visível
 
@@ -311,363 +310,224 @@ const AdressContainer = ({
             </button>
           </form>
         )}
-        {addresses && addresses.length > 0 ? (
-          addresses.map((address, index) => (
-            <div
-              key={index}
-              className="bg-gray-800 shadow-md rounded-lg p-4 border border-gray-200"
-            >
-              {editingIndex === index ? (
-                // Modo de edição
-                <form
-                  onSubmit={handleFormEditingSubmit(onSubmit)}
-                  className="flex flex-col gap-4"
-                >
-                  <div>
-                    <label
-                      htmlFor={`address-${index}`}
-                      className="block font-bold"
-                    >
-                      Morada Completa
-                    </label>
-                    <input
-                      id={`address-${index}`}
-                      type="text"
-                      defaultValue={address.address}
-                      {...formEditingRegister('address')}
-                      className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                    />
-                    {editingErrors.city && (
-                      <p className="text-red-500">
-                        {editingErrors.city.message}
+        {addresses && addresses.length > 0
+          ? addresses.map((address, index) => (
+              <div
+                key={index}
+                className="bg-gray-800 shadow-md rounded-lg p-4 border border-gray-200"
+              >
+                {editingIndex === index ? (
+                  // Modo de edição
+                  <form
+                    onSubmit={handleFormEditingSubmit(onSubmit)}
+                    className="flex flex-col gap-4"
+                  >
+                    <div>
+                      <label
+                        htmlFor={`address-${index}`}
+                        className="block font-bold"
+                      >
+                        Morada Completa
+                      </label>
+                      <input
+                        id={`address-${index}`}
+                        type="text"
+                        defaultValue={address.address}
+                        {...formEditingRegister('address')}
+                        className="border border-gray-300 rounded p-2 w-full bg-transparent"
+                      />
+                      {editingErrors.city && (
+                        <p className="text-red-500">
+                          {editingErrors.city.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex gap-2">
+                      <div>
+                        <label
+                          htmlFor={`city-${index}`}
+                          className="block font-bold"
+                        >
+                          Cidade
+                        </label>
+                        <input
+                          id={`city-${index}`}
+                          type="text"
+                          defaultValue={address.city}
+                          {...formEditingRegister('city')}
+                          className="border border-gray-300 rounded p-2 w-full bg-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor={`postalCode-${index}`}
+                          className="block font-bold"
+                        >
+                          Código Postal
+                        </label>
+                        <input
+                          id={`postalCode-${index}`}
+                          type="text"
+                          defaultValue={address.postalCode}
+                          {...formEditingRegister('postalCode')}
+                          className="border border-gray-300 rounded p-2 w-full bg-transparent"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <div>
+                        <label
+                          htmlFor={`phoneNumber-${index}`}
+                          className="block font-bold"
+                        >
+                          Telemóvel
+                        </label>
+                        <input
+                          id={`phoneNumber-${index}`}
+                          type="text"
+                          defaultValue={address.phoneNumber}
+                          {...formEditingRegister('phoneNumber')}
+                          className="border border-gray-300 rounded p-2 w-full bg-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor={`nif-${index}`}
+                          className="block font-bold"
+                        >
+                          NIF
+                        </label>
+                        <input
+                          id={`nif-${index}`}
+                          type="text"
+                          defaultValue={address.nif}
+                          {...formEditingRegister('nif')}
+                          className="border border-gray-300 rounded p-2 w-full bg-transparent"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <input
+                          id="addTaxpayer"
+                          type="checkbox"
+                          defaultChecked={address.addTaxpayer}
+                          {...formEditingRegister('addTaxpayer')}
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label
+                          htmlFor="addTaxpayer"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Adicionar contribuinte à fatura
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          id="defaultAdress"
+                          type="checkbox"
+                          defaultChecked={address.defaultAdress}
+                          {...formEditingRegister('defaultAdress')}
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label
+                          htmlFor="defaultAdress"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Definir Morada de Envio Como Padrão
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          id="addTaxpayer"
+                          type="checkbox"
+                          defaultChecked={address.defaultAdressFaturation}
+                          {...formEditingRegister('defaultAdressFaturation')}
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label
+                          htmlFor="defaultAdressFaturation"
+                          className="text-sm font-medium text-gray-700"
+                        >
+                          Definir Morada de Envio Como Faturacao
+                        </label>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-4">
+                      <button
+                        type="submit"
+                        className={`bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600`}
+                      >
+                        Salvar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingIndex(null)}
+                        className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  // Modo normal
+                  <div className="flex flex-col gap-1 h-full">
+                    <h3 className="text-xl font-bold mb-2">
+                      {address.address}
+                    </h3>
+                    <p className="text-slate-200">
+                      <strong>Cidade:</strong> {address.city}
+                    </p>
+                    <p className="text-slate-200">
+                      <strong>Código Postal:</strong> {address.postalCode}
+                    </p>
+                    <p className="text-slate-200">
+                      <strong>Telemóvel:</strong> {address.phoneNumber}
+                    </p>
+                    {address.nif && (
+                      <p className="text-slate-200">
+                        <strong>NIF:</strong> {address.nif}
                       </p>
                     )}
-                  </div>
-                  <div className="flex gap-2">
-                    <div>
-                      <label
-                        htmlFor={`city-${index}`}
-                        className="block font-bold"
+                    {address.defaultAdress && (
+                      <p className="text-slate-200">
+                        <strong>Morada predefinida</strong>
+                      </p>
+                    )}
+                    {address.defaultAdressFaturation && (
+                      <p className="text-slate-200">
+                        <strong>Morada de Faturacao Predefinida</strong>
+                      </p>
+                    )}
+                    <div className="flex gap-2 mt-auto">
+                      <button
+                        onClick={() => {
+                          resetFormEditing(address)
+                          setEditingIndex(index)
+                          setIsAdding(false)
+                        }}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
                       >
-                        Cidade
-                      </label>
-                      <input
-                        id={`city-${index}`}
-                        type="text"
-                        defaultValue={address.city}
-                        {...formEditingRegister('city')}
-                        className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor={`postalCode-${index}`}
-                        className="block font-bold"
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (address.addressId) {
+                            deleteAddress({ addressId: address.addressId })
+                          } else {
+                            console.error('Address ID is undefined.')
+                          }
+                        }}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                       >
-                        Código Postal
-                      </label>
-                      <input
-                        id={`postalCode-${index}`}
-                        type="text"
-                        defaultValue={address.postalCode}
-                        {...formEditingRegister('postalCode')}
-                        className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <div>
-                      <label
-                        htmlFor={`phoneNumber-${index}`}
-                        className="block font-bold"
-                      >
-                        Telemóvel
-                      </label>
-                      <input
-                        id={`phoneNumber-${index}`}
-                        type="text"
-                        defaultValue={address.phoneNumber}
-                        {...formEditingRegister('phoneNumber')}
-                        className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor={`nif-${index}`}
-                        className="block font-bold"
-                      >
-                        NIF
-                      </label>
-                      <input
-                        id={`nif-${index}`}
-                        type="text"
-                        defaultValue={address.nif}
-                        {...formEditingRegister('nif')}
-                        className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                      />
+                        Apagar
+                      </button>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2">
-                      <input
-                        id="addTaxpayer"
-                        type="checkbox"
-                        defaultChecked={address.addTaxpayer}
-                        {...formEditingRegister('addTaxpayer')}
-                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                      />
-                      <label
-                        htmlFor="addTaxpayer"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Adicionar contribuinte à fatura
-                      </label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <input
-                        id="defaultAdress"
-                        type="checkbox"
-                        defaultChecked={address.defaultAdress}
-                        {...formEditingRegister('defaultAdress')}
-                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                      />
-                      <label
-                        htmlFor="defaultAdress"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Definir Morada de Envio Como Padrão
-                      </label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <input
-                        id="addTaxpayer"
-                        type="checkbox"
-                        defaultChecked={address.defaultAdressFaturation}
-                        {...formEditingRegister('defaultAdressFaturation')}
-                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                      />
-                      <label
-                        htmlFor="defaultAdressFaturation"
-                        className="text-sm font-medium text-gray-700"
-                      >
-                        Definir Morada de Envio Como Faturacao
-                      </label>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 mt-4">
-                    <button
-                      type="submit"
-                      className={`bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600`}
-                    >
-                      Salvar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setEditingIndex(null)}
-                      className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                // Modo normal
-                <div className="flex flex-col gap-1 h-full">
-                  <h3 className="text-xl font-bold mb-2">{address.address}</h3>
-                  <p className="text-slate-200">
-                    <strong>Cidade:</strong> {address.city}
-                  </p>
-                  <p className="text-slate-200">
-                    <strong>Código Postal:</strong> {address.postalCode}
-                  </p>
-                  <p className="text-slate-200">
-                    <strong>Telemóvel:</strong> {address.phoneNumber}
-                  </p>
-                  {address.nif && (
-                    <p className="text-slate-200">
-                      <strong>NIF:</strong> {address.nif}
-                    </p>
-                  )}
-                  {address.defaultAdress && (
-                    <p className="text-slate-200">
-                      <strong>Morada predefinida</strong>
-                    </p>
-                  )}
-                  {address.defaultAdressFaturation && (
-                    <p className="text-slate-200">
-                      <strong>Morada de Faturacao Predefinida</strong>
-                    </p>
-                  )}
-                  <div className="flex gap-2 mt-auto">
-                    <button
-                      onClick={() => {
-                        resetFormEditing(address)
-                        setEditingIndex(index)
-                        setIsAdding(false)
-                      }}
-                      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (address.addressId) {
-                          deleteAddress({ addressId: address.addressId })
-                        } else {
-                          console.error('Address ID is undefined.')
-                        }
-                      }}
-                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                    >
-                      Apagar
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <form
-            onSubmit={handleFormNewSubmit(onSubmit as SubmitHandler<Address>)}
-            className="mt-4 flex flex-col gap-4"
-          >
-            <div>
-              <label htmlFor="postalCode" className="block font-bold">
-                Morada Completa
-              </label>
-              <input
-                id="street"
-                type="text"
-                placeholder="Morada Completa"
-                {...formNewRegister('address')}
-                className="border border-gray-300 rounded p-2 w-full bg-transparent"
-              />
-              {errorsAddress.address && (
-                <p className="text-red-500">{errorsAddress.address.message}</p>
-              )}
-            </div>
-
-            <div className="flex gap-2">
-              <div>
-                <label htmlFor="postalCode" className="block font-bold">
-                  Cidade
-                </label>
-                <input
-                  id="city"
-                  type="text"
-                  placeholder="Cidade"
-                  {...formNewRegister('city')}
-                  className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                />
-                {errorsAddress.city && (
-                  <p className="text-red-500">{errorsAddress.city.message}</p>
                 )}
               </div>
-
-              <div>
-                <label htmlFor="postalCode" className="block font-bold">
-                  Código Postal:
-                </label>
-                <input
-                  id="postalCode"
-                  type="text"
-                  placeholder="Código Postal"
-                  {...formNewRegister('postalCode')}
-                  className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                />
-                {errorsAddress.postalCode && (
-                  <p className="text-red-500">
-                    {errorsAddress.postalCode.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div>
-                <label htmlFor="postalCode" className="block font-bold">
-                  Numero de Telemovel:
-                </label>
-                <input
-                  id="phoneNumber"
-                  type="text"
-                  placeholder="Telemovel"
-                  {...formNewRegister('phoneNumber')}
-                  className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                />
-                {errorsAddress.phoneNumber && (
-                  <p className="text-red-500">
-                    {errorsAddress.phoneNumber.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="postalCode" className="block font-bold">
-                  NIF
-                </label>
-                <input
-                  id="nif"
-                  type="text"
-                  placeholder="NIF"
-                  {...formNewRegister('nif')}
-                  className="border border-gray-300 rounded p-2 w-full bg-transparent"
-                />
-                {errorsAddress.nif && (
-                  <p className="text-red-500">{errorsAddress.nif.message}</p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                id="addTaxpayer"
-                type="checkbox"
-                {...formNewRegister('addTaxpayer')}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <label
-                htmlFor="addTaxpayer"
-                className="text-sm font-medium text-gray-700"
-              >
-                Adicionar contribuinte à fatura
-              </label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                id="defaultAdress"
-                type="checkbox"
-                {...formNewRegister('defaultAdress')}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <label
-                htmlFor="defaultAdress"
-                className="text-sm font-medium text-gray-700"
-              >
-                Definir Morada de Envio Como Padrão
-              </label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                id="addTaxpayer"
-                type="checkbox"
-                {...formNewRegister('defaultAdressFaturation')}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <label
-                htmlFor="defaultAdressFaturation"
-                className="text-sm font-medium text-gray-700"
-              >
-                Definir Morada de Envio Como Faturacao
-              </label>
-            </div>
-            <button
-              type="submit"
-              className={` ${successMessage ? 'bg-green-500' : 'bg-blue-500'} hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-fit`}
-            >
-              {successMessage ? 'Guardado com sucesso!' : 'Guardar'}
-            </button>
-          </form>
-        )}
+            ))
+          : null}
       </div>
     </div>
   )
