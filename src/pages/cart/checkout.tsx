@@ -75,13 +75,7 @@ const Checkout = ({ adress }: { adress: Address[] }) => {
           <h2 className="text-2xl font-bold mb-2">Resumo do Pedido</h2>
           {/* Aqui você pode mostrar um resumo do pedido */}
           <button
-            onClick={prevStep}
-            className="bg-gray-500 text-white px-4 py-2 rounded mt-4 mr-2"
-          >
-            Voltar
-          </button>
-          <button
-            onClick={() => router.push('/success')}
+            onClick={() => router.push('/orders')}
             className="bg-green-500 text-white px-4 py-2 rounded mt-4"
           >
             Finalizar Pedido

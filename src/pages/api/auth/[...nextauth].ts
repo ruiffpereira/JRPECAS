@@ -1,4 +1,4 @@
-import { postWebsitesCustomerslogin } from '@/server/customers/hooks/usePostWebsitesCustomersLogin'
+import { postWebsitesCustomerslogin } from '@/server/customers/hooks/usePostWebsitesCustomerslogin'
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
 

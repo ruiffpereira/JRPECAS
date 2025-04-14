@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { getWebsitesEcommerceCarts } from '@/server/ecommerce/hooks/useGetWebsitesEcommerceCarts'
 import {
   Cart,
@@ -114,6 +114,8 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
           // console.error('Error adding product to cart:', error)
         }
       }
+    } else {
+      await signIn('google', { redirect: false })
     }
   }
 
