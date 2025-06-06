@@ -1,35 +1,35 @@
-import { useState, Suspense, Fragment } from 'react'
-import ProductCard from '@/components/products/productCard'
-import { useProducts } from '@/context/ProductsContext'
-import { Product } from '@/server/ecommerce'
+import { useState, Suspense, Fragment } from "react";
+import ProductCard from "@/components/products/productCard";
+import { useProducts } from "@/context/ProductsContext";
+import { Product } from "@/servers/ecommerce";
 
 // Defina a interface para as propriedades
 interface ProductGridProps {
-  products: Product[]
+  products: Product[];
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [priceRange, setPriceRange] = useState(1000)
-  let categories = [] as string[]
-  const { searchProduct } = useProducts()
-  const [filtersOpen, setFilterstOpen] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [priceRange, setPriceRange] = useState(1000);
+  let categories = [] as string[];
+  const { searchProduct } = useProducts();
+  const [filtersOpen, setFilterstOpen] = useState(false);
 
-  const category = new Set<string>()
+  const category = new Set<string>();
   products.forEach((product) => {
-    category.add(product.category?.name || '')
-  })
-  categories = Array.from(category)
+    category.add(product.category?.name || "");
+  });
+  categories = Array.from(category);
 
   const filteredProducts = products.filter((product) => {
     return (
-      (selectedCategory === '' ||
+      (selectedCategory === "" ||
         (product.category && product.category.name === selectedCategory)) &&
       product.price <= priceRange &&
-      (searchProduct === '' ||
+      (searchProduct === "" ||
         product.name.toLowerCase().includes(searchProduct.toLowerCase()))
-    )
-  })
+    );
+  });
 
   // podia filtra  por aqui tambem
   // console.log('aqiu: ', filteredProducts.length)
@@ -38,7 +38,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
     <Fragment>
       <div className="flex gap-1">
         <h2
-          className={`text-xxl font-bold text-green-600 ${filteredProducts.length < products.length ? 'block' : 'hidden'} `}
+          className={`text-xxl font-bold text-green-600 ${
+            filteredProducts.length < products.length ? "block" : "hidden"
+          } `}
         >
           Resultado da pesquisa: {filteredProducts.length}
         </h2>
@@ -46,11 +48,15 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
       </div>
       <button
         onClick={() => {
-          setFilterstOpen(true)
+          setFilterstOpen(true);
         }}
-        className={`h-11 d-flex items-center rounded w-full border  ${filteredProducts.length < products.length ? 'text-green-600' : 'text-white'} hover:bg-gray-800 md:hidden`}
+        className={`h-11 d-flex items-center rounded w-full border  ${
+          filteredProducts.length < products.length
+            ? "text-green-600"
+            : "text-white"
+        } hover:bg-gray-800 md:hidden`}
       >
-        Filtros {filteredProducts.length < products.length && 'ativos'}
+        Filtros {filteredProducts.length < products.length && "ativos"}
       </button>
       <main className="container mx-auto">
         <div className="flex gap-10">
@@ -113,16 +119,22 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
           </div>
           {/* MOBILE */}
           <div
-            className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${filtersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} md:hidden`}
+            className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${
+              filtersOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            } md:hidden`}
           >
             <div
-              className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${filtersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${
+                filtersOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
               onClick={() => {
-                setFilterstOpen(false)
+                setFilterstOpen(false);
               }}
             ></div>
             <nav
-              className={`fixed top-0 right-0 h-full bg-gray-900 w-3/4 text-white p-4 z-50 transform transition-transform duration-300 ${filtersOpen ? 'translate-x-0' : 'translate-x-full'}`}
+              className={`fixed top-0 right-0 h-full bg-gray-900 w-3/4 text-white p-4 z-50 transform transition-transform duration-300 ${
+                filtersOpen ? "translate-x-0" : "translate-x-full"
+              }`}
             >
               <div className="flex gap-2 flex-col">
                 <h2 className="text-xl font-bold mb-4 text-white">Filtros</h2>
@@ -159,7 +171,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
         </div>
       </main>
     </Fragment>
-  )
-}
+  );
+};
 
-export default ProductGrid
+export default ProductGrid;

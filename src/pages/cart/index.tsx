@@ -1,12 +1,12 @@
-import Link from 'next/link'
-import { useProducts } from '@/context/ProductsContext'
-import Image from 'next/image'
-import { Fragment } from 'react'
-import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci'
-import router from 'next/router'
+import Link from "next/link";
+import { useProducts } from "@/context/ProductsContext";
+import Image from "next/image";
+import { Fragment } from "react";
+import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
+import router from "next/router";
 
 const Cart: React.FC = () => {
-  const { cart, addToCart } = useProducts()
+  const { cart, addToCart } = useProducts();
 
   return (
     <Fragment>
@@ -46,8 +46,10 @@ const Cart: React.FC = () => {
                       <td className="py-2 px-4 border-b border-gray-700">
                         <div className="relative w-24 h-24">
                           <Image
-                            src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${item.photos?.[0].slice(2) ?? ''}`}
-                            alt={item.name || ''}
+                            src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${
+                              item.photos?.[0].slice(2) ?? ""
+                            }`}
+                            alt={item.name || ""}
                             width={200}
                             height={200}
                             className="rounded-md w-full h-full"
@@ -63,7 +65,7 @@ const Cart: React.FC = () => {
                             className="text-4xl"
                             onClick={() =>
                               addToCart({
-                                productId: item.productId ?? '',
+                                productId: item.productId ?? "",
                                 quantity: 0,
                               })
                             }
@@ -75,7 +77,7 @@ const Cart: React.FC = () => {
                             className="text-4xl"
                             onClick={() =>
                               addToCart({
-                                productId: item.productId ?? '',
+                                productId: item.productId ?? "",
                                 quantity: 1,
                               })
                             }
@@ -88,27 +90,26 @@ const Cart: React.FC = () => {
                         {item.price}€
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
           </div>
           <button
-            onClick={() => router.push('/cart/checkout')}
+            onClick={() => router.push("/cart/checkout")}
             className="text-end text-red-500 text-xl"
           >
             Finalizar Encomenda
           </button>
         </Fragment>
       )}
-
       <div className="mt-8">
         <Link href="/" className="text-red-500 hover:underline">
           Continuar Comprando
         </Link>
       </div>
     </Fragment>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

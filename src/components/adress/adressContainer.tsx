@@ -1,49 +1,57 @@
 import {
   useGetWebsitesCustomersAddresses,
   getWebsitesCustomersAddressesQueryKey,
-} from '@/server/customers/hooks/useGetWebsitesCustomersAddresses'
-import { usePutWebsitesCustomersAddressesAddressid } from '@/server/customers/hooks/usePutWebsitesCustomersAddressesAddressid'
-import { usePostWebsitesCustomersAddresses } from '@/server/customers/hooks/usePostWebsitesCustomersAddresses'
-import { useDeleteWebsitesCustomersAddressesAddressid } from '@/server/customers/hooks/useDeleteWebsitesCustomersAddressesAddressid'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { z } from 'zod'
-import { Address } from '@/server/customers'
-import { getQueryClient } from '@/pages/_app'
+} from "@/servers/customers/hooks/useGetWebsitesCustomersAddresses";
+import { usePutWebsitesCustomersAddressesAddressid } from "@/servers/customers/hooks/usePutWebsitesCustomersAddressesAddressid";
+import { usePostWebsitesCustomersAddresses } from "@/servers/customers/hooks/usePostWebsitesCustomersAddresses";
+import { useDeleteWebsitesCustomersAddressesAddressid } from "@/servers/customers/hooks/useDeleteWebsitesCustomersAddressesAddressid";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { Address } from "@/servers/customers";
+import { getQueryClient } from "@/pages/_app";
 
 const addressSchema = z.object({
-  address: z.string().min(5, 'Morada completa é obrigatória'),
+  address: z.string().min(5, "Morada completa é obrigatória"),
   defaultAdressFaturation: z.boolean().default(false).optional(),
   defaultAdress: z.boolean().default(false).optional(),
   postalCode: z
     .string()
-    .regex(/^\d{4}-\d{3}$/, 'O código postal deve estar no formato 1234-567'),
-  city: z.string().min(1, 'Cidade é obrigatória'),
+    .regex(/^\d{4}-\d{3}$/, "O código postal deve estar no formato 1234-567"),
+  city: z.string().min(1, "Cidade é obrigatória"),
   phoneNumber: z
     .string()
-    .regex(/^\+?[1-9]\d{1,14}$/, ' Número de telemóvel inválido'),
+    .regex(/^\+?[1-9]\d{1,14}$/, " Número de telemóvel inválido"),
   nif: z
     .string()
     .regex(
       /^\d{9}$/,
-      'NIF deve ter exatamente 9 dígitos e conter apenas números',
+      "NIF deve ter exatamente 9 dígitos e conter apenas números"
     )
-    .min(9, 'NIF deve ter 9 dígitos')
-    .max(9, 'NIF deve ter 9 dígitos')
+    .min(9, "NIF deve ter 9 dígitos")
+    .max(9, "NIF deve ter 9 dígitos")
     .optional(),
   addTaxpayer: z.boolean().optional(),
-})
+});
 
 const AdressContainer = ({
   adresss,
+  onSelectAddress,
+  onSelectAddressFaturarion,
+  selectedId,
+  selectedIdFatu,
   session,
 }: {
-  adresss: Address[]
-  session: { user: { token: string } }
+  adresss: Address[];
+  session: { user: { token: string } };
+  onSelectAddress?: (addressId: string) => void;
+  onSelectAddressFaturarion?: (addressId: string) => void;
+  selectedId?: string | null;
+  selectedIdFatu?: string | null;
 }) => {
-  const [editingIndex, setEditingIndex] = useState<number | null>(null)
-  const [isAdding, setIsAdding] = useState(false) // Estado para controlar se o formulário de adição está visível
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [isAdding, setIsAdding] = useState(false); // Estado para controlar se o formulário de adição está visível
 
   const { data: addresses, isError } = useGetWebsitesCustomersAddresses({
     query: {
@@ -54,8 +62,8 @@ const AdressContainer = ({
         Authorization: `Bearer ${session?.user?.token}`, // Passa o token de autenticação
       },
     },
-  })
-  const queryClient = getQueryClient()
+  });
+  const queryClient = getQueryClient();
 
   const {
     register: formEditingRegister,
@@ -64,7 +72,7 @@ const AdressContainer = ({
     formState: { errors: editingErrors },
   } = useForm<Address>({
     resolver: zodResolver(addressSchema),
-  })
+  });
 
   const {
     register: formNewRegister,
@@ -73,18 +81,18 @@ const AdressContainer = ({
     reset: resetNewAdress,
   } = useForm<Address>({
     resolver: zodResolver(addressSchema),
-  })
+  });
 
   const { mutate: updateAddress } = usePutWebsitesCustomersAddressesAddressid({
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: getWebsitesCustomersAddressesQueryKey(),
-        })
-        setEditingIndex(null)
+        });
+        setEditingIndex(null);
       },
       onError: (err) => {
-        console.error('Erro ao atualizar a morada:', err)
+        console.error("Erro ao atualizar a morada:", err);
       },
     },
     client: {
@@ -92,19 +100,19 @@ const AdressContainer = ({
         Authorization: `Bearer ${session?.user?.token}`, // Adiciona o token de sessão
       },
     },
-  })
+  });
 
   const { mutate: newAdress, error } = usePostWebsitesCustomersAddresses({
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: getWebsitesCustomersAddressesQueryKey(),
-        })
-        setEditingIndex(null)
-        resetNewAdress()
+        });
+        setEditingIndex(null);
+        resetNewAdress();
       },
       onError: (err) => {
-        console.error('Erro ao atualizar a morada:', err)
+        console.error("Erro ao atualizar a morada:", err);
       },
     },
     client: {
@@ -112,7 +120,7 @@ const AdressContainer = ({
         Authorization: `Bearer ${session?.user?.token}`, // Adiciona o token de sessão
       },
     },
-  })
+  });
 
   const { mutate: deleteAddress } =
     useDeleteWebsitesCustomersAddressesAddressid({
@@ -120,10 +128,10 @@ const AdressContainer = ({
         onSuccess: () => {
           queryClient.invalidateQueries({
             queryKey: getWebsitesCustomersAddressesQueryKey(),
-          })
+          });
         },
         onError: (err) => {
-          console.error('Erro ao apagar a morada:', err)
+          console.error("Erro ao apagar a morada:", err);
         },
       },
       client: {
@@ -131,24 +139,24 @@ const AdressContainer = ({
           Authorization: `Bearer ${session?.user?.token}`, // Adiciona o token de sessão
         },
       },
-    })
+    });
 
   const onSubmit: SubmitHandler<Address> = (data) => {
     if (editingIndex !== null) {
-      const addressId = addresses && addresses[editingIndex]?.addressId
+      const addressId = addresses && addresses[editingIndex]?.addressId;
       if (!addressId) {
-        console.error('ID da morada não encontrado.')
-        return
+        console.error("ID da morada não encontrado.");
+        return;
       }
-      updateAddress({ addressId, data }) // Chama o hook para atualizar a morada
+      updateAddress({ addressId, data }); // Chama o hook para atualizar a morada
     } else {
-      console.log('Adicionando nova morada:', data)
-      newAdress({ data }) // Chama o hook para adicionar uma nova morada
+      console.log("Adicionando nova morada:", data);
+      newAdress({ data }); // Chama o hook para adicionar uma nova morada
     }
-  }
+  };
 
   if (isError) {
-    return <div>Error loading addresses</div>
+    return <div>Error loading addresses</div>;
   }
 
   return (
@@ -157,7 +165,7 @@ const AdressContainer = ({
         onClick={() => setIsAdding(!isAdding)} // Alterna o estado do formulário
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-fit"
       >
-        {isAdding ? 'Cancelar' : 'Adicionar Morada'}
+        {isAdding ? "Cancelar" : "Adicionar Morada"}
       </button>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -178,7 +186,7 @@ const AdressContainer = ({
               <input
                 type="text"
                 placeholder="Morada Completa"
-                {...formNewRegister('address')}
+                {...formNewRegister("address")}
                 className="border border-gray-300 rounded p-2 w-full bg-transparent"
               />
               {errorsAddress.address && (
@@ -194,7 +202,7 @@ const AdressContainer = ({
                 <input
                   type="text"
                   placeholder="Cidade"
-                  {...formNewRegister('city')}
+                  {...formNewRegister("city")}
                   className="border border-gray-300 rounded p-2 w-full bg-transparent"
                 />
                 {errorsAddress.city && (
@@ -209,7 +217,7 @@ const AdressContainer = ({
                 <input
                   type="text"
                   placeholder="Código Postal"
-                  {...formNewRegister('postalCode')}
+                  {...formNewRegister("postalCode")}
                   className="border border-gray-300 rounded p-2 w-full bg-transparent"
                 />
                 {errorsAddress.postalCode && (
@@ -228,7 +236,7 @@ const AdressContainer = ({
                 <input
                   type="text"
                   placeholder="Telemóvel"
-                  {...formNewRegister('phoneNumber')}
+                  {...formNewRegister("phoneNumber")}
                   className="border border-gray-300 rounded p-2 w-full bg-transparent"
                 />
                 {errorsAddress.phoneNumber && (
@@ -245,7 +253,7 @@ const AdressContainer = ({
                 <input
                   type="text"
                   placeholder="NIF"
-                  {...formNewRegister('nif')}
+                  {...formNewRegister("nif")}
                   className="border border-gray-300 rounded p-2 w-full bg-transparent"
                 />
                 {errorsAddress.nif && (
@@ -258,7 +266,7 @@ const AdressContainer = ({
               <input
                 id="addTaxpayer"
                 type="checkbox"
-                {...formNewRegister('addTaxpayer')}
+                {...formNewRegister("addTaxpayer")}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
@@ -273,7 +281,7 @@ const AdressContainer = ({
               <input
                 id="defaultAdress"
                 type="checkbox"
-                {...formNewRegister('defaultAdress')}
+                {...formNewRegister("defaultAdress")}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
@@ -288,7 +296,7 @@ const AdressContainer = ({
               <input
                 id="defaultAdressFaturation"
                 type="checkbox"
-                {...formNewRegister('defaultAdressFaturation')}
+                {...formNewRegister("defaultAdressFaturation")}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
@@ -303,10 +311,10 @@ const AdressContainer = ({
               type="submit"
               disabled={isAddingAddress} // Desativa o botão enquanto a mutação está em andamento
               className={`bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 ${
-                isAddingAddress ? 'opacity-50 cursor-not-allowed' : ''
+                isAddingAddress ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {isAddingAddress ? 'Adicionando...' : 'Adicionar'}
+              {isAddingAddress ? "Adicionando..." : "Adicionar"}
             </button>
           </form>
         )}
@@ -333,7 +341,7 @@ const AdressContainer = ({
                         id={`address-${index}`}
                         type="text"
                         defaultValue={address.address}
-                        {...formEditingRegister('address')}
+                        {...formEditingRegister("address")}
                         className="border border-gray-300 rounded p-2 w-full bg-transparent"
                       />
                       {editingErrors.city && (
@@ -354,7 +362,7 @@ const AdressContainer = ({
                           id={`city-${index}`}
                           type="text"
                           defaultValue={address.city}
-                          {...formEditingRegister('city')}
+                          {...formEditingRegister("city")}
                           className="border border-gray-300 rounded p-2 w-full bg-transparent"
                         />
                       </div>
@@ -369,7 +377,7 @@ const AdressContainer = ({
                           id={`postalCode-${index}`}
                           type="text"
                           defaultValue={address.postalCode}
-                          {...formEditingRegister('postalCode')}
+                          {...formEditingRegister("postalCode")}
                           className="border border-gray-300 rounded p-2 w-full bg-transparent"
                         />
                       </div>
@@ -386,7 +394,7 @@ const AdressContainer = ({
                           id={`phoneNumber-${index}`}
                           type="text"
                           defaultValue={address.phoneNumber}
-                          {...formEditingRegister('phoneNumber')}
+                          {...formEditingRegister("phoneNumber")}
                           className="border border-gray-300 rounded p-2 w-full bg-transparent"
                         />
                       </div>
@@ -401,7 +409,7 @@ const AdressContainer = ({
                           id={`nif-${index}`}
                           type="text"
                           defaultValue={address.nif}
-                          {...formEditingRegister('nif')}
+                          {...formEditingRegister("nif")}
                           className="border border-gray-300 rounded p-2 w-full bg-transparent"
                         />
                       </div>
@@ -412,7 +420,7 @@ const AdressContainer = ({
                           id="addTaxpayer"
                           type="checkbox"
                           defaultChecked={address.addTaxpayer}
-                          {...formEditingRegister('addTaxpayer')}
+                          {...formEditingRegister("addTaxpayer")}
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
                         <label
@@ -427,7 +435,7 @@ const AdressContainer = ({
                           id="defaultAdress"
                           type="checkbox"
                           defaultChecked={address.defaultAdress}
-                          {...formEditingRegister('defaultAdress')}
+                          {...formEditingRegister("defaultAdress")}
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
                         <label
@@ -442,7 +450,7 @@ const AdressContainer = ({
                           id="addTaxpayer"
                           type="checkbox"
                           defaultChecked={address.defaultAdressFaturation}
-                          {...formEditingRegister('defaultAdressFaturation')}
+                          {...formEditingRegister("defaultAdressFaturation")}
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
                         <label
@@ -472,6 +480,28 @@ const AdressContainer = ({
                 ) : (
                   // Modo normal
                   <div className="flex flex-col gap-1 h-full">
+                    {onSelectAddress && (
+                      <input
+                        type="radio"
+                        name="addressEnvio"
+                        checked={selectedId === address.addressId}
+                        onChange={() =>
+                          onSelectAddress?.(address.addressId ?? "")
+                        }
+                      />
+                    )}
+
+                    {onSelectAddressFaturarion && (
+                      <input
+                        type="radio"
+                        name="addressFaturation"
+                        checked={selectedIdFatu === address.addressId}
+                        onChange={() =>
+                          onSelectAddressFaturarion?.(address.addressId ?? "")
+                        }
+                      />
+                    )}
+
                     <h3 className="text-xl font-bold mb-2">
                       {address.address}
                     </h3>
@@ -489,6 +519,11 @@ const AdressContainer = ({
                         <strong>NIF:</strong> {address.nif}
                       </p>
                     )}
+                    {address.addTaxpayer && (
+                      <p className="text-slate-200">
+                        <strong>Contribuinte na Fatura</strong>
+                      </p>
+                    )}
                     {address.defaultAdress && (
                       <p className="text-slate-200">
                         <strong>Morada predefinida</strong>
@@ -502,9 +537,9 @@ const AdressContainer = ({
                     <div className="flex gap-2 mt-auto">
                       <button
                         onClick={() => {
-                          resetFormEditing(address)
-                          setEditingIndex(index)
-                          setIsAdding(false)
+                          resetFormEditing(address);
+                          setEditingIndex(index);
+                          setIsAdding(false);
                         }}
                         className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
                       >
@@ -513,9 +548,9 @@ const AdressContainer = ({
                       <button
                         onClick={() => {
                           if (address.addressId) {
-                            deleteAddress({ addressId: address.addressId })
+                            deleteAddress({ addressId: address.addressId });
                           } else {
-                            console.error('Address ID is undefined.')
+                            console.error("Address ID is undefined.");
                           }
                         }}
                         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
@@ -530,7 +565,7 @@ const AdressContainer = ({
           : null}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdressContainer
+export default AdressContainer;

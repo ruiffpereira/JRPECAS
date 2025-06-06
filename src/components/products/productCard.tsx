@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import { useProducts } from '../../context/ProductsContext'
-import { FiShoppingCart } from 'react-icons/fi'
-import { Product } from '@/server/ecommerce'
+import Image from "next/image";
+import { useProducts } from "../../context/ProductsContext";
+import { FiShoppingCart } from "react-icons/fi";
+import { Product } from "@/servers/ecommerce";
 
 const ProductCard: React.FC<Product> = ({
   productId,
@@ -10,18 +10,20 @@ const ProductCard: React.FC<Product> = ({
   price,
   photos,
 }) => {
-  const { addToCart } = useProducts()
+  const { addToCart } = useProducts();
 
   return (
     <div className="border border-gray-700 rounded-lg p-4 shadow-md relative bg-gray-800 flex flex-col">
       <div className="relative w-full h-32" id={`${productId}`}>
         {Array.isArray(photos) && photos.length > 0 ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${photos?.[0].slice(2) ?? ''}`}
+            src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${
+              photos?.[0].slice(2) ?? ""
+            }`}
             alt={name}
             width={200}
             height={200}
-            style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
             className="rounded-md"
           />
         ) : (
@@ -45,7 +47,7 @@ const ProductCard: React.FC<Product> = ({
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

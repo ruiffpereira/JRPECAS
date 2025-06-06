@@ -1,21 +1,21 @@
-import { postWebsitesCustomerslogin } from '@/server/customers/hooks/usePostWebsitesCustomerslogin'
-import NextAuth from 'next-auth/next'
-import GoogleProvider from 'next-auth/providers/google'
+import { postWebsitesCustomerslogin } from "@/servers/customers/hooks/usePostWebsitesCustomerslogin";
+import NextAuth from "next-auth/next";
+import GoogleProvider from "next-auth/providers/google";
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface User {
-    token: string
-    customerId: string
+    token: string;
+    customerId: string;
   }
 
   interface Session {
     user: {
-      image: string
-      name: string
-      token: string
-      email: string
-      customerId: string
-    }
+      image: string;
+      name: string;
+      token: string;
+      email: string;
+      customerId: string;
+    };
   }
 }
 
@@ -27,7 +27,7 @@ export default NextAuth({
       authorization: {
         params: {
           scope:
-            'openid profile email https://www.googleapis.com/auth/user.phonenumbers.read',
+            "openid profile email https://www.googleapis.com/auth/user.phonenumbers.read",
         },
       },
     }),
@@ -36,9 +36,9 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === 'google') {
+      if (account?.provider === "google") {
         try {
-          if (!account.id_token) return false
+          if (!account.id_token) return false;
 
           const customer = await postWebsitesCustomerslogin(
             {
@@ -48,45 +48,45 @@ export default NextAuth({
               headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
               },
-            },
-          )
+            }
+          );
           if (user && customer && customer.customerId) {
-            user.token = customer.token || ''
-            user.customerId = customer.customerId
-            return true
+            user.token = customer.token || "";
+            user.customerId = customer.customerId;
+            return true;
           } else {
-            console.error('Failed to authenticate user')
-            return false
+            console.error("Failed to authenticate user");
+            return false;
           }
         } catch (error) {
-          console.error('Error during signIn callback:', error)
-          return false
+          console.error("Error during signIn callback:", error);
+          return false;
         }
       }
 
-      return true
+      return true;
     },
     async redirect({ baseUrl }) {
-      return baseUrl
+      return baseUrl;
     },
     async jwt({ token, user }) {
       if (user) {
-        token.token = user.token
-        token.customerId = user.customerId
+        token.token = user.token;
+        token.customerId = user.customerId;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
-      session.user.token = token.token as string
-      session.user.customerId = token.customerId as string
-      return session
+      session.user.token = token.token as string;
+      session.user.customerId = token.customerId as string;
+      return session;
     },
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
   },
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
     maxAge: 5 * 24 * 60 * 60, // 6 dias
   },
-})
+});
