@@ -1,12 +1,13 @@
 import { useGetWebsitesEcommerceOrdersId } from '@/servers/ecommerce/hooks/useGetWebsitesEcommerceOrdersId'
 import { GetServerSidePropsContext } from 'next'
 import { getSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 
 export default function OrderIdPage({
   sessionNext,
   id,
 }: {
-  sessionNext: any
+  sessionNext: Session
   id: string
 }) {
   const {

@@ -1,5 +1,5 @@
 import { LoginAndAddToCart } from '@/components/auth'
-import { signOut, useSession, getSession } from 'next-auth/react'
+import { signOut, getSession } from 'next-auth/react'
 import { Address } from '@/servers/customers'
 import { GetServerSidePropsContext } from 'next'
 import { getWebsitesCustomersAddresses } from '@/servers/customers/hooks/useGetWebsitesCustomersAddresses'

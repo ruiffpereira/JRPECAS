@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { getSession } from 'next-auth/react'
 import { useGetWebsitesEcommerceOrders } from '@/servers/ecommerce/hooks/useGetWebsitesEcommerceOrders'
 import { GetServerSidePropsContext } from 'next'
@@ -7,8 +6,6 @@ import Link from 'next/link'
 import routes from '@/routes'
 
 const OrdersPage = ({ sessionNext }: { sessionNext: Session }) => {
-  const [details, setDetails] = useState<boolean>(false)
-
   const {
     data: orders,
     isLoading,

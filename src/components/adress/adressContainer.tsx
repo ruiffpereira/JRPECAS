@@ -6,7 +6,7 @@ import { usePutWebsitesCustomersAddressesAddressid } from '@/servers/customers/h
 import { usePostWebsitesCustomersAddresses } from '@/servers/customers/hooks/usePostWebsitesCustomersAddresses'
 import { useDeleteWebsitesCustomersAddressesAddressid } from '@/servers/customers/hooks/useDeleteWebsitesCustomersAddressesAddressid'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { Address } from '@/servers/customers'

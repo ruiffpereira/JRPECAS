@@ -7,7 +7,6 @@ import {
 } from '@/servers/ecommerce'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 import { useQueryClient } from '@tanstack/react-query'
-// import { Session } from "inspector";
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import AdressContainer from './adress/adressContainer'
@@ -19,9 +18,7 @@ type SessionWithUser = {
     token: string
     name: string
     email: string
-    // add other user properties as needed
   }
-  // add other session properties as needed
 }
 
 const Checkout = ({
@@ -152,7 +149,7 @@ const Checkout = ({
         return
       }
     } catch (error) {
-      //router.push(routes.orders);
+      console.error('Erro ao processar o pagamento:', error)
     }
 
     newOrder(
