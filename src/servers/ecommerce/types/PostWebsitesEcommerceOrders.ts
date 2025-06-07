@@ -67,10 +67,14 @@ export type PostWebsitesEcommerceOrdersMutationRequest = {
   billingAddress?: string
 }
 
-export type PostWebsitesEcommerceOrdersMutationResponse = PostWebsitesEcommerceOrders201
+export type PostWebsitesEcommerceOrdersMutationResponse =
+  PostWebsitesEcommerceOrders201
 
 export type PostWebsitesEcommerceOrdersMutation = {
   Response: PostWebsitesEcommerceOrders201
   Request: PostWebsitesEcommerceOrdersMutationRequest
-  Errors: PostWebsitesEcommerceOrders400 | PostWebsitesEcommerceOrders404 | PostWebsitesEcommerceOrders500
+  Errors:
+    | PostWebsitesEcommerceOrders400
+    | PostWebsitesEcommerceOrders404
+    | PostWebsitesEcommerceOrders500
 }

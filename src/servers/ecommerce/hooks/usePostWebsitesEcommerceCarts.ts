@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PostWebsitesEcommerceCartsMutationRequest,
@@ -14,9 +17,12 @@ import type {
 } from '../types/PostWebsitesEcommerceCarts.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const postWebsitesEcommerceCartsMutationKey = () => [{ url: '/websites/ecommerce/carts' }] as const
+export const postWebsitesEcommerceCartsMutationKey = () =>
+  [{ url: '/websites/ecommerce/carts' }] as const
 
-export type PostWebsitesEcommerceCartsMutationKey = ReturnType<typeof postWebsitesEcommerceCartsMutationKey>
+export type PostWebsitesEcommerceCartsMutationKey = ReturnType<
+  typeof postWebsitesEcommerceCartsMutationKey
+>
 
 /**
  * @summary Add a product to the cart
@@ -24,15 +30,25 @@ export type PostWebsitesEcommerceCartsMutationKey = ReturnType<typeof postWebsit
  */
 export async function postWebsitesEcommerceCarts(
   data: PostWebsitesEcommerceCartsMutationRequest,
-  config: Partial<RequestConfig<PostWebsitesEcommerceCartsMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<RequestConfig<PostWebsitesEcommerceCartsMutationRequest>> & {
+    client?: typeof client
+  } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
   const res = await request<
     PostWebsitesEcommerceCartsMutationResponse,
-    ResponseErrorConfig<PostWebsitesEcommerceCarts400 | PostWebsitesEcommerceCarts500>,
+    ResponseErrorConfig<
+      PostWebsitesEcommerceCarts400 | PostWebsitesEcommerceCarts500
+    >,
     PostWebsitesEcommerceCartsMutationRequest
-  >({ method: 'POST', url: `/websites/ecommerce/carts`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'POST',
+    url: `/websites/ecommerce/carts`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -44,20 +60,27 @@ export function usePostWebsitesEcommerceCarts<TContext>(
   options: {
     mutation?: UseMutationOptions<
       PostWebsitesEcommerceCartsMutationResponse,
-      ResponseErrorConfig<PostWebsitesEcommerceCarts400 | PostWebsitesEcommerceCarts500>,
+      ResponseErrorConfig<
+        PostWebsitesEcommerceCarts400 | PostWebsitesEcommerceCarts500
+      >,
       { data: PostWebsitesEcommerceCartsMutationRequest },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PostWebsitesEcommerceCartsMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PostWebsitesEcommerceCartsMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? postWebsitesEcommerceCartsMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ?? postWebsitesEcommerceCartsMutationKey()
 
   return useMutation<
     PostWebsitesEcommerceCartsMutationResponse,
-    ResponseErrorConfig<PostWebsitesEcommerceCarts400 | PostWebsitesEcommerceCarts500>,
+    ResponseErrorConfig<
+      PostWebsitesEcommerceCarts400 | PostWebsitesEcommerceCarts500
+    >,
     { data: PostWebsitesEcommerceCartsMutationRequest },
     TContext
   >(

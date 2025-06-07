@@ -27,7 +27,8 @@ export type PostWebsitesCustomersAddresses409 = any
 
 export type PostWebsitesCustomersAddressesMutationRequest = Address
 
-export type PostWebsitesCustomersAddressesMutationResponse = PostWebsitesCustomersAddresses201
+export type PostWebsitesCustomersAddressesMutationResponse =
+  PostWebsitesCustomersAddresses201
 
 export type PostWebsitesCustomersAddressesMutation = {
   Response: PostWebsitesCustomersAddresses201

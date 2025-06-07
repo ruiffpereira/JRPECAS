@@ -1,7 +1,7 @@
-import Image from "next/image";
-import { useProducts } from "../../context/ProductsContext";
-import { FiShoppingCart } from "react-icons/fi";
-import { Product } from "@/servers/ecommerce";
+import Image from 'next/image'
+import { useProducts } from '../../context/ProductsContext'
+import { FiShoppingCart } from 'react-icons/fi'
+import { Product } from '@/servers/ecommerce'
 
 const ProductCard: React.FC<Product> = ({
   productId,
@@ -10,20 +10,20 @@ const ProductCard: React.FC<Product> = ({
   price,
   photos,
 }) => {
-  const { addToCart } = useProducts();
+  const { addToCart } = useProducts()
 
   return (
-    <div className="border border-gray-700 rounded-lg p-4 shadow-md relative bg-gray-800 flex flex-col">
-      <div className="relative w-full h-32" id={`${productId}`}>
+    <div className="relative flex flex-col rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-md">
+      <div className="relative h-32 w-full" id={`${productId}`}>
         {Array.isArray(photos) && photos.length > 0 ? (
           <Image
             src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${
-              photos?.[0].slice(2) ?? ""
+              photos?.[0].slice(2) ?? ''
             }`}
             alt={name}
             width={200}
             height={200}
-            style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            style={{ objectFit: 'contain', width: '100%', height: '100%' }}
             className="rounded-md"
           />
         ) : (
@@ -31,11 +31,11 @@ const ProductCard: React.FC<Product> = ({
         )}
       </div>
       <h2 className="text-sm text-white">{name}</h2>
-      <p className="text-gray-300 text-sm">{description}</p>
-      <div className="flex justify-between items-center mt-auto pt-8">
-        <p className="text-xl text-white font-bold">{price}€</p>
+      <p className="text-sm text-gray-300">{description}</p>
+      <div className="mt-auto flex items-center justify-between pt-8">
+        <p className="text-xl font-bold text-white">{price}€</p>
         <button
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
           onClick={() =>
             addToCart({
               productId,
@@ -47,7 +47,7 @@ const ProductCard: React.FC<Product> = ({
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard

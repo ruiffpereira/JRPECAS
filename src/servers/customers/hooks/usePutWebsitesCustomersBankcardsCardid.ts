@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PutWebsitesCustomersBankcardsCardidMutationRequest,
@@ -15,9 +18,12 @@ import type {
 } from '../types/PutWebsitesCustomersBankcardsCardid.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const putWebsitesCustomersBankcardsCardidMutationKey = () => [{ url: '/websites/customers/bankcards/{cardId}' }] as const
+export const putWebsitesCustomersBankcardsCardidMutationKey = () =>
+  [{ url: '/websites/customers/bankcards/{cardId}' }] as const
 
-export type PutWebsitesCustomersBankcardsCardidMutationKey = ReturnType<typeof putWebsitesCustomersBankcardsCardidMutationKey>
+export type PutWebsitesCustomersBankcardsCardidMutationKey = ReturnType<
+  typeof putWebsitesCustomersBankcardsCardidMutationKey
+>
 
 /**
  * @summary Update a bank card
@@ -26,15 +32,26 @@ export type PutWebsitesCustomersBankcardsCardidMutationKey = ReturnType<typeof p
 export async function putWebsitesCustomersBankcardsCardid(
   cardId: PutWebsitesCustomersBankcardsCardidPathParams['cardId'],
   data?: PutWebsitesCustomersBankcardsCardidMutationRequest,
-  config: Partial<RequestConfig<PutWebsitesCustomersBankcardsCardidMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<
+    RequestConfig<PutWebsitesCustomersBankcardsCardidMutationRequest>
+  > & { client?: typeof client } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
   const res = await request<
     PutWebsitesCustomersBankcardsCardidMutationResponse,
-    ResponseErrorConfig<PutWebsitesCustomersBankcardsCardid400 | PutWebsitesCustomersBankcardsCardid404>,
+    ResponseErrorConfig<
+      | PutWebsitesCustomersBankcardsCardid400
+      | PutWebsitesCustomersBankcardsCardid404
+    >,
     PutWebsitesCustomersBankcardsCardidMutationRequest
-  >({ method: 'PUT', url: `/websites/customers/bankcards/${cardId}`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'PUT',
+    url: `/websites/customers/bankcards/${cardId}`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -46,21 +63,37 @@ export function usePutWebsitesCustomersBankcardsCardid<TContext>(
   options: {
     mutation?: UseMutationOptions<
       PutWebsitesCustomersBankcardsCardidMutationResponse,
-      ResponseErrorConfig<PutWebsitesCustomersBankcardsCardid400 | PutWebsitesCustomersBankcardsCardid404>,
-      { cardId: PutWebsitesCustomersBankcardsCardidPathParams['cardId']; data?: PutWebsitesCustomersBankcardsCardidMutationRequest },
+      ResponseErrorConfig<
+        | PutWebsitesCustomersBankcardsCardid400
+        | PutWebsitesCustomersBankcardsCardid404
+      >,
+      {
+        cardId: PutWebsitesCustomersBankcardsCardidPathParams['cardId']
+        data?: PutWebsitesCustomersBankcardsCardidMutationRequest
+      },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PutWebsitesCustomersBankcardsCardidMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PutWebsitesCustomersBankcardsCardidMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? putWebsitesCustomersBankcardsCardidMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ??
+    putWebsitesCustomersBankcardsCardidMutationKey()
 
   return useMutation<
     PutWebsitesCustomersBankcardsCardidMutationResponse,
-    ResponseErrorConfig<PutWebsitesCustomersBankcardsCardid400 | PutWebsitesCustomersBankcardsCardid404>,
-    { cardId: PutWebsitesCustomersBankcardsCardidPathParams['cardId']; data?: PutWebsitesCustomersBankcardsCardidMutationRequest },
+    ResponseErrorConfig<
+      | PutWebsitesCustomersBankcardsCardid400
+      | PutWebsitesCustomersBankcardsCardid404
+    >,
+    {
+      cardId: PutWebsitesCustomersBankcardsCardidPathParams['cardId']
+      data?: PutWebsitesCustomersBankcardsCardidMutationRequest
+    },
     TContext
   >(
     {

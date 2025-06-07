@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PostWebsitesCustomersAddressesMutationRequest,
@@ -14,9 +17,12 @@ import type {
 } from '../types/PostWebsitesCustomersAddresses.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const postWebsitesCustomersAddressesMutationKey = () => [{ url: '/websites/customers/addresses' }] as const
+export const postWebsitesCustomersAddressesMutationKey = () =>
+  [{ url: '/websites/customers/addresses' }] as const
 
-export type PostWebsitesCustomersAddressesMutationKey = ReturnType<typeof postWebsitesCustomersAddressesMutationKey>
+export type PostWebsitesCustomersAddressesMutationKey = ReturnType<
+  typeof postWebsitesCustomersAddressesMutationKey
+>
 
 /**
  * @summary Create a new address
@@ -24,15 +30,25 @@ export type PostWebsitesCustomersAddressesMutationKey = ReturnType<typeof postWe
  */
 export async function postWebsitesCustomersAddresses(
   data: PostWebsitesCustomersAddressesMutationRequest,
-  config: Partial<RequestConfig<PostWebsitesCustomersAddressesMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<
+    RequestConfig<PostWebsitesCustomersAddressesMutationRequest>
+  > & { client?: typeof client } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
   const res = await request<
     PostWebsitesCustomersAddressesMutationResponse,
-    ResponseErrorConfig<PostWebsitesCustomersAddresses400 | PostWebsitesCustomersAddresses409>,
+    ResponseErrorConfig<
+      PostWebsitesCustomersAddresses400 | PostWebsitesCustomersAddresses409
+    >,
     PostWebsitesCustomersAddressesMutationRequest
-  >({ method: 'POST', url: `/websites/customers/addresses`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'POST',
+    url: `/websites/customers/addresses`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -44,20 +60,27 @@ export function usePostWebsitesCustomersAddresses<TContext>(
   options: {
     mutation?: UseMutationOptions<
       PostWebsitesCustomersAddressesMutationResponse,
-      ResponseErrorConfig<PostWebsitesCustomersAddresses400 | PostWebsitesCustomersAddresses409>,
+      ResponseErrorConfig<
+        PostWebsitesCustomersAddresses400 | PostWebsitesCustomersAddresses409
+      >,
       { data: PostWebsitesCustomersAddressesMutationRequest },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PostWebsitesCustomersAddressesMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PostWebsitesCustomersAddressesMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? postWebsitesCustomersAddressesMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ?? postWebsitesCustomersAddressesMutationKey()
 
   return useMutation<
     PostWebsitesCustomersAddressesMutationResponse,
-    ResponseErrorConfig<PostWebsitesCustomersAddresses400 | PostWebsitesCustomersAddresses409>,
+    ResponseErrorConfig<
+      PostWebsitesCustomersAddresses400 | PostWebsitesCustomersAddresses409
+    >,
     { data: PostWebsitesCustomersAddressesMutationRequest },
     TContext
   >(

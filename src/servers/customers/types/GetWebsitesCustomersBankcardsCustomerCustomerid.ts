@@ -21,7 +21,8 @@ export type GetWebsitesCustomersBankcardsCustomerCustomerid200 = any
  */
 export type GetWebsitesCustomersBankcardsCustomerCustomerid500 = any
 
-export type GetWebsitesCustomersBankcardsCustomerCustomeridQueryResponse = GetWebsitesCustomersBankcardsCustomerCustomerid200
+export type GetWebsitesCustomersBankcardsCustomerCustomeridQueryResponse =
+  GetWebsitesCustomersBankcardsCustomerCustomerid200
 
 export type GetWebsitesCustomersBankcardsCustomerCustomeridQuery = {
   Response: GetWebsitesCustomersBankcardsCustomerCustomerid200

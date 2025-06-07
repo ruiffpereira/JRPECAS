@@ -1,20 +1,20 @@
-import { defineConfig } from "@kubb/core";
-import { pluginOas } from "@kubb/plugin-oas";
-import { pluginTs } from "@kubb/plugin-ts";
-import { pluginReactQuery } from "@kubb/plugin-react-query";
-import "dotenv/config";
+import { defineConfig } from '@kubb/core'
+import { pluginOas } from '@kubb/plugin-oas'
+import { pluginTs } from '@kubb/plugin-ts'
+import { pluginReactQuery } from '@kubb/plugin-react-query'
+import 'dotenv/config'
 
 const configs = [
   defineConfig({
-    name: "Customers",
-    root: ".",
+    name: 'Customers',
+    root: '.',
     input: {
       path: `${process.env.NEXT_PUBLIC_API_BASE_URL}-docs/websites/customers.json`, // URL do Swagger ou OpenAPI
     },
     output: {
-      path: "./src/servers/customers",
+      path: './src/servers/customers',
       extension: {
-        ".ts": ".ts",
+        '.ts': '.ts',
       },
     },
     plugins: [
@@ -29,15 +29,15 @@ const configs = [
     ],
   }),
   defineConfig({
-    name: "Ecommerce",
-    root: ".",
+    name: 'Ecommerce',
+    root: '.',
     input: {
       path: `${process.env.NEXT_PUBLIC_API_BASE_URL}-docs/websites/ecommerce.json`, // URL do Swagger ou OpenAPI
     },
     output: {
-      path: "./src/servers/ecommerce",
+      path: './src/servers/ecommerce',
       extension: {
-        ".ts": ".ts",
+        '.ts': '.ts',
       },
     },
     plugins: [
@@ -50,6 +50,6 @@ const configs = [
       }), // Gera hooks para React Query
     ],
   }),
-];
+]
 
-export default configs;
+export default configs

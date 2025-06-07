@@ -53,7 +53,8 @@ export type GetWebsitesEcommerceCarts404 = any
  */
 export type GetWebsitesEcommerceCarts500 = any
 
-export type GetWebsitesEcommerceCartsQueryResponse = GetWebsitesEcommerceCarts200
+export type GetWebsitesEcommerceCartsQueryResponse =
+  GetWebsitesEcommerceCarts200
 
 export type GetWebsitesEcommerceCartsQuery = {
   Response: GetWebsitesEcommerceCarts200

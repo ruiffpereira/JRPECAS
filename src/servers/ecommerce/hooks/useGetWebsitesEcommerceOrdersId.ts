@@ -4,8 +4,16 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryResult } from '@tanstack/react-query'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  QueryObserverOptions,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import type {
   GetWebsitesEcommerceOrdersIdQueryResponse,
   GetWebsitesEcommerceOrdersIdPathParams,
@@ -14,10 +22,13 @@ import type {
 } from '../types/GetWebsitesEcommerceOrdersId.ts'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-export const getWebsitesEcommerceOrdersIdQueryKey = (id: GetWebsitesEcommerceOrdersIdPathParams['id']) =>
-  [{ url: '/websites/ecommerce/orders/:id', params: { id: id } }] as const
+export const getWebsitesEcommerceOrdersIdQueryKey = (
+  id: GetWebsitesEcommerceOrdersIdPathParams['id'],
+) => [{ url: '/websites/ecommerce/orders/:id', params: { id: id } }] as const
 
-export type GetWebsitesEcommerceOrdersIdQueryKey = ReturnType<typeof getWebsitesEcommerceOrdersIdQueryKey>
+export type GetWebsitesEcommerceOrdersIdQueryKey = ReturnType<
+  typeof getWebsitesEcommerceOrdersIdQueryKey
+>
 
 /**
  * @summary Obtém uma encomenda específica pelo ID para o cliente autenticado
@@ -31,9 +42,16 @@ export async function getWebsitesEcommerceOrdersId(
 
   const res = await request<
     GetWebsitesEcommerceOrdersIdQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+    >,
     unknown
-  >({ method: 'GET', url: `/websites/ecommerce/orders/${id}`, baseURL: 'http://localhost:2001/api', ...requestConfig })
+  >({
+    method: 'GET',
+    url: `/websites/ecommerce/orders/${id}`,
+    baseURL: 'http://localhost:2001/api',
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -44,7 +62,9 @@ export function getWebsitesEcommerceOrdersIdQueryOptions(
   const queryKey = getWebsitesEcommerceOrdersIdQueryKey(id)
   return queryOptions<
     GetWebsitesEcommerceOrdersIdQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+    >,
     GetWebsitesEcommerceOrdersIdQueryResponse,
     typeof queryKey
   >({
@@ -71,7 +91,9 @@ export function useGetWebsitesEcommerceOrdersId<
     query?: Partial<
       QueryObserverOptions<
         GetWebsitesEcommerceOrdersIdQueryResponse,
-        ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>,
+        ResponseErrorConfig<
+          GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+        >,
         TData,
         TQueryData,
         TQueryKey
@@ -80,17 +102,29 @@ export function useGetWebsitesEcommerceOrdersId<
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesEcommerceOrdersIdQueryKey(id)
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesEcommerceOrdersIdQueryKey(id)
 
   const query = useQuery(
     {
-      ...(getWebsitesEcommerceOrdersIdQueryOptions(id, config) as unknown as QueryObserverOptions),
+      ...(getWebsitesEcommerceOrdersIdQueryOptions(
+        id,
+        config,
+      ) as unknown as QueryObserverOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<QueryObserverOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseQueryResult<TData, ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>> & { queryKey: TQueryKey }
+  ) as UseQueryResult<
+    TData,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+    >
+  > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey
 

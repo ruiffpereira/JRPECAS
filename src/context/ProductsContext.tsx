@@ -4,89 +4,89 @@ import React, {
   useState,
   ReactNode,
   useEffect,
-} from "react";
-import { signIn, useSession } from "next-auth/react";
-import { getWebsitesEcommerceCarts } from "@/servers/ecommerce/hooks/useGetWebsitesEcommerceCarts";
+} from 'react'
+import { signIn, useSession } from 'next-auth/react'
+import { getWebsitesEcommerceCarts } from '@/servers/ecommerce/hooks/useGetWebsitesEcommerceCarts'
 import {
   Cart,
   GetWebsitesEcommerceCarts200,
   PostWebsitesEcommerceCartsMutationRequest,
   Product,
-} from "@/servers/ecommerce";
-import { postWebsitesEcommerceCarts } from "@/servers/ecommerce/hooks/usePostWebsitesEcommerceCarts";
+} from '@/servers/ecommerce'
+import { postWebsitesEcommerceCarts } from '@/servers/ecommerce/hooks/usePostWebsitesEcommerceCarts'
 
 interface ProductsContextProps {
-  products: Product[];
-  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
-  cart: Cart;
-  setCart: React.Dispatch<React.SetStateAction<Cart>>;
-  addToCart: (item: PostWebsitesEcommerceCartsMutationRequest) => Promise<void>;
-  searchProduct: string;
-  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  products: Product[]
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>
+  cart: Cart
+  setCart: React.Dispatch<React.SetStateAction<Cart>>
+  addToCart: (item: PostWebsitesEcommerceCartsMutationRequest) => Promise<void>
+  searchProduct: string
+  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const ProductsContext = createContext<ProductsContextProps | undefined>(
-  undefined
-);
+  undefined,
+)
 
 export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([])
   const [cart, setCart] = useState<Cart>({
-    cartId: "",
-    customerId: "",
+    cartId: '',
+    customerId: '',
     products: [],
     shipPrice: 0,
-  });
-  const [searchProduct, setSearchProduct] = useState("");
-  const { data: session } = useSession();
+  })
+  const [searchProduct, setSearchProduct] = useState('')
+  const { data: session } = useSession()
 
   useEffect(() => {
     const fetchCartProducts = async () => {
       if (session?.user?.token) {
-        const token = session.user.token;
+        const token = session.user.token
         if (token) {
           try {
             const getCartProducts: GetWebsitesEcommerceCarts200 =
               await getWebsitesEcommerceCarts({
                 authorization: `Bearer ${token}`,
-              });
+              })
             // Transforme os dados, se necessário
             const cartProducts: Cart = {
               cartId: getCartProducts.cartId,
               customerId: getCartProducts.customerId,
               products: getCartProducts.products,
               shipPrice: getCartProducts.shipPrice,
-            };
+            }
             if (cartProducts && cartProducts.products) {
-              setCart(cartProducts);
+              setCart(cartProducts)
             } else {
               setCart({
-                cartId: "",
-                customerId: "",
+                cartId: '',
+                customerId: '',
                 products: [],
                 shipPrice: 0,
-              }); // Valor padrão se a resposta não for válida
+              }) // Valor padrão se a resposta não for válida
             }
           } catch (error) {
-            console.error("Erro ao buscar produtos do carrinho:", error);
+            console.error('Erro ao buscar produtos do carrinho:', error)
             setCart({
-              cartId: "",
-              customerId: "",
+              cartId: '',
+              customerId: '',
               products: [],
               shipPrice: 0,
-            }); // Valor padrão em caso de erro
+            }) // Valor padrão em caso de erro
           }
         }
       }
-    };
-    fetchCartProducts();
-  }, [session]);
+    }
+    fetchCartProducts()
+  }, [session])
 
   const addToCart = async (item: PostWebsitesEcommerceCartsMutationRequest) => {
     if (session) {
-      const token = session.user.token;
+      const token = session.user.token
       if (token) {
         try {
           const response = await postWebsitesEcommerceCarts(
@@ -98,30 +98,30 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-            }
-          );
+            },
+          )
           if (response && response.products) {
             setCart({
-              cartId: response.cartId || "",
-              customerId: response.customerId || "",
+              cartId: response.cartId || '',
+              customerId: response.customerId || '',
               products: response.products || [],
               shipPrice: response.shipPrice || 0,
-            });
+            })
           } else {
-            console.error("Failed to add product to cart");
+            console.error('Failed to add product to cart')
           }
         } catch {
           // console.error('Error adding product to cart:', error)
         }
       }
     } else {
-      await signIn("google", { redirect: false });
+      await signIn('google', { redirect: false })
     }
-  };
+  }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchProduct(e.target.value);
-  };
+    setSearchProduct(e.target.value)
+  }
 
   return (
     <ProductsContext.Provider
@@ -137,13 +137,13 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
     >
       {children}
     </ProductsContext.Provider>
-  );
-};
+  )
+}
 
 export const useProducts = (): ProductsContextProps => {
-  const context = useContext(ProductsContext);
+  const context = useContext(ProductsContext)
   if (!context) {
-    throw new Error("useProducts must be used within a ProductsProvider");
+    throw new Error('useProducts must be used within a ProductsProvider')
   }
-  return context;
-};
+  return context
+}

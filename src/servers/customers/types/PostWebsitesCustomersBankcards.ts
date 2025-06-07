@@ -36,7 +36,8 @@ export type PostWebsitesCustomersBankcardsMutationRequest = {
   customerId?: string
 }
 
-export type PostWebsitesCustomersBankcardsMutationResponse = PostWebsitesCustomersBankcards201
+export type PostWebsitesCustomersBankcardsMutationResponse =
+  PostWebsitesCustomersBankcards201
 
 export type PostWebsitesCustomersBankcardsMutation = {
   Response: PostWebsitesCustomersBankcards201

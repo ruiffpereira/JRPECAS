@@ -1,7 +1,7 @@
 const routes = {
-  orders: "/orders",
-  user: "/user",
+  orders: '/orders',
+  user: '/user',
   orderDetails: (id: string) => `orders/${id}`,
-};
+}
 
-export default routes;
+export default routes

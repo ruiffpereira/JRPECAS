@@ -1,4 +1,4 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (
@@ -13,10 +13,10 @@ export default function Document() {
         />
         {/* Title should be defined at the page level using <Head> from next/head */}
       </Head>
-      <body className="antialiased overflow-hidden">
+      <body className="overflow-hidden antialiased">
         <Main />
         <NextScript />
       </body>
     </Html>
-  );
+  )
 }

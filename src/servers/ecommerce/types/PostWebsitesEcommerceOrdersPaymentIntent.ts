@@ -34,10 +34,11 @@ export type PostWebsitesEcommerceOrdersPaymentIntent500 = {
   error?: string
 }
 
-export const postWebsitesEcommerceOrdersPaymentIntentMutationRequestPaymentMethodEnum = {
-  card: 'card',
-  mb_way: 'mb_way',
-} as const
+export const postWebsitesEcommerceOrdersPaymentIntentMutationRequestPaymentMethodEnum =
+  {
+    card: 'card',
+    mb_way: 'mb_way',
+  } as const
 
 export type PostWebsitesEcommerceOrdersPaymentIntentMutationRequestPaymentMethodEnum =
   (typeof postWebsitesEcommerceOrdersPaymentIntentMutationRequestPaymentMethodEnum)[keyof typeof postWebsitesEcommerceOrdersPaymentIntentMutationRequestPaymentMethodEnum]
@@ -55,10 +56,13 @@ export type PostWebsitesEcommerceOrdersPaymentIntentMutationRequest = {
   paymentMethod?: PostWebsitesEcommerceOrdersPaymentIntentMutationRequestPaymentMethodEnum
 }
 
-export type PostWebsitesEcommerceOrdersPaymentIntentMutationResponse = PostWebsitesEcommerceOrdersPaymentIntent200
+export type PostWebsitesEcommerceOrdersPaymentIntentMutationResponse =
+  PostWebsitesEcommerceOrdersPaymentIntent200
 
 export type PostWebsitesEcommerceOrdersPaymentIntentMutation = {
   Response: PostWebsitesEcommerceOrdersPaymentIntent200
   Request: PostWebsitesEcommerceOrdersPaymentIntentMutationRequest
-  Errors: PostWebsitesEcommerceOrdersPaymentIntent400 | PostWebsitesEcommerceOrdersPaymentIntent500
+  Errors:
+    | PostWebsitesEcommerceOrdersPaymentIntent400
+    | PostWebsitesEcommerceOrdersPaymentIntent500
 }

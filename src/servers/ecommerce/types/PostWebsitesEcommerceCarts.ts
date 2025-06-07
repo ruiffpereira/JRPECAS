@@ -53,7 +53,8 @@ export type PostWebsitesEcommerceCartsMutationRequest = {
   quantity: number
 }
 
-export type PostWebsitesEcommerceCartsMutationResponse = PostWebsitesEcommerceCarts200
+export type PostWebsitesEcommerceCartsMutationResponse =
+  PostWebsitesEcommerceCarts200
 
 export type PostWebsitesEcommerceCartsMutation = {
   Response: PostWebsitesEcommerceCarts200

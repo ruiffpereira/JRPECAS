@@ -4,8 +4,16 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, UseSuspenseQueryOptions, UseSuspenseQueryResult } from '@tanstack/react-query'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query'
 import type {
   GetWebsitesEcommerceCartsQueryResponse,
   GetWebsitesEcommerceCartsHeaderParams,
@@ -14,9 +22,12 @@ import type {
 } from '../types/GetWebsitesEcommerceCarts.ts'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 
-export const getWebsitesEcommerceCartsSuspenseQueryKey = () => [{ url: '/websites/ecommerce/carts' }] as const
+export const getWebsitesEcommerceCartsSuspenseQueryKey = () =>
+  [{ url: '/websites/ecommerce/carts' }] as const
 
-export type GetWebsitesEcommerceCartsSuspenseQueryKey = ReturnType<typeof getWebsitesEcommerceCartsSuspenseQueryKey>
+export type GetWebsitesEcommerceCartsSuspenseQueryKey = ReturnType<
+  typeof getWebsitesEcommerceCartsSuspenseQueryKey
+>
 
 /**
  * @summary Get all items in the cart
@@ -28,7 +39,13 @@ export async function getWebsitesEcommerceCartsSuspense(
 ) {
   const { client: request = client, ...requestConfig } = config
 
-  const res = await request<GetWebsitesEcommerceCartsQueryResponse, ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>, unknown>({
+  const res = await request<
+    GetWebsitesEcommerceCartsQueryResponse,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >,
+    unknown
+  >({
     method: 'GET',
     url: `/websites/ecommerce/carts`,
     baseURL: 'http://localhost:2001/api',
@@ -45,7 +62,9 @@ export function getWebsitesEcommerceCartsSuspenseQueryOptions(
   const queryKey = getWebsitesEcommerceCartsSuspenseQueryKey()
   return queryOptions<
     GetWebsitesEcommerceCartsQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >,
     GetWebsitesEcommerceCartsQueryResponse,
     typeof queryKey
   >({
@@ -70,7 +89,9 @@ export function useGetWebsitesEcommerceCartsSuspense<
     query?: Partial<
       UseSuspenseQueryOptions<
         GetWebsitesEcommerceCartsQueryResponse,
-        ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>,
+        ResponseErrorConfig<
+          GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+        >,
         TData,
         TQueryKey
       >
@@ -78,17 +99,29 @@ export function useGetWebsitesEcommerceCartsSuspense<
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesEcommerceCartsSuspenseQueryKey()
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesEcommerceCartsSuspenseQueryKey()
 
   const query = useSuspenseQuery(
     {
-      ...(getWebsitesEcommerceCartsSuspenseQueryOptions(headers, config) as unknown as UseSuspenseQueryOptions),
+      ...(getWebsitesEcommerceCartsSuspenseQueryOptions(
+        headers,
+        config,
+      ) as unknown as UseSuspenseQueryOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<UseSuspenseQueryOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseSuspenseQueryResult<TData, ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>> & { queryKey: TQueryKey }
+  ) as UseSuspenseQueryResult<
+    TData,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >
+  > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey
 

@@ -24,10 +24,10 @@ const Header: React.FC = () => {
   )
 
   return (
-    <header className="bg-black text-white py-4 sticky top-0 z-20 flex-shrink-0">
-      <div className="container mx-auto px-4 flex md:justify-between items-center gap-4">
+    <header className="sticky top-0 z-20 flex-shrink-0 bg-black py-4 text-white">
+      <div className="container mx-auto flex items-center gap-4 px-4 md:justify-between">
         <button
-          className="md:hidden mr-2"
+          className="mr-2 md:hidden"
           onClick={() => {
             setMenuOpen(!menuOpen)
           }}
@@ -35,18 +35,18 @@ const Header: React.FC = () => {
           {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
         <Link className="truncate" href="/">
-          <h1 className="text-xl md:text-3xl font-bold text-red-500 truncate">
+          <h1 className="truncate text-xl font-bold text-red-500 md:text-3xl">
             JRPECASCOMPLETE
           </h1>
         </Link>
         <input
           type="text"
-          className="text-center py-2 px-4 flex-grow rounded md:max-w-sm bg-gray-800 text-white hidden lg:block"
+          className="hidden flex-grow rounded bg-gray-800 px-4 py-2 text-center text-white md:max-w-sm lg:block"
           placeholder="Pesquisar por um artigo"
           value={searchProduct}
           onChange={handleSearchChange}
         />
-        <nav className="hidden md:flex space-x-4 items-center">
+        <nav className="hidden items-center space-x-4 md:flex">
           <Link href="/about">Sobre Nós</Link>
           {session ? (
             <Link href="/user">
@@ -61,21 +61,21 @@ const Header: React.FC = () => {
               )}
             </Link>
           ) : (
-            <button className="flex gap-2 items-center" onClick={handleSignIn}>
+            <button className="flex items-center gap-2" onClick={handleSignIn}>
               <FiUser />
               <p>Login</p>
             </button>
           )}
           <Link href="/cart">
-            <div className="flex items-center space-x-2 relative">
+            <div className="relative flex items-center space-x-2">
               <FiShoppingCart />
-              <div className="absolute -top-2 -right-3 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
+              <div className="absolute -right-3 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
                 {totalCart}
               </div>
             </div>
           </Link>
         </nav>
-        <div className="flex gap-4 items-center ml-auto md:hidden">
+        <div className="ml-auto flex items-center gap-4 md:hidden">
           {session ? (
             <Link href="/user">
               {session.user.image && (
@@ -90,7 +90,7 @@ const Header: React.FC = () => {
             </Link>
           ) : (
             <button
-              className="flex gap-2 items-center"
+              className="flex items-center gap-2"
               onClick={(event) => {
                 LoginAndAddToCart(event)
               }}
@@ -107,7 +107,7 @@ const Header: React.FC = () => {
           >
             <FiShoppingCart />
             {cart.products.length > 0 && (
-              <div className="absolute -top-3 -right-4 text-xs bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full">
+              <div className="absolute -right-4 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
                 {cart.products.length}
               </div>
             )}
@@ -115,25 +115,25 @@ const Header: React.FC = () => {
         </div>
       </div>
       <div
-        className={`md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${menuOpen || cartOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300 md:hidden ${menuOpen || cartOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         onClick={() => {
           setCartOpen(false)
           setMenuOpen(false)
         }}
       ></div>
       <nav
-        className={`md:hidden fixed top-0 left-0 w-3/4 h-full bg-gray-900 text-white p-4 z-50 transform transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed left-0 top-0 z-50 h-full w-3/4 transform bg-gray-900 p-4 text-white transition-transform duration-300 md:hidden ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex gap-4 flex-col h-full">
+        <div className="flex h-full flex-col gap-4">
           {session ? (
-            <div className="flex gap-4 flex-col">
+            <div className="flex flex-col gap-4">
               <Link
                 href="/user"
                 onClick={() => setMenuOpen(false)}
-                className="flex gap-2 flex-col justify-start"
+                className="flex flex-col justify-start gap-2"
               >
                 <p>Bem Vindo</p>
-                <div className="flex gap-2 items-center mb-4">
+                <div className="mb-4 flex items-center gap-2">
                   {session.user.image && (
                     <Image
                       src={session.user.image}
@@ -147,7 +147,7 @@ const Header: React.FC = () => {
                 </div>
               </Link>
               <Link
-                className="flex gap-2 items-center"
+                className="flex items-center gap-2"
                 onClick={() => {
                   setMenuOpen(false)
                 }}
@@ -157,7 +157,7 @@ const Header: React.FC = () => {
                 Carrinho
               </Link>
               <Link
-                className="flex gap-2 items-center"
+                className="flex items-center gap-2"
                 onClick={() => {
                   setMenuOpen(false)
                 }}
@@ -168,14 +168,14 @@ const Header: React.FC = () => {
               </Link>
               <button
                 onClick={() => signOut()}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
               >
                 Logout
               </button>
             </div>
           ) : (
             <button
-              className="flex gap-2 items-center"
+              className="flex items-center gap-2"
               onClick={(event) => {
                 LoginAndAddToCart(event)
               }}
@@ -197,33 +197,33 @@ const Header: React.FC = () => {
         </div>
       </nav>
       <nav
-        className={`md:hidden fixed top-0 right-0 h-full bg-gray-900 w-3/4 text-white p-4 z-50 transform transition-transform duration-300 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed right-0 top-0 z-50 h-full w-3/4 transform bg-gray-900 p-4 text-white transition-transform duration-300 md:hidden ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <div className="overflow-auto h-full flex flex-col gap-2">
-          <h2 className="text-xl font-bold mb-4 text-white flex-shrink-0">
+        <div className="flex h-full flex-col gap-2 overflow-auto">
+          <h2 className="mb-4 flex-shrink-0 text-xl font-bold text-white">
             Carrinho
           </h2>
           {cart.products.length === 0 ? (
             <p className="text-white">Seu carrinho está vazio.</p>
           ) : (
-            <div className="flex flex-col gap-4 overflow-hidden flex-grow h-full">
+            <div className="flex h-full flex-grow flex-col gap-4 overflow-hidden">
               <div className="flex flex-col gap-4 overflow-auto">
                 {cart.products.map((item, index) => {
                   return (
                     <div
                       key={index}
-                      className="rounded-md flex gap-4 items-center p-4 bg-slate-800"
+                      className="flex items-center gap-4 rounded-md bg-slate-800 p-4"
                     >
-                      <div className="w-20 h-20 overflow-hidden relative flex-shrink-0">
+                      <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden">
                         <Image
                           src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${item.photos?.[0].slice(2) ?? ''}`}
                           alt={item.name || 'Product image'}
                           fill
                         />
                       </div>
-                      <div className="flex gap-2 flex-col flex-grow">
+                      <div className="flex flex-grow flex-col gap-2">
                         <p>{item.name}</p>
-                        <div className="flex gap-2 justify-between">
+                        <div className="flex justify-between gap-2">
                           <div>{item.price}€</div>
                           <div>{item.quantity}€</div>
                         </div>
@@ -237,7 +237,7 @@ const Header: React.FC = () => {
                 href="/cart"
               >
                 <div
-                  className="flex items-center space-x-2 relative"
+                  className="relative flex items-center space-x-2"
                   onClick={() => {
                     setCartOpen(false)
                   }}
@@ -249,10 +249,10 @@ const Header: React.FC = () => {
           )}
         </div>
       </nav>
-      <div className="container mx-auto px-4 lg:hidden mt-2">
+      <div className="container mx-auto mt-2 px-4 lg:hidden">
         <input
           type="text"
-          className="py-2 px-4 rounded bg-gray-800 text-white w-full"
+          className="w-full rounded bg-gray-800 px-4 py-2 text-white"
           placeholder="Pesquise por um artigo"
           value={searchProduct}
           onChange={handleSearchChange}

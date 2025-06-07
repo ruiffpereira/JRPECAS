@@ -4,8 +4,16 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, UseSuspenseQueryOptions, UseSuspenseQueryResult } from '@tanstack/react-query'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query'
 import type {
   GetWebsitesEcommerceOrdersIdQueryResponse,
   GetWebsitesEcommerceOrdersIdPathParams,
@@ -14,10 +22,13 @@ import type {
 } from '../types/GetWebsitesEcommerceOrdersId.ts'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 
-export const getWebsitesEcommerceOrdersIdSuspenseQueryKey = (id: GetWebsitesEcommerceOrdersIdPathParams['id']) =>
-  [{ url: '/websites/ecommerce/orders/:id', params: { id: id } }] as const
+export const getWebsitesEcommerceOrdersIdSuspenseQueryKey = (
+  id: GetWebsitesEcommerceOrdersIdPathParams['id'],
+) => [{ url: '/websites/ecommerce/orders/:id', params: { id: id } }] as const
 
-export type GetWebsitesEcommerceOrdersIdSuspenseQueryKey = ReturnType<typeof getWebsitesEcommerceOrdersIdSuspenseQueryKey>
+export type GetWebsitesEcommerceOrdersIdSuspenseQueryKey = ReturnType<
+  typeof getWebsitesEcommerceOrdersIdSuspenseQueryKey
+>
 
 /**
  * @summary Obtém uma encomenda específica pelo ID para o cliente autenticado
@@ -31,9 +42,16 @@ export async function getWebsitesEcommerceOrdersIdSuspense(
 
   const res = await request<
     GetWebsitesEcommerceOrdersIdQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+    >,
     unknown
-  >({ method: 'GET', url: `/websites/ecommerce/orders/${id}`, baseURL: 'http://localhost:2001/api', ...requestConfig })
+  >({
+    method: 'GET',
+    url: `/websites/ecommerce/orders/${id}`,
+    baseURL: 'http://localhost:2001/api',
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -44,7 +62,9 @@ export function getWebsitesEcommerceOrdersIdSuspenseQueryOptions(
   const queryKey = getWebsitesEcommerceOrdersIdSuspenseQueryKey(id)
   return queryOptions<
     GetWebsitesEcommerceOrdersIdQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+    >,
     GetWebsitesEcommerceOrdersIdQueryResponse,
     typeof queryKey
   >({
@@ -70,7 +90,9 @@ export function useGetWebsitesEcommerceOrdersIdSuspense<
     query?: Partial<
       UseSuspenseQueryOptions<
         GetWebsitesEcommerceOrdersIdQueryResponse,
-        ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>,
+        ResponseErrorConfig<
+          GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+        >,
         TData,
         TQueryKey
       >
@@ -78,17 +100,29 @@ export function useGetWebsitesEcommerceOrdersIdSuspense<
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesEcommerceOrdersIdSuspenseQueryKey(id)
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesEcommerceOrdersIdSuspenseQueryKey(id)
 
   const query = useSuspenseQuery(
     {
-      ...(getWebsitesEcommerceOrdersIdSuspenseQueryOptions(id, config) as unknown as UseSuspenseQueryOptions),
+      ...(getWebsitesEcommerceOrdersIdSuspenseQueryOptions(
+        id,
+        config,
+      ) as unknown as UseSuspenseQueryOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<UseSuspenseQueryOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseSuspenseQueryResult<TData, ResponseErrorConfig<GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500>> & { queryKey: TQueryKey }
+  ) as UseSuspenseQueryResult<
+    TData,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceOrdersId404 | GetWebsitesEcommerceOrdersId500
+    >
+  > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey
 

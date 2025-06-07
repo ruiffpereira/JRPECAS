@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PostWebsitesEcommerceOrdersPaymentIntentMutationRequest,
@@ -14,9 +17,12 @@ import type {
 } from '../types/PostWebsitesEcommerceOrdersPaymentIntent.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const postWebsitesEcommerceOrdersPaymentIntentMutationKey = () => [{ url: '/websites/ecommerce/orders/payment-intent' }] as const
+export const postWebsitesEcommerceOrdersPaymentIntentMutationKey = () =>
+  [{ url: '/websites/ecommerce/orders/payment-intent' }] as const
 
-export type PostWebsitesEcommerceOrdersPaymentIntentMutationKey = ReturnType<typeof postWebsitesEcommerceOrdersPaymentIntentMutationKey>
+export type PostWebsitesEcommerceOrdersPaymentIntentMutationKey = ReturnType<
+  typeof postWebsitesEcommerceOrdersPaymentIntentMutationKey
+>
 
 /**
  * @summary Cria um PaymentIntent Stripe para o pagamento da encomenda (cartão ou MB WAY)
@@ -24,15 +30,26 @@ export type PostWebsitesEcommerceOrdersPaymentIntentMutationKey = ReturnType<typ
  */
 export async function postWebsitesEcommerceOrdersPaymentIntent(
   data: PostWebsitesEcommerceOrdersPaymentIntentMutationRequest,
-  config: Partial<RequestConfig<PostWebsitesEcommerceOrdersPaymentIntentMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<
+    RequestConfig<PostWebsitesEcommerceOrdersPaymentIntentMutationRequest>
+  > & { client?: typeof client } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
   const res = await request<
     PostWebsitesEcommerceOrdersPaymentIntentMutationResponse,
-    ResponseErrorConfig<PostWebsitesEcommerceOrdersPaymentIntent400 | PostWebsitesEcommerceOrdersPaymentIntent500>,
+    ResponseErrorConfig<
+      | PostWebsitesEcommerceOrdersPaymentIntent400
+      | PostWebsitesEcommerceOrdersPaymentIntent500
+    >,
     PostWebsitesEcommerceOrdersPaymentIntentMutationRequest
-  >({ method: 'POST', url: `/websites/ecommerce/orders/payment-intent`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'POST',
+    url: `/websites/ecommerce/orders/payment-intent`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -44,20 +61,30 @@ export function usePostWebsitesEcommerceOrdersPaymentIntent<TContext>(
   options: {
     mutation?: UseMutationOptions<
       PostWebsitesEcommerceOrdersPaymentIntentMutationResponse,
-      ResponseErrorConfig<PostWebsitesEcommerceOrdersPaymentIntent400 | PostWebsitesEcommerceOrdersPaymentIntent500>,
+      ResponseErrorConfig<
+        | PostWebsitesEcommerceOrdersPaymentIntent400
+        | PostWebsitesEcommerceOrdersPaymentIntent500
+      >,
       { data: PostWebsitesEcommerceOrdersPaymentIntentMutationRequest },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PostWebsitesEcommerceOrdersPaymentIntentMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PostWebsitesEcommerceOrdersPaymentIntentMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? postWebsitesEcommerceOrdersPaymentIntentMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ??
+    postWebsitesEcommerceOrdersPaymentIntentMutationKey()
 
   return useMutation<
     PostWebsitesEcommerceOrdersPaymentIntentMutationResponse,
-    ResponseErrorConfig<PostWebsitesEcommerceOrdersPaymentIntent400 | PostWebsitesEcommerceOrdersPaymentIntent500>,
+    ResponseErrorConfig<
+      | PostWebsitesEcommerceOrdersPaymentIntent400
+      | PostWebsitesEcommerceOrdersPaymentIntent500
+    >,
     { data: PostWebsitesEcommerceOrdersPaymentIntentMutationRequest },
     TContext
   >(

@@ -4,23 +4,43 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryResult } from '@tanstack/react-query'
-import type { GetWebsitesCustomersAddressesQueryResponse, GetWebsitesCustomersAddresses500 } from '../types/GetWebsitesCustomersAddresses.ts'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  QueryObserverOptions,
+  UseQueryResult,
+} from '@tanstack/react-query'
+import type {
+  GetWebsitesCustomersAddressesQueryResponse,
+  GetWebsitesCustomersAddresses500,
+} from '../types/GetWebsitesCustomersAddresses.ts'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-export const getWebsitesCustomersAddressesQueryKey = () => [{ url: '/websites/customers/addresses' }] as const
+export const getWebsitesCustomersAddressesQueryKey = () =>
+  [{ url: '/websites/customers/addresses' }] as const
 
-export type GetWebsitesCustomersAddressesQueryKey = ReturnType<typeof getWebsitesCustomersAddressesQueryKey>
+export type GetWebsitesCustomersAddressesQueryKey = ReturnType<
+  typeof getWebsitesCustomersAddressesQueryKey
+>
 
 /**
  * @summary Get all addresses for the authenticated customer
  * {@link /websites/customers/addresses}
  */
-export async function getWebsitesCustomersAddresses(config: Partial<RequestConfig> & { client?: typeof client } = {}) {
+export async function getWebsitesCustomersAddresses(
+  config: Partial<RequestConfig> & { client?: typeof client } = {},
+) {
   const { client: request = client, ...requestConfig } = config
 
-  const res = await request<GetWebsitesCustomersAddressesQueryResponse, ResponseErrorConfig<GetWebsitesCustomersAddresses500>, unknown>({
+  const res = await request<
+    GetWebsitesCustomersAddressesQueryResponse,
+    ResponseErrorConfig<GetWebsitesCustomersAddresses500>,
+    unknown
+  >({
     method: 'GET',
     url: `/websites/customers/addresses`,
     baseURL: 'http://localhost:2001/api',
@@ -29,7 +49,9 @@ export async function getWebsitesCustomersAddresses(config: Partial<RequestConfi
   return res.data
 }
 
-export function getWebsitesCustomersAddressesQueryOptions(config: Partial<RequestConfig> & { client?: typeof client } = {}) {
+export function getWebsitesCustomersAddressesQueryOptions(
+  config: Partial<RequestConfig> & { client?: typeof client } = {},
+) {
   const queryKey = getWebsitesCustomersAddressesQueryKey()
   return queryOptions<
     GetWebsitesCustomersAddressesQueryResponse,
@@ -56,22 +78,37 @@ export function useGetWebsitesCustomersAddresses<
 >(
   options: {
     query?: Partial<
-      QueryObserverOptions<GetWebsitesCustomersAddressesQueryResponse, ResponseErrorConfig<GetWebsitesCustomersAddresses500>, TData, TQueryData, TQueryKey>
+      QueryObserverOptions<
+        GetWebsitesCustomersAddressesQueryResponse,
+        ResponseErrorConfig<GetWebsitesCustomersAddresses500>,
+        TData,
+        TQueryData,
+        TQueryKey
+      >
     > & { client?: QueryClient }
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesCustomersAddressesQueryKey()
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesCustomersAddressesQueryKey()
 
   const query = useQuery(
     {
-      ...(getWebsitesCustomersAddressesQueryOptions(config) as unknown as QueryObserverOptions),
+      ...(getWebsitesCustomersAddressesQueryOptions(
+        config,
+      ) as unknown as QueryObserverOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<QueryObserverOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseQueryResult<TData, ResponseErrorConfig<GetWebsitesCustomersAddresses500>> & { queryKey: TQueryKey }
+  ) as UseQueryResult<
+    TData,
+    ResponseErrorConfig<GetWebsitesCustomersAddresses500>
+  > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey
 

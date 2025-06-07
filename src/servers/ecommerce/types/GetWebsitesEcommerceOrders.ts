@@ -20,7 +20,8 @@ export type GetWebsitesEcommerceOrders500 = {
   error?: string
 }
 
-export type GetWebsitesEcommerceOrdersQueryResponse = GetWebsitesEcommerceOrders200
+export type GetWebsitesEcommerceOrdersQueryResponse =
+  GetWebsitesEcommerceOrders200
 
 export type GetWebsitesEcommerceOrdersQuery = {
   Response: GetWebsitesEcommerceOrders200

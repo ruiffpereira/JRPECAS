@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PostWebsitesCustomersloginMutationRequest,
@@ -15,9 +18,12 @@ import type {
 } from '../types/PostWebsitesCustomerslogin.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const postWebsitesCustomersloginMutationKey = () => [{ url: '/websites/customerslogin' }] as const
+export const postWebsitesCustomersloginMutationKey = () =>
+  [{ url: '/websites/customerslogin' }] as const
 
-export type PostWebsitesCustomersloginMutationKey = ReturnType<typeof postWebsitesCustomersloginMutationKey>
+export type PostWebsitesCustomersloginMutationKey = ReturnType<
+  typeof postWebsitesCustomersloginMutationKey
+>
 
 /**
  * @summary Log in or create a customer
@@ -25,15 +31,27 @@ export type PostWebsitesCustomersloginMutationKey = ReturnType<typeof postWebsit
  */
 export async function postWebsitesCustomerslogin(
   data: PostWebsitesCustomersloginMutationRequest,
-  config: Partial<RequestConfig<PostWebsitesCustomersloginMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<RequestConfig<PostWebsitesCustomersloginMutationRequest>> & {
+    client?: typeof client
+  } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
   const res = await request<
     PostWebsitesCustomersloginMutationResponse,
-    ResponseErrorConfig<PostWebsitesCustomerslogin400 | PostWebsitesCustomerslogin404 | PostWebsitesCustomerslogin500>,
+    ResponseErrorConfig<
+      | PostWebsitesCustomerslogin400
+      | PostWebsitesCustomerslogin404
+      | PostWebsitesCustomerslogin500
+    >,
     PostWebsitesCustomersloginMutationRequest
-  >({ method: 'POST', url: `/websites/customerslogin`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'POST',
+    url: `/websites/customerslogin`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -45,20 +63,31 @@ export function usePostWebsitesCustomerslogin<TContext>(
   options: {
     mutation?: UseMutationOptions<
       PostWebsitesCustomersloginMutationResponse,
-      ResponseErrorConfig<PostWebsitesCustomerslogin400 | PostWebsitesCustomerslogin404 | PostWebsitesCustomerslogin500>,
+      ResponseErrorConfig<
+        | PostWebsitesCustomerslogin400
+        | PostWebsitesCustomerslogin404
+        | PostWebsitesCustomerslogin500
+      >,
       { data: PostWebsitesCustomersloginMutationRequest },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PostWebsitesCustomersloginMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PostWebsitesCustomersloginMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? postWebsitesCustomersloginMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ?? postWebsitesCustomersloginMutationKey()
 
   return useMutation<
     PostWebsitesCustomersloginMutationResponse,
-    ResponseErrorConfig<PostWebsitesCustomerslogin400 | PostWebsitesCustomerslogin404 | PostWebsitesCustomerslogin500>,
+    ResponseErrorConfig<
+      | PostWebsitesCustomerslogin400
+      | PostWebsitesCustomerslogin404
+      | PostWebsitesCustomerslogin500
+    >,
     { data: PostWebsitesCustomersloginMutationRequest },
     TContext
   >(

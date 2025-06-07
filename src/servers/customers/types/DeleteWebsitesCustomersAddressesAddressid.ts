@@ -36,10 +36,13 @@ export type DeleteWebsitesCustomersAddressesAddressid500 = {
   error?: string
 }
 
-export type DeleteWebsitesCustomersAddressesAddressidMutationResponse = DeleteWebsitesCustomersAddressesAddressid204
+export type DeleteWebsitesCustomersAddressesAddressidMutationResponse =
+  DeleteWebsitesCustomersAddressesAddressid204
 
 export type DeleteWebsitesCustomersAddressesAddressidMutation = {
   Response: DeleteWebsitesCustomersAddressesAddressid204
   PathParams: DeleteWebsitesCustomersAddressesAddressidPathParams
-  Errors: DeleteWebsitesCustomersAddressesAddressid404 | DeleteWebsitesCustomersAddressesAddressid500
+  Errors:
+    | DeleteWebsitesCustomersAddressesAddressid404
+    | DeleteWebsitesCustomersAddressesAddressid500
 }

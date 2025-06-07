@@ -12,10 +12,10 @@ const Body: React.FC<BodyProps> = ({ children }) => {
   const { searchProduct } = useProducts()
 
   return (
-    <div className={`h-dvh bg-gray-900 flex flex-col overflow-auto   `}>
+    <div className={`flex h-dvh flex-col overflow-auto bg-gray-900`}>
       <Header />
       <section
-        className={`flex-shrink-0 relative h-96 mb-4 ${searchProduct.length > 0 && 'hidden md:block'}`}
+        className={`relative mb-4 h-96 flex-shrink-0 ${searchProduct.length > 0 && 'hidden md:block'}`}
       >
         <Image
           src="/3.jpg"
@@ -23,15 +23,15 @@ const Body: React.FC<BodyProps> = ({ children }) => {
           fill
           priority
           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          className="w-full h-full"
+          className="h-full w-full"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <h2 className="text-white text-4xl font-bold px-4 text-center">
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <h2 className="px-4 text-center text-4xl font-bold text-white">
             Peças de Carros à Venda
           </h2>
         </div>
       </section>
-      <main className="container mx-auto p-4 flex flex-col gap-4 mb-4 flex-grow">
+      <main className="container mx-auto mb-4 flex flex-grow flex-col gap-4 p-4">
         {children}
       </main>
       <Footer />

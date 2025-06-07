@@ -88,10 +88,14 @@ export type PostWebsitesCustomersloginMutationRequest = {
   idToken: string
 }
 
-export type PostWebsitesCustomersloginMutationResponse = PostWebsitesCustomerslogin200
+export type PostWebsitesCustomersloginMutationResponse =
+  PostWebsitesCustomerslogin200
 
 export type PostWebsitesCustomersloginMutation = {
   Response: PostWebsitesCustomerslogin200
   Request: PostWebsitesCustomersloginMutationRequest
-  Errors: PostWebsitesCustomerslogin400 | PostWebsitesCustomerslogin404 | PostWebsitesCustomerslogin500
+  Errors:
+    | PostWebsitesCustomerslogin400
+    | PostWebsitesCustomerslogin404
+    | PostWebsitesCustomerslogin500
 }

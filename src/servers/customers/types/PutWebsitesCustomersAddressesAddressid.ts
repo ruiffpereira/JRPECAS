@@ -40,11 +40,14 @@ export type PutWebsitesCustomersAddressesAddressid404 = {
 
 export type PutWebsitesCustomersAddressesAddressidMutationRequest = Address
 
-export type PutWebsitesCustomersAddressesAddressidMutationResponse = PutWebsitesCustomersAddressesAddressid200
+export type PutWebsitesCustomersAddressesAddressidMutationResponse =
+  PutWebsitesCustomersAddressesAddressid200
 
 export type PutWebsitesCustomersAddressesAddressidMutation = {
   Response: PutWebsitesCustomersAddressesAddressid200
   Request: PutWebsitesCustomersAddressesAddressidMutationRequest
   PathParams: PutWebsitesCustomersAddressesAddressidPathParams
-  Errors: PutWebsitesCustomersAddressesAddressid400 | PutWebsitesCustomersAddressesAddressid404
+  Errors:
+    | PutWebsitesCustomersAddressesAddressid400
+    | PutWebsitesCustomersAddressesAddressid404
 }

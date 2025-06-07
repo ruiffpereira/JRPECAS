@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PostWebsitesCustomersBankcardsMutationRequest,
@@ -13,9 +16,12 @@ import type {
 } from '../types/PostWebsitesCustomersBankcards.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const postWebsitesCustomersBankcardsMutationKey = () => [{ url: '/websites/customers/bankcards' }] as const
+export const postWebsitesCustomersBankcardsMutationKey = () =>
+  [{ url: '/websites/customers/bankcards' }] as const
 
-export type PostWebsitesCustomersBankcardsMutationKey = ReturnType<typeof postWebsitesCustomersBankcardsMutationKey>
+export type PostWebsitesCustomersBankcardsMutationKey = ReturnType<
+  typeof postWebsitesCustomersBankcardsMutationKey
+>
 
 /**
  * @summary Create a new bank card
@@ -23,7 +29,9 @@ export type PostWebsitesCustomersBankcardsMutationKey = ReturnType<typeof postWe
  */
 export async function postWebsitesCustomersBankcards(
   data?: PostWebsitesCustomersBankcardsMutationRequest,
-  config: Partial<RequestConfig<PostWebsitesCustomersBankcardsMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<
+    RequestConfig<PostWebsitesCustomersBankcardsMutationRequest>
+  > & { client?: typeof client } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
@@ -31,7 +39,13 @@ export async function postWebsitesCustomersBankcards(
     PostWebsitesCustomersBankcardsMutationResponse,
     ResponseErrorConfig<PostWebsitesCustomersBankcards400>,
     PostWebsitesCustomersBankcardsMutationRequest
-  >({ method: 'POST', url: `/websites/customers/bankcards`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'POST',
+    url: `/websites/customers/bankcards`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -47,12 +61,15 @@ export function usePostWebsitesCustomersBankcards<TContext>(
       { data?: PostWebsitesCustomersBankcardsMutationRequest },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PostWebsitesCustomersBankcardsMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PostWebsitesCustomersBankcardsMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? postWebsitesCustomersBankcardsMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ?? postWebsitesCustomersBankcardsMutationKey()
 
   return useMutation<
     PostWebsitesCustomersBankcardsMutationResponse,

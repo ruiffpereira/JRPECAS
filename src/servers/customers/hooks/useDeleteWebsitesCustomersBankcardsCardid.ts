@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   DeleteWebsitesCustomersBankcardsCardidMutationResponse,
@@ -14,9 +17,12 @@ import type {
 } from '../types/DeleteWebsitesCustomersBankcardsCardid.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const deleteWebsitesCustomersBankcardsCardidMutationKey = () => [{ url: '/websites/customers/bankcards/{cardId}' }] as const
+export const deleteWebsitesCustomersBankcardsCardidMutationKey = () =>
+  [{ url: '/websites/customers/bankcards/{cardId}' }] as const
 
-export type DeleteWebsitesCustomersBankcardsCardidMutationKey = ReturnType<typeof deleteWebsitesCustomersBankcardsCardidMutationKey>
+export type DeleteWebsitesCustomersBankcardsCardidMutationKey = ReturnType<
+  typeof deleteWebsitesCustomersBankcardsCardidMutationKey
+>
 
 /**
  * @summary Delete a bank card
@@ -30,9 +36,17 @@ export async function deleteWebsitesCustomersBankcardsCardid(
 
   const res = await request<
     DeleteWebsitesCustomersBankcardsCardidMutationResponse,
-    ResponseErrorConfig<DeleteWebsitesCustomersBankcardsCardid404 | DeleteWebsitesCustomersBankcardsCardid500>,
+    ResponseErrorConfig<
+      | DeleteWebsitesCustomersBankcardsCardid404
+      | DeleteWebsitesCustomersBankcardsCardid500
+    >,
     unknown
-  >({ method: 'DELETE', url: `/websites/customers/bankcards/${cardId}`, baseURL: 'http://localhost:2001/api', ...requestConfig })
+  >({
+    method: 'DELETE',
+    url: `/websites/customers/bankcards/${cardId}`,
+    baseURL: 'http://localhost:2001/api',
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -44,7 +58,10 @@ export function useDeleteWebsitesCustomersBankcardsCardid<TContext>(
   options: {
     mutation?: UseMutationOptions<
       DeleteWebsitesCustomersBankcardsCardidMutationResponse,
-      ResponseErrorConfig<DeleteWebsitesCustomersBankcardsCardid404 | DeleteWebsitesCustomersBankcardsCardid500>,
+      ResponseErrorConfig<
+        | DeleteWebsitesCustomersBankcardsCardid404
+        | DeleteWebsitesCustomersBankcardsCardid500
+      >,
       { cardId: DeleteWebsitesCustomersBankcardsCardidPathParams['cardId'] },
       TContext
     > & { client?: QueryClient }
@@ -53,11 +70,16 @@ export function useDeleteWebsitesCustomersBankcardsCardid<TContext>(
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? deleteWebsitesCustomersBankcardsCardidMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ??
+    deleteWebsitesCustomersBankcardsCardidMutationKey()
 
   return useMutation<
     DeleteWebsitesCustomersBankcardsCardidMutationResponse,
-    ResponseErrorConfig<DeleteWebsitesCustomersBankcardsCardid404 | DeleteWebsitesCustomersBankcardsCardid500>,
+    ResponseErrorConfig<
+      | DeleteWebsitesCustomersBankcardsCardid404
+      | DeleteWebsitesCustomersBankcardsCardid500
+    >,
     { cardId: DeleteWebsitesCustomersBankcardsCardidPathParams['cardId'] },
     TContext
   >(

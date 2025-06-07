@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   DeleteWebsitesCustomersAddressesAddressidMutationResponse,
@@ -14,9 +17,12 @@ import type {
 } from '../types/DeleteWebsitesCustomersAddressesAddressid.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const deleteWebsitesCustomersAddressesAddressidMutationKey = () => [{ url: '/websites/customers/addresses/{addressId}' }] as const
+export const deleteWebsitesCustomersAddressesAddressidMutationKey = () =>
+  [{ url: '/websites/customers/addresses/{addressId}' }] as const
 
-export type DeleteWebsitesCustomersAddressesAddressidMutationKey = ReturnType<typeof deleteWebsitesCustomersAddressesAddressidMutationKey>
+export type DeleteWebsitesCustomersAddressesAddressidMutationKey = ReturnType<
+  typeof deleteWebsitesCustomersAddressesAddressidMutationKey
+>
 
 /**
  * @summary Delete an address
@@ -30,9 +36,17 @@ export async function deleteWebsitesCustomersAddressesAddressid(
 
   const res = await request<
     DeleteWebsitesCustomersAddressesAddressidMutationResponse,
-    ResponseErrorConfig<DeleteWebsitesCustomersAddressesAddressid404 | DeleteWebsitesCustomersAddressesAddressid500>,
+    ResponseErrorConfig<
+      | DeleteWebsitesCustomersAddressesAddressid404
+      | DeleteWebsitesCustomersAddressesAddressid500
+    >,
     unknown
-  >({ method: 'DELETE', url: `/websites/customers/addresses/${addressId}`, baseURL: 'http://localhost:2001/api', ...requestConfig })
+  >({
+    method: 'DELETE',
+    url: `/websites/customers/addresses/${addressId}`,
+    baseURL: 'http://localhost:2001/api',
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -44,8 +58,13 @@ export function useDeleteWebsitesCustomersAddressesAddressid<TContext>(
   options: {
     mutation?: UseMutationOptions<
       DeleteWebsitesCustomersAddressesAddressidMutationResponse,
-      ResponseErrorConfig<DeleteWebsitesCustomersAddressesAddressid404 | DeleteWebsitesCustomersAddressesAddressid500>,
-      { addressId: DeleteWebsitesCustomersAddressesAddressidPathParams['addressId'] },
+      ResponseErrorConfig<
+        | DeleteWebsitesCustomersAddressesAddressid404
+        | DeleteWebsitesCustomersAddressesAddressid500
+      >,
+      {
+        addressId: DeleteWebsitesCustomersAddressesAddressidPathParams['addressId']
+      },
       TContext
     > & { client?: QueryClient }
     client?: Partial<RequestConfig> & { client?: typeof client }
@@ -53,12 +72,19 @@ export function useDeleteWebsitesCustomersAddressesAddressid<TContext>(
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? deleteWebsitesCustomersAddressesAddressidMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ??
+    deleteWebsitesCustomersAddressesAddressidMutationKey()
 
   return useMutation<
     DeleteWebsitesCustomersAddressesAddressidMutationResponse,
-    ResponseErrorConfig<DeleteWebsitesCustomersAddressesAddressid404 | DeleteWebsitesCustomersAddressesAddressid500>,
-    { addressId: DeleteWebsitesCustomersAddressesAddressidPathParams['addressId'] },
+    ResponseErrorConfig<
+      | DeleteWebsitesCustomersAddressesAddressid404
+      | DeleteWebsitesCustomersAddressesAddressid500
+    >,
+    {
+      addressId: DeleteWebsitesCustomersAddressesAddressidPathParams['addressId']
+    },
     TContext
   >(
     {

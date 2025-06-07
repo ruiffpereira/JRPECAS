@@ -4,8 +4,16 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, UseSuspenseQueryOptions, UseSuspenseQueryResult } from '@tanstack/react-query'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query'
 import type {
   GetWebsitesCustomersBankcardsCustomerCustomeridQueryResponse,
   GetWebsitesCustomersBankcardsCustomerCustomeridPathParams,
@@ -15,9 +23,18 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 
 export const getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey = (
   customerId: GetWebsitesCustomersBankcardsCustomerCustomeridPathParams['customerId'],
-) => [{ url: '/websites/customers/bankcards/customer/:customerId', params: { customerId: customerId } }] as const
+) =>
+  [
+    {
+      url: '/websites/customers/bankcards/customer/:customerId',
+      params: { customerId: customerId },
+    },
+  ] as const
 
-export type GetWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey = ReturnType<typeof getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey>
+export type GetWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey =
+  ReturnType<
+    typeof getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey
+  >
 
 /**
  * @summary Get all bank cards for a customer
@@ -33,7 +50,12 @@ export async function getWebsitesCustomersBankcardsCustomerCustomeridSuspense(
     GetWebsitesCustomersBankcardsCustomerCustomeridQueryResponse,
     ResponseErrorConfig<GetWebsitesCustomersBankcardsCustomerCustomerid500>,
     unknown
-  >({ method: 'GET', url: `/websites/customers/bankcards/customer/${customerId}`, baseURL: 'http://localhost:2001/api', ...requestConfig })
+  >({
+    method: 'GET',
+    url: `/websites/customers/bankcards/customer/${customerId}`,
+    baseURL: 'http://localhost:2001/api',
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -41,7 +63,8 @@ export function getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryOpti
   customerId: GetWebsitesCustomersBankcardsCustomerCustomeridPathParams['customerId'],
   config: Partial<RequestConfig> & { client?: typeof client } = {},
 ) {
-  const queryKey = getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey(customerId)
+  const queryKey =
+    getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey(customerId)
   return queryOptions<
     GetWebsitesCustomersBankcardsCustomerCustomeridQueryResponse,
     ResponseErrorConfig<GetWebsitesCustomersBankcardsCustomerCustomerid500>,
@@ -52,7 +75,10 @@ export function getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryOpti
     queryKey,
     queryFn: async ({ signal }) => {
       config.signal = signal
-      return getWebsitesCustomersBankcardsCustomerCustomeridSuspense(customerId, config)
+      return getWebsitesCustomersBankcardsCustomerCustomeridSuspense(
+        customerId,
+        config,
+      )
     },
   })
 }
@@ -63,7 +89,8 @@ export function getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryOpti
  */
 export function useGetWebsitesCustomersBankcardsCustomerCustomeridSuspense<
   TData = GetWebsitesCustomersBankcardsCustomerCustomeridQueryResponse,
-  TQueryKey extends QueryKey = GetWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey,
+  TQueryKey extends
+    QueryKey = GetWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey,
 >(
   customerId: GetWebsitesCustomersBankcardsCustomerCustomeridPathParams['customerId'],
   options: {
@@ -78,17 +105,28 @@ export function useGetWebsitesCustomersBankcardsCustomerCustomeridSuspense<
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey(customerId)
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ??
+    getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryKey(customerId)
 
   const query = useSuspenseQuery(
     {
-      ...(getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryOptions(customerId, config) as unknown as UseSuspenseQueryOptions),
+      ...(getWebsitesCustomersBankcardsCustomerCustomeridSuspenseQueryOptions(
+        customerId,
+        config,
+      ) as unknown as UseSuspenseQueryOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<UseSuspenseQueryOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseSuspenseQueryResult<TData, ResponseErrorConfig<GetWebsitesCustomersBankcardsCustomerCustomerid500>> & { queryKey: TQueryKey }
+  ) as UseSuspenseQueryResult<
+    TData,
+    ResponseErrorConfig<GetWebsitesCustomersBankcardsCustomerCustomerid500>
+  > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey
 

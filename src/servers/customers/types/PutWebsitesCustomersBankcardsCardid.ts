@@ -41,11 +41,14 @@ export type PutWebsitesCustomersBankcardsCardidMutationRequest = {
   cvv?: string
 }
 
-export type PutWebsitesCustomersBankcardsCardidMutationResponse = PutWebsitesCustomersBankcardsCardid200
+export type PutWebsitesCustomersBankcardsCardidMutationResponse =
+  PutWebsitesCustomersBankcardsCardid200
 
 export type PutWebsitesCustomersBankcardsCardidMutation = {
   Response: PutWebsitesCustomersBankcardsCardid200
   Request: PutWebsitesCustomersBankcardsCardidMutationRequest
   PathParams: PutWebsitesCustomersBankcardsCardidPathParams
-  Errors: PutWebsitesCustomersBankcardsCardid400 | PutWebsitesCustomersBankcardsCardid404
+  Errors:
+    | PutWebsitesCustomersBankcardsCardid400
+    | PutWebsitesCustomersBankcardsCardid404
 }

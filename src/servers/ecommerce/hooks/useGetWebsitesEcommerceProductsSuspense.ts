@@ -4,8 +4,16 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, UseSuspenseQueryOptions, UseSuspenseQueryResult } from '@tanstack/react-query'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query'
 import type {
   GetWebsitesEcommerceProductsQueryResponse,
   GetWebsitesEcommerceProductsHeaderParams,
@@ -15,9 +23,12 @@ import type {
 } from '../types/GetWebsitesEcommerceProducts.ts'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 
-export const getWebsitesEcommerceProductsSuspenseQueryKey = () => [{ url: '/websites/ecommerce/products' }] as const
+export const getWebsitesEcommerceProductsSuspenseQueryKey = () =>
+  [{ url: '/websites/ecommerce/products' }] as const
 
-export type GetWebsitesEcommerceProductsSuspenseQueryKey = ReturnType<typeof getWebsitesEcommerceProductsSuspenseQueryKey>
+export type GetWebsitesEcommerceProductsSuspenseQueryKey = ReturnType<
+  typeof getWebsitesEcommerceProductsSuspenseQueryKey
+>
 
 /**
  * @summary Get all products for a website
@@ -31,7 +42,11 @@ export async function getWebsitesEcommerceProductsSuspense(
 
   const res = await request<
     GetWebsitesEcommerceProductsQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>,
+    ResponseErrorConfig<
+      | GetWebsitesEcommerceProducts400
+      | GetWebsitesEcommerceProducts404
+      | GetWebsitesEcommerceProducts500
+    >,
     unknown
   >({
     method: 'GET',
@@ -50,7 +65,11 @@ export function getWebsitesEcommerceProductsSuspenseQueryOptions(
   const queryKey = getWebsitesEcommerceProductsSuspenseQueryKey()
   return queryOptions<
     GetWebsitesEcommerceProductsQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>,
+    ResponseErrorConfig<
+      | GetWebsitesEcommerceProducts400
+      | GetWebsitesEcommerceProducts404
+      | GetWebsitesEcommerceProducts500
+    >,
     GetWebsitesEcommerceProductsQueryResponse,
     typeof queryKey
   >({
@@ -75,7 +94,11 @@ export function useGetWebsitesEcommerceProductsSuspense<
     query?: Partial<
       UseSuspenseQueryOptions<
         GetWebsitesEcommerceProductsQueryResponse,
-        ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>,
+        ResponseErrorConfig<
+          | GetWebsitesEcommerceProducts400
+          | GetWebsitesEcommerceProducts404
+          | GetWebsitesEcommerceProducts500
+        >,
         TData,
         TQueryKey
       >
@@ -83,19 +106,30 @@ export function useGetWebsitesEcommerceProductsSuspense<
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesEcommerceProductsSuspenseQueryKey()
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesEcommerceProductsSuspenseQueryKey()
 
   const query = useSuspenseQuery(
     {
-      ...(getWebsitesEcommerceProductsSuspenseQueryOptions(headers, config) as unknown as UseSuspenseQueryOptions),
+      ...(getWebsitesEcommerceProductsSuspenseQueryOptions(
+        headers,
+        config,
+      ) as unknown as UseSuspenseQueryOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<UseSuspenseQueryOptions, 'queryKey'>),
     },
     queryClient,
   ) as UseSuspenseQueryResult<
     TData,
-    ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>
+    ResponseErrorConfig<
+      | GetWebsitesEcommerceProducts400
+      | GetWebsitesEcommerceProducts404
+      | GetWebsitesEcommerceProducts500
+    >
   > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey

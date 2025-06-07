@@ -3,9 +3,9 @@ import React from 'react'
 const About: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold text-center mb-8">Sobre Nós</h1>
+      <h1 className="mb-8 text-center text-4xl font-bold">Sobre Nós</h1>
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Nossa Empresa</h2>
+        <h2 className="mb-4 text-2xl font-bold">Nossa Empresa</h2>
         <p className="text-lg">
           Bem-vindo à JR-PECAS, sua fonte número um para todas as peças
           automotivas. Estamos dedicados a fornecer a você o melhor em peças de
@@ -14,7 +14,7 @@ const About: React.FC = () => {
         </p>
       </section>
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Missão</h2>
+        <h2 className="mb-4 text-2xl font-bold">Missão</h2>
         <p className="text-lg">
           Nossa missão é oferecer peças automotivas de alta qualidade a preços
           competitivos, garantindo a satisfação total dos nossos clientes em
@@ -22,7 +22,7 @@ const About: React.FC = () => {
         </p>
       </section>
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Visão</h2>
+        <h2 className="mb-4 text-2xl font-bold">Visão</h2>
         <p className="text-lg">
           Ser a empresa líder no fornecimento de peças automotivas
           internacionalmente, reconhecida pela excelência em qualidade e
@@ -30,8 +30,8 @@ const About: React.FC = () => {
         </p>
       </section>
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Valores</h2>
-        <ul className="list-disc list-inside text-lg">
+        <h2 className="mb-4 text-2xl font-bold">Valores</h2>
+        <ul className="list-inside list-disc text-lg">
           <li>Qualidade</li>
           <li>Integridade</li>
           <li>Inovação</li>
@@ -39,7 +39,7 @@ const About: React.FC = () => {
         </ul>
       </section>
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Nossos Produtos</h2>
+        <h2 className="mb-4 text-2xl font-bold">Nossos Produtos</h2>
         <p className="text-lg">
           Oferecemos uma ampla gama de peças automotivas, incluindo motores,
           transmissões, sistemas de freios, componentes elétricos e muito mais.
@@ -48,7 +48,7 @@ const About: React.FC = () => {
         </p>
       </section>
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Contato</h2>
+        <h2 className="mb-4 text-2xl font-bold">Contato</h2>
         <p className="text-lg">
           Se você tiver alguma dúvida ou precisar de mais informações, não
           hesite em nos contatar. Estamos aqui para ajudar!

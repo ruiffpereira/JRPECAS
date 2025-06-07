@@ -4,8 +4,16 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryResult } from '@tanstack/react-query'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  QueryObserverOptions,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import type {
   GetWebsitesEcommerceCartsQueryResponse,
   GetWebsitesEcommerceCartsHeaderParams,
@@ -14,9 +22,12 @@ import type {
 } from '../types/GetWebsitesEcommerceCarts.ts'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-export const getWebsitesEcommerceCartsQueryKey = () => [{ url: '/websites/ecommerce/carts' }] as const
+export const getWebsitesEcommerceCartsQueryKey = () =>
+  [{ url: '/websites/ecommerce/carts' }] as const
 
-export type GetWebsitesEcommerceCartsQueryKey = ReturnType<typeof getWebsitesEcommerceCartsQueryKey>
+export type GetWebsitesEcommerceCartsQueryKey = ReturnType<
+  typeof getWebsitesEcommerceCartsQueryKey
+>
 
 /**
  * @summary Get all items in the cart
@@ -28,7 +39,13 @@ export async function getWebsitesEcommerceCarts(
 ) {
   const { client: request = client, ...requestConfig } = config
 
-  const res = await request<GetWebsitesEcommerceCartsQueryResponse, ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>, unknown>({
+  const res = await request<
+    GetWebsitesEcommerceCartsQueryResponse,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >,
+    unknown
+  >({
     method: 'GET',
     url: `/websites/ecommerce/carts`,
     baseURL: 'http://localhost:2001/api',
@@ -45,7 +62,9 @@ export function getWebsitesEcommerceCartsQueryOptions(
   const queryKey = getWebsitesEcommerceCartsQueryKey()
   return queryOptions<
     GetWebsitesEcommerceCartsQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >,
     GetWebsitesEcommerceCartsQueryResponse,
     typeof queryKey
   >({
@@ -71,7 +90,9 @@ export function useGetWebsitesEcommerceCarts<
     query?: Partial<
       QueryObserverOptions<
         GetWebsitesEcommerceCartsQueryResponse,
-        ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>,
+        ResponseErrorConfig<
+          GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+        >,
         TData,
         TQueryData,
         TQueryKey
@@ -80,17 +101,28 @@ export function useGetWebsitesEcommerceCarts<
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
   const queryKey = queryOptions?.queryKey ?? getWebsitesEcommerceCartsQueryKey()
 
   const query = useQuery(
     {
-      ...(getWebsitesEcommerceCartsQueryOptions(headers, config) as unknown as QueryObserverOptions),
+      ...(getWebsitesEcommerceCartsQueryOptions(
+        headers,
+        config,
+      ) as unknown as QueryObserverOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<QueryObserverOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseQueryResult<TData, ResponseErrorConfig<GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500>> & { queryKey: TQueryKey }
+  ) as UseQueryResult<
+    TData,
+    ResponseErrorConfig<
+      GetWebsitesEcommerceCarts404 | GetWebsitesEcommerceCarts500
+    >
+  > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey
 

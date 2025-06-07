@@ -4,23 +4,43 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, UseSuspenseQueryOptions, UseSuspenseQueryResult } from '@tanstack/react-query'
-import type { GetWebsitesCustomersAddressesQueryResponse, GetWebsitesCustomersAddresses500 } from '../types/GetWebsitesCustomersAddresses.ts'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  UseSuspenseQueryOptions,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query'
+import type {
+  GetWebsitesCustomersAddressesQueryResponse,
+  GetWebsitesCustomersAddresses500,
+} from '../types/GetWebsitesCustomersAddresses.ts'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 
-export const getWebsitesCustomersAddressesSuspenseQueryKey = () => [{ url: '/websites/customers/addresses' }] as const
+export const getWebsitesCustomersAddressesSuspenseQueryKey = () =>
+  [{ url: '/websites/customers/addresses' }] as const
 
-export type GetWebsitesCustomersAddressesSuspenseQueryKey = ReturnType<typeof getWebsitesCustomersAddressesSuspenseQueryKey>
+export type GetWebsitesCustomersAddressesSuspenseQueryKey = ReturnType<
+  typeof getWebsitesCustomersAddressesSuspenseQueryKey
+>
 
 /**
  * @summary Get all addresses for the authenticated customer
  * {@link /websites/customers/addresses}
  */
-export async function getWebsitesCustomersAddressesSuspense(config: Partial<RequestConfig> & { client?: typeof client } = {}) {
+export async function getWebsitesCustomersAddressesSuspense(
+  config: Partial<RequestConfig> & { client?: typeof client } = {},
+) {
   const { client: request = client, ...requestConfig } = config
 
-  const res = await request<GetWebsitesCustomersAddressesQueryResponse, ResponseErrorConfig<GetWebsitesCustomersAddresses500>, unknown>({
+  const res = await request<
+    GetWebsitesCustomersAddressesQueryResponse,
+    ResponseErrorConfig<GetWebsitesCustomersAddresses500>,
+    unknown
+  >({
     method: 'GET',
     url: `/websites/customers/addresses`,
     baseURL: 'http://localhost:2001/api',
@@ -29,7 +49,9 @@ export async function getWebsitesCustomersAddressesSuspense(config: Partial<Requ
   return res.data
 }
 
-export function getWebsitesCustomersAddressesSuspenseQueryOptions(config: Partial<RequestConfig> & { client?: typeof client } = {}) {
+export function getWebsitesCustomersAddressesSuspenseQueryOptions(
+  config: Partial<RequestConfig> & { client?: typeof client } = {},
+) {
   const queryKey = getWebsitesCustomersAddressesSuspenseQueryKey()
   return queryOptions<
     GetWebsitesCustomersAddressesQueryResponse,
@@ -55,22 +77,36 @@ export function useGetWebsitesCustomersAddressesSuspense<
 >(
   options: {
     query?: Partial<
-      UseSuspenseQueryOptions<GetWebsitesCustomersAddressesQueryResponse, ResponseErrorConfig<GetWebsitesCustomersAddresses500>, TData, TQueryKey>
+      UseSuspenseQueryOptions<
+        GetWebsitesCustomersAddressesQueryResponse,
+        ResponseErrorConfig<GetWebsitesCustomersAddresses500>,
+        TData,
+        TQueryKey
+      >
     > & { client?: QueryClient }
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesCustomersAddressesSuspenseQueryKey()
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesCustomersAddressesSuspenseQueryKey()
 
   const query = useSuspenseQuery(
     {
-      ...(getWebsitesCustomersAddressesSuspenseQueryOptions(config) as unknown as UseSuspenseQueryOptions),
+      ...(getWebsitesCustomersAddressesSuspenseQueryOptions(
+        config,
+      ) as unknown as UseSuspenseQueryOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<UseSuspenseQueryOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseSuspenseQueryResult<TData, ResponseErrorConfig<GetWebsitesCustomersAddresses500>> & { queryKey: TQueryKey }
+  ) as UseSuspenseQueryResult<
+    TData,
+    ResponseErrorConfig<GetWebsitesCustomersAddresses500>
+  > & { queryKey: TQueryKey }
 
   query.queryKey = queryKey as TQueryKey
 

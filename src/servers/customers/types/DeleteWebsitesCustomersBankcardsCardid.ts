@@ -26,10 +26,13 @@ export type DeleteWebsitesCustomersBankcardsCardid404 = any
  */
 export type DeleteWebsitesCustomersBankcardsCardid500 = any
 
-export type DeleteWebsitesCustomersBankcardsCardidMutationResponse = DeleteWebsitesCustomersBankcardsCardid204
+export type DeleteWebsitesCustomersBankcardsCardidMutationResponse =
+  DeleteWebsitesCustomersBankcardsCardid204
 
 export type DeleteWebsitesCustomersBankcardsCardidMutation = {
   Response: DeleteWebsitesCustomersBankcardsCardid204
   PathParams: DeleteWebsitesCustomersBankcardsCardidPathParams
-  Errors: DeleteWebsitesCustomersBankcardsCardid404 | DeleteWebsitesCustomersBankcardsCardid500
+  Errors:
+    | DeleteWebsitesCustomersBankcardsCardid404
+    | DeleteWebsitesCustomersBankcardsCardid500
 }

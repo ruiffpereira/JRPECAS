@@ -33,10 +33,14 @@ export type GetWebsitesEcommerceProducts404 = any
  */
 export type GetWebsitesEcommerceProducts500 = any
 
-export type GetWebsitesEcommerceProductsQueryResponse = GetWebsitesEcommerceProducts200
+export type GetWebsitesEcommerceProductsQueryResponse =
+  GetWebsitesEcommerceProducts200
 
 export type GetWebsitesEcommerceProductsQuery = {
   Response: GetWebsitesEcommerceProducts200
   HeaderParams: GetWebsitesEcommerceProductsHeaderParams
-  Errors: GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500
+  Errors:
+    | GetWebsitesEcommerceProducts400
+    | GetWebsitesEcommerceProducts404
+    | GetWebsitesEcommerceProducts500
 }

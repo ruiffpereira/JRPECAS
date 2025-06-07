@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PostWebsitesEcommerceOrdersMutationRequest,
@@ -15,9 +18,12 @@ import type {
 } from '../types/PostWebsitesEcommerceOrders.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const postWebsitesEcommerceOrdersMutationKey = () => [{ url: '/websites/ecommerce/orders' }] as const
+export const postWebsitesEcommerceOrdersMutationKey = () =>
+  [{ url: '/websites/ecommerce/orders' }] as const
 
-export type PostWebsitesEcommerceOrdersMutationKey = ReturnType<typeof postWebsitesEcommerceOrdersMutationKey>
+export type PostWebsitesEcommerceOrdersMutationKey = ReturnType<
+  typeof postWebsitesEcommerceOrdersMutationKey
+>
 
 /**
  * @summary Cria uma nova encomenda após pagamento Stripe confirmado (chamado pelo webhook)
@@ -25,15 +31,27 @@ export type PostWebsitesEcommerceOrdersMutationKey = ReturnType<typeof postWebsi
  */
 export async function postWebsitesEcommerceOrders(
   data?: PostWebsitesEcommerceOrdersMutationRequest,
-  config: Partial<RequestConfig<PostWebsitesEcommerceOrdersMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<RequestConfig<PostWebsitesEcommerceOrdersMutationRequest>> & {
+    client?: typeof client
+  } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
   const res = await request<
     PostWebsitesEcommerceOrdersMutationResponse,
-    ResponseErrorConfig<PostWebsitesEcommerceOrders400 | PostWebsitesEcommerceOrders404 | PostWebsitesEcommerceOrders500>,
+    ResponseErrorConfig<
+      | PostWebsitesEcommerceOrders400
+      | PostWebsitesEcommerceOrders404
+      | PostWebsitesEcommerceOrders500
+    >,
     PostWebsitesEcommerceOrdersMutationRequest
-  >({ method: 'POST', url: `/websites/ecommerce/orders`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'POST',
+    url: `/websites/ecommerce/orders`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -45,20 +63,31 @@ export function usePostWebsitesEcommerceOrders<TContext>(
   options: {
     mutation?: UseMutationOptions<
       PostWebsitesEcommerceOrdersMutationResponse,
-      ResponseErrorConfig<PostWebsitesEcommerceOrders400 | PostWebsitesEcommerceOrders404 | PostWebsitesEcommerceOrders500>,
+      ResponseErrorConfig<
+        | PostWebsitesEcommerceOrders400
+        | PostWebsitesEcommerceOrders404
+        | PostWebsitesEcommerceOrders500
+      >,
       { data?: PostWebsitesEcommerceOrdersMutationRequest },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PostWebsitesEcommerceOrdersMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PostWebsitesEcommerceOrdersMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? postWebsitesEcommerceOrdersMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ?? postWebsitesEcommerceOrdersMutationKey()
 
   return useMutation<
     PostWebsitesEcommerceOrdersMutationResponse,
-    ResponseErrorConfig<PostWebsitesEcommerceOrders400 | PostWebsitesEcommerceOrders404 | PostWebsitesEcommerceOrders500>,
+    ResponseErrorConfig<
+      | PostWebsitesEcommerceOrders400
+      | PostWebsitesEcommerceOrders404
+      | PostWebsitesEcommerceOrders500
+    >,
     { data?: PostWebsitesEcommerceOrdersMutationRequest },
     TContext
   >(

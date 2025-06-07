@@ -4,8 +4,16 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
-import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryResult } from '@tanstack/react-query'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
+import type {
+  QueryKey,
+  QueryClient,
+  QueryObserverOptions,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import type {
   GetWebsitesEcommerceProductsQueryResponse,
   GetWebsitesEcommerceProductsHeaderParams,
@@ -15,9 +23,12 @@ import type {
 } from '../types/GetWebsitesEcommerceProducts.ts'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-export const getWebsitesEcommerceProductsQueryKey = () => [{ url: '/websites/ecommerce/products' }] as const
+export const getWebsitesEcommerceProductsQueryKey = () =>
+  [{ url: '/websites/ecommerce/products' }] as const
 
-export type GetWebsitesEcommerceProductsQueryKey = ReturnType<typeof getWebsitesEcommerceProductsQueryKey>
+export type GetWebsitesEcommerceProductsQueryKey = ReturnType<
+  typeof getWebsitesEcommerceProductsQueryKey
+>
 
 /**
  * @summary Get all products for a website
@@ -31,7 +42,11 @@ export async function getWebsitesEcommerceProducts(
 
   const res = await request<
     GetWebsitesEcommerceProductsQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>,
+    ResponseErrorConfig<
+      | GetWebsitesEcommerceProducts400
+      | GetWebsitesEcommerceProducts404
+      | GetWebsitesEcommerceProducts500
+    >,
     unknown
   >({
     method: 'GET',
@@ -50,7 +65,11 @@ export function getWebsitesEcommerceProductsQueryOptions(
   const queryKey = getWebsitesEcommerceProductsQueryKey()
   return queryOptions<
     GetWebsitesEcommerceProductsQueryResponse,
-    ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>,
+    ResponseErrorConfig<
+      | GetWebsitesEcommerceProducts400
+      | GetWebsitesEcommerceProducts404
+      | GetWebsitesEcommerceProducts500
+    >,
     GetWebsitesEcommerceProductsQueryResponse,
     typeof queryKey
   >({
@@ -76,7 +95,11 @@ export function useGetWebsitesEcommerceProducts<
     query?: Partial<
       QueryObserverOptions<
         GetWebsitesEcommerceProductsQueryResponse,
-        ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>,
+        ResponseErrorConfig<
+          | GetWebsitesEcommerceProducts400
+          | GetWebsitesEcommerceProducts404
+          | GetWebsitesEcommerceProducts500
+        >,
         TData,
         TQueryData,
         TQueryKey
@@ -85,17 +108,31 @@ export function useGetWebsitesEcommerceProducts<
     client?: Partial<RequestConfig> & { client?: typeof client }
   } = {},
 ) {
-  const { query: { client: queryClient, ...queryOptions } = {}, client: config = {} } = options ?? {}
-  const queryKey = queryOptions?.queryKey ?? getWebsitesEcommerceProductsQueryKey()
+  const {
+    query: { client: queryClient, ...queryOptions } = {},
+    client: config = {},
+  } = options ?? {}
+  const queryKey =
+    queryOptions?.queryKey ?? getWebsitesEcommerceProductsQueryKey()
 
   const query = useQuery(
     {
-      ...(getWebsitesEcommerceProductsQueryOptions(headers, config) as unknown as QueryObserverOptions),
+      ...(getWebsitesEcommerceProductsQueryOptions(
+        headers,
+        config,
+      ) as unknown as QueryObserverOptions),
       queryKey,
       ...(queryOptions as unknown as Omit<QueryObserverOptions, 'queryKey'>),
     },
     queryClient,
-  ) as UseQueryResult<TData, ResponseErrorConfig<GetWebsitesEcommerceProducts400 | GetWebsitesEcommerceProducts404 | GetWebsitesEcommerceProducts500>> & {
+  ) as UseQueryResult<
+    TData,
+    ResponseErrorConfig<
+      | GetWebsitesEcommerceProducts400
+      | GetWebsitesEcommerceProducts404
+      | GetWebsitesEcommerceProducts500
+    >
+  > & {
     queryKey: TQueryKey
   }
 

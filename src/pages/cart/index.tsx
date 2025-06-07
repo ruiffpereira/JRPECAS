@@ -1,40 +1,40 @@
-import Link from "next/link";
-import { useProducts } from "@/context/ProductsContext";
-import Image from "next/image";
-import { Fragment } from "react";
-import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
-import router from "next/router";
+import Link from 'next/link'
+import { useProducts } from '@/context/ProductsContext'
+import Image from 'next/image'
+import { Fragment } from 'react'
+import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci'
+import router from 'next/router'
 
 const Cart: React.FC = () => {
-  const { cart, addToCart } = useProducts();
+  const { cart, addToCart } = useProducts()
 
   return (
     <Fragment>
-      <h1 className="text-3xl font-bold text-white mb-8">
+      <h1 className="mb-8 text-3xl font-bold text-white">
         Carrinho de Compras
       </h1>
       {cart.products.length === 0 ? (
         <p className="text-white">Seu carrinho está vazio.</p>
       ) : (
         <Fragment>
-          <div className="text-end mb-4  text-lg">
+          <div className="mb-4 text-end text-lg">
             Total:
-            <span className="ml-2 font-bold text-2xl">{cart.shipPrice}€</span>
+            <span className="ml-2 text-2xl font-bold">{cart.shipPrice}€</span>
           </div>
           <div className="overflow-auto">
-            <table className="min-w-full bg-gray-800 text-white rounded-md">
-              <thead className="bg-gray-800 z-10 ">
+            <table className="min-w-full rounded-md bg-gray-800 text-white">
+              <thead className="z-10 bg-gray-800">
                 <tr>
-                  <th className="py-2 px-2 border-b text-start border-gray-700">
+                  <th className="border-b border-gray-700 px-2 py-2 text-start">
                     Imagem
                   </th>
-                  <th className="py-2 px-2 border-b text-start border-gray-700">
+                  <th className="border-b border-gray-700 px-2 py-2 text-start">
                     Nome
                   </th>
-                  <th className="py-2 px-2 border-b text-start border-gray-700">
+                  <th className="border-b border-gray-700 px-2 py-2 text-start">
                     Quantidade
                   </th>
-                  <th className="py-4 px-2 border-b text-start border-gray-700">
+                  <th className="border-b border-gray-700 px-2 py-4 text-start">
                     Preço
                   </th>
                 </tr>
@@ -43,29 +43,29 @@ const Cart: React.FC = () => {
                 {cart.products.map((item, index) => {
                   return (
                     <tr key={index} className="hover:bg-gray-700">
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <div className="relative w-24 h-24">
+                      <td className="border-b border-gray-700 px-4 py-2">
+                        <div className="relative h-24 w-24">
                           <Image
                             src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${
-                              item.photos?.[0].slice(2) ?? ""
+                              item.photos?.[0].slice(2) ?? ''
                             }`}
-                            alt={item.name || ""}
+                            alt={item.name || ''}
                             width={200}
                             height={200}
-                            className="rounded-md w-full h-full"
+                            className="h-full w-full rounded-md"
                           />
                         </div>
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
+                      <td className="border-b border-gray-700 px-4 py-2">
                         {item.name}
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <div className="flex gap-1 items-center">
+                      <td className="border-b border-gray-700 px-4 py-2">
+                        <div className="flex items-center gap-1">
                           <button
                             className="text-4xl"
                             onClick={() =>
                               addToCart({
-                                productId: item.productId ?? "",
+                                productId: item.productId ?? '',
                                 quantity: 0,
                               })
                             }
@@ -77,7 +77,7 @@ const Cart: React.FC = () => {
                             className="text-4xl"
                             onClick={() =>
                               addToCart({
-                                productId: item.productId ?? "",
+                                productId: item.productId ?? '',
                                 quantity: 1,
                               })
                             }
@@ -86,18 +86,18 @@ const Cart: React.FC = () => {
                           </button>
                         </div>
                       </td>
-                      <td className="py-2 px-4 border-b border-gray-700">
+                      <td className="border-b border-gray-700 px-4 py-2">
                         {item.price}€
                       </td>
                     </tr>
-                  );
+                  )
                 })}
               </tbody>
             </table>
           </div>
           <button
-            onClick={() => router.push("/cart/checkout")}
-            className="text-end text-red-500 text-xl"
+            onClick={() => router.push('/cart/checkout')}
+            className="text-end text-xl text-red-500"
           >
             Finalizar Encomenda
           </button>
@@ -109,7 +109,7 @@ const Cart: React.FC = () => {
         </Link>
       </div>
     </Fragment>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

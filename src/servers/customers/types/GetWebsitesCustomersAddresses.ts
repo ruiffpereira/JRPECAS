@@ -20,7 +20,8 @@ export type GetWebsitesCustomersAddresses500 = {
   error?: string
 }
 
-export type GetWebsitesCustomersAddressesQueryResponse = GetWebsitesCustomersAddresses200
+export type GetWebsitesCustomersAddressesQueryResponse =
+  GetWebsitesCustomersAddresses200
 
 export type GetWebsitesCustomersAddressesQuery = {
   Response: GetWebsitesCustomersAddresses200

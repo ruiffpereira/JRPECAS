@@ -4,7 +4,10 @@
  */
 
 import client from '@kubb/plugin-client/clients/axios'
-import type { RequestConfig, ResponseErrorConfig } from '@kubb/plugin-client/clients/axios'
+import type {
+  RequestConfig,
+  ResponseErrorConfig,
+} from '@kubb/plugin-client/clients/axios'
 import type { UseMutationOptions, QueryClient } from '@tanstack/react-query'
 import type {
   PutWebsitesCustomersAddressesAddressidMutationRequest,
@@ -15,9 +18,12 @@ import type {
 } from '../types/PutWebsitesCustomersAddressesAddressid.ts'
 import { useMutation } from '@tanstack/react-query'
 
-export const putWebsitesCustomersAddressesAddressidMutationKey = () => [{ url: '/websites/customers/addresses/{addressId}' }] as const
+export const putWebsitesCustomersAddressesAddressidMutationKey = () =>
+  [{ url: '/websites/customers/addresses/{addressId}' }] as const
 
-export type PutWebsitesCustomersAddressesAddressidMutationKey = ReturnType<typeof putWebsitesCustomersAddressesAddressidMutationKey>
+export type PutWebsitesCustomersAddressesAddressidMutationKey = ReturnType<
+  typeof putWebsitesCustomersAddressesAddressidMutationKey
+>
 
 /**
  * @summary Update an address
@@ -26,15 +32,26 @@ export type PutWebsitesCustomersAddressesAddressidMutationKey = ReturnType<typeo
 export async function putWebsitesCustomersAddressesAddressid(
   addressId: PutWebsitesCustomersAddressesAddressidPathParams['addressId'],
   data: PutWebsitesCustomersAddressesAddressidMutationRequest,
-  config: Partial<RequestConfig<PutWebsitesCustomersAddressesAddressidMutationRequest>> & { client?: typeof client } = {},
+  config: Partial<
+    RequestConfig<PutWebsitesCustomersAddressesAddressidMutationRequest>
+  > & { client?: typeof client } = {},
 ) {
   const { client: request = client, ...requestConfig } = config
 
   const res = await request<
     PutWebsitesCustomersAddressesAddressidMutationResponse,
-    ResponseErrorConfig<PutWebsitesCustomersAddressesAddressid400 | PutWebsitesCustomersAddressesAddressid404>,
+    ResponseErrorConfig<
+      | PutWebsitesCustomersAddressesAddressid400
+      | PutWebsitesCustomersAddressesAddressid404
+    >,
     PutWebsitesCustomersAddressesAddressidMutationRequest
-  >({ method: 'PUT', url: `/websites/customers/addresses/${addressId}`, baseURL: 'http://localhost:2001/api', data, ...requestConfig })
+  >({
+    method: 'PUT',
+    url: `/websites/customers/addresses/${addressId}`,
+    baseURL: 'http://localhost:2001/api',
+    data,
+    ...requestConfig,
+  })
   return res.data
 }
 
@@ -46,21 +63,37 @@ export function usePutWebsitesCustomersAddressesAddressid<TContext>(
   options: {
     mutation?: UseMutationOptions<
       PutWebsitesCustomersAddressesAddressidMutationResponse,
-      ResponseErrorConfig<PutWebsitesCustomersAddressesAddressid400 | PutWebsitesCustomersAddressesAddressid404>,
-      { addressId: PutWebsitesCustomersAddressesAddressidPathParams['addressId']; data: PutWebsitesCustomersAddressesAddressidMutationRequest },
+      ResponseErrorConfig<
+        | PutWebsitesCustomersAddressesAddressid400
+        | PutWebsitesCustomersAddressesAddressid404
+      >,
+      {
+        addressId: PutWebsitesCustomersAddressesAddressidPathParams['addressId']
+        data: PutWebsitesCustomersAddressesAddressidMutationRequest
+      },
       TContext
     > & { client?: QueryClient }
-    client?: Partial<RequestConfig<PutWebsitesCustomersAddressesAddressidMutationRequest>> & { client?: typeof client }
+    client?: Partial<
+      RequestConfig<PutWebsitesCustomersAddressesAddressidMutationRequest>
+    > & { client?: typeof client }
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...mutationOptions } = mutation
-  const mutationKey = mutationOptions.mutationKey ?? putWebsitesCustomersAddressesAddressidMutationKey()
+  const mutationKey =
+    mutationOptions.mutationKey ??
+    putWebsitesCustomersAddressesAddressidMutationKey()
 
   return useMutation<
     PutWebsitesCustomersAddressesAddressidMutationResponse,
-    ResponseErrorConfig<PutWebsitesCustomersAddressesAddressid400 | PutWebsitesCustomersAddressesAddressid404>,
-    { addressId: PutWebsitesCustomersAddressesAddressidPathParams['addressId']; data: PutWebsitesCustomersAddressesAddressidMutationRequest },
+    ResponseErrorConfig<
+      | PutWebsitesCustomersAddressesAddressid400
+      | PutWebsitesCustomersAddressesAddressid404
+    >,
+    {
+      addressId: PutWebsitesCustomersAddressesAddressidPathParams['addressId']
+      data: PutWebsitesCustomersAddressesAddressidMutationRequest
+    },
     TContext
   >(
     {

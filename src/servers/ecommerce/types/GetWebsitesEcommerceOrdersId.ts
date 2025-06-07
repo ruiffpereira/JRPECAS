@@ -38,7 +38,8 @@ export type GetWebsitesEcommerceOrdersId500 = {
   error?: string
 }
 
-export type GetWebsitesEcommerceOrdersIdQueryResponse = GetWebsitesEcommerceOrdersId200
+export type GetWebsitesEcommerceOrdersIdQueryResponse =
+  GetWebsitesEcommerceOrdersId200
 
 export type GetWebsitesEcommerceOrdersIdQuery = {
   Response: GetWebsitesEcommerceOrdersId200

@@ -1,1 +1,18 @@
-{"type":"object","properties":{"cardId":{"type":"string","description":"ID of the bank card"},"cardNumber":{"type":"string","description":"Card number"},"expirationDate":{"type":"string","description":"Expiration date of the card (MM/YY format)"},"cvv":{"type":"string","description":"CVV of the card"},"customerId":{"type":"string","description":"ID of the customer associated with the bank card"}},"required":["cardNumber","expirationDate","cvv","customerId"],"x-readme-ref-name":"BankCard"}
+{
+  "type": "object",
+  "properties": {
+    "cardId": { "type": "string", "description": "ID of the bank card" },
+    "cardNumber": { "type": "string", "description": "Card number" },
+    "expirationDate": {
+      "type": "string",
+      "description": "Expiration date of the card (MM/YY format)"
+    },
+    "cvv": { "type": "string", "description": "CVV of the card" },
+    "customerId": {
+      "type": "string",
+      "description": "ID of the customer associated with the bank card"
+    }
+  },
+  "required": ["cardNumber", "expirationDate", "cvv", "customerId"],
+  "x-readme-ref-name": "BankCard"
+}
