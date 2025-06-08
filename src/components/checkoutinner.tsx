@@ -2,10 +2,9 @@ import { useProducts } from '@/context/ProductsContext'
 import routes from '@/routes'
 import {
   usePostWebsitesEcommerceOrders,
-  postWebsitesEcommerceOrdersPaymentIntent,
   getWebsitesEcommerceOrdersQueryKey,
 } from '@/servers/ecommerce'
-import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
+import { useElements, PaymentElement, useStripe } from '@stripe/react-stripe-js'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -40,13 +39,11 @@ const Checkout = ({
       address.find((a) => a.defaultAdressFaturation)?.addressId ?? null,
     )
   const { cart, setCart } = useProducts()
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'mb_way'>('card')
-  const [mbwayPhone, setMbwayPhone] = useState('')
+  const stripe = useStripe()
 
   const nextStep = () => setStep((prev) => prev + 1)
   const prevStep = () => setStep((prev) => prev - 1)
 
-  const stripe = useStripe()
   const elements = useElements()
 
   const { mutate: newOrder, isPending: isPendingOrder } =
@@ -83,73 +80,18 @@ const Checkout = ({
       return
     }
 
-    try {
-      const paymentIntent = await postWebsitesEcommerceOrdersPaymentIntent(
-        {
-          paymentMethod,
-          customerId: sessionNext.user.email,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionNext?.user.token}`,
-          },
-        },
-      )
+    // Confirma o pagamento com Stripe
+    const result = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: window.location.origin + '/orders?result=success',
+      },
+      redirect: 'if_required',
+    })
 
-      const { clientSecret } = paymentIntent
-
-      if (!clientSecret) {
-        alert('Erro ao obter o clientSecret do pagamento.')
-        return
-      }
-
-      // 2. Usa Stripe.js para processar o pagamento
-      if (!stripe) {
-        alert('Stripe não foi carregado corretamente.')
-        return
-      }
-
-      let result
-      if (paymentMethod === 'card') {
-        const cardElement = elements.getElement(CardElement)
-        if (!cardElement) {
-          alert('Não foi possível obter o elemento do cartão.')
-          return
-        }
-        result = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: cardElement,
-            billing_details: {
-              name: sessionNext.user.name,
-              email: sessionNext.user.email,
-            },
-          },
-        })
-      } else if (paymentMethod === 'mb_way') {
-        // MB WAY: pede o número de telemóvel
-        result = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            payment_method_data: {
-              billing_details: {
-                name: sessionNext.user.name,
-                email: sessionNext.user.email,
-                phone: mbwayPhone,
-              },
-            },
-            return_url: window.location.origin + '/orders?result=success',
-          },
-          redirect: 'always',
-        })
-        // ... resto do flow ...
-      }
-
-      if (result && result.error) {
-        alert('Erro no pagamento: ' + result.error.message)
-        return
-      }
-    } catch (error) {
-      console.error('Erro ao processar o pagamento:', error)
+    if (result.error) {
+      alert('Erro no pagamento: ' + result.error.message)
+      return
     }
 
     newOrder(
@@ -266,40 +208,8 @@ const Checkout = ({
             ))}
           </div>
           <div className="mb-4 flex gap-4">
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="card"
-                checked={paymentMethod === 'card'}
-                onChange={() => setPaymentMethod('card')}
-              />
-              <span className="ml-2">Cartão</span>
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="mb_way"
-                checked={paymentMethod === 'mb_way'}
-                onChange={() => setPaymentMethod('mb_way')}
-              />
-              <span className="ml-2">MB WAY</span>
-            </label>
+            <PaymentElement className="rounded bg-white p-2" />
           </div>
-          {paymentMethod === 'mb_way' ? (
-            <input
-              type="tel"
-              placeholder="Telemóvel MB WAY"
-              value={mbwayPhone}
-              onChange={(e) => setMbwayPhone(e.target.value)}
-              className="mb-2 rounded p-2"
-              required
-            />
-          ) : (
-            <CardElement className="rounded bg-white p-2" />
-          )}
-
           <div className="ml-auto flex gap-4">
             <button
               onClick={prevStep}
