@@ -20,7 +20,7 @@
 .DS_Store
 *.pem
 
-src/server
+src/servers
 
 # debug
 npm-debug.log*
@@ -37,3 +37,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+public/sw.js
+public/workbox-*.js
+
