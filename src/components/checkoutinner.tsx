@@ -1,9 +1,6 @@
 import { useProducts } from '@/context/ProductsContext'
 import routes from '@/routes'
-import {
-  usePostWebsitesEcommerceOrders,
-  getWebsitesEcommerceOrdersQueryKey,
-} from '@/servers/ecommerce'
+import { getWebsitesEcommerceOrdersQueryKey } from '@/servers/ecommerce'
 import { useElements, PaymentElement, useStripe } from '@stripe/react-stripe-js'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
@@ -29,6 +26,7 @@ const Checkout = ({
 }) => {
   const router = useRouter()
   const queryClient = useQueryClient()
+  const [pendingOrder, setPedingOrder] = useState(false)
 
   const [step, setStep] = useState(1) // Gerencia as etapas do checkout
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
@@ -46,15 +44,6 @@ const Checkout = ({
 
   const elements = useElements()
 
-  const { mutate: newOrder, isPending: isPendingOrder } =
-    usePostWebsitesEcommerceOrders({
-      client: {
-        headers: {
-          Authorization: `Bearer ${sessionNext?.user.token}`,
-        },
-      },
-    })
-
   if (!sessionNext) {
     return (
       <div>
@@ -70,6 +59,7 @@ const Checkout = ({
   }
 
   async function handleCheckout() {
+    setPedingOrder(true)
     if (!selectedAddressId || !selectedAddressIdFaturarion) {
       alert('Por favor, selecione as moradas de envio e faturação.')
       return
@@ -90,30 +80,17 @@ const Checkout = ({
     })
 
     if (result.error) {
+      setPedingOrder(false)
       alert('Erro no pagamento: ' + result.error.message)
       return
     }
 
-    newOrder(
-      {
-        data: {
-          billingAddress: selectedAddressIdFaturarion,
-          shippingAddress: selectedAddressId,
-        },
-      },
-      {
-        onSuccess: () => {
-          setCart({ products: [], shipPrice: 0, cartId: '', customerId: '' })
-          queryClient.invalidateQueries({
-            queryKey: getWebsitesEcommerceOrdersQueryKey(),
-          })
-          router.push(routes.orders)
-        },
-        onError: () => {
-          router.push(routes.orders)
-        },
-      },
-    )
+    setPedingOrder(false)
+    setCart({ products: [], shipPrice: 0, cartId: '', customerId: '' })
+    queryClient.invalidateQueries({
+      queryKey: getWebsitesEcommerceOrdersQueryKey(),
+    })
+    router.push(routes.orders)
   }
 
   return (
@@ -220,7 +197,7 @@ const Checkout = ({
             <button
               onClick={handleCheckout}
               className={`mt-4 rounded bg-green-500 px-4 py-2 text-white ${
-                isPendingOrder ? 'cursor-not-allowed opacity-50' : ''
+                pendingOrder ? 'cursor-not-allowed opacity-50' : ''
               }`}
             >
               Finalizar Pedido

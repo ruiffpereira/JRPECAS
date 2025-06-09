@@ -11,6 +11,9 @@ export default function Document() {
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/icon-192x192.png" />
+        <meta name="theme-color" content="#000000" />
         {/* Title should be defined at the page level using <Head> from next/head */}
       </Head>
       <body className="overflow-hidden antialiased">
