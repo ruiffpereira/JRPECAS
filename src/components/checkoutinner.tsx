@@ -81,7 +81,6 @@ const Checkout = ({
 
     if (result.error) {
       setPedingOrder(false)
-      alert('Erro no pagamento: ' + result.error.message)
       return
     }
 

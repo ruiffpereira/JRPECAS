@@ -4,111 +4,123 @@ import Image from 'next/image'
 import { Fragment } from 'react'
 import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci'
 import router from 'next/router'
+import routes from '@/routes'
 
 const Cart: React.FC = () => {
   const { cart, addToCart } = useProducts()
 
   return (
-    <Fragment>
-      <h1 className="mb-8 text-3xl font-bold text-white">
-        Carrinho de Compras
-      </h1>
+    <>
       {cart.products.length === 0 ? (
-        <p className="text-white">Seu carrinho está vazio.</p>
+        <div className="rounded-xl bg-gray-800/80 p-8 text-center text-gray-300 shadow">
+          <p className="mb-4 text-lg">O seu carrinho está vazio.</p>
+          <Link
+            href="/"
+            className="inline-block rounded bg-red-500 px-6 py-2 font-semibold text-white shadow transition hover:bg-red-600"
+          >
+            Ver Produtos
+          </Link>
+        </div>
       ) : (
         <Fragment>
-          <div className="mb-4 text-end text-lg">
-            Total:
-            <span className="ml-2 text-2xl font-bold">{cart.shipPrice}€</span>
+          <div className="mb-6 flex items-end justify-end gap-2">
+            <span className="text-lg text-gray-300">Total:</span>
+            <span className="rounded bg-gray-800 px-4 py-2 text-2xl font-bold text-green-400 shadow">
+              {cart.shipPrice}€
+            </span>
           </div>
-          <div className="overflow-auto">
-            <table className="min-w-full rounded-md bg-gray-800 text-white">
-              <thead className="z-10 bg-gray-800">
+          <div className="overflow-x-auto rounded-xl shadow">
+            <table className="min-w-full bg-gray-800/90 text-white">
+              <thead>
                 <tr>
-                  <th className="border-b border-gray-700 px-2 py-2 text-start">
+                  <th className="px-2 py-3 text-left text-sm font-semibold text-gray-400">
                     Imagem
                   </th>
-                  <th className="border-b border-gray-700 px-2 py-2 text-start">
+                  <th className="px-2 py-3 text-left text-sm font-semibold text-gray-400">
                     Nome
                   </th>
-                  <th className="border-b border-gray-700 px-2 py-2 text-start">
+                  <th className="px-2 py-3 text-center text-sm font-semibold text-gray-400">
                     Quantidade
                   </th>
-                  <th className="border-b border-gray-700 px-2 py-4 text-start">
+                  <th className="px-2 py-3 text-left text-sm font-semibold text-gray-400">
                     Preço
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {cart.products.map((item, index) => {
-                  return (
-                    <tr key={index} className="hover:bg-gray-700">
-                      <td className="border-b border-gray-700 px-4 py-2">
-                        <div className="relative h-24 w-24">
-                          <Image
-                            src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${
-                              item.photos?.[0].slice(2) ?? ''
-                            }`}
-                            alt={item.name || ''}
-                            width={200}
-                            height={200}
-                            className="h-full w-full rounded-md"
-                          />
-                        </div>
-                      </td>
-                      <td className="border-b border-gray-700 px-4 py-2">
-                        {item.name}
-                      </td>
-                      <td className="border-b border-gray-700 px-4 py-2">
-                        <div className="flex items-center gap-1">
-                          <button
-                            className="text-4xl"
-                            onClick={() =>
-                              addToCart({
-                                productId: item.productId ?? '',
-                                quantity: 0,
-                              })
-                            }
-                          >
-                            <CiSquareMinus />
-                          </button>
-                          <div className="w-7 text-center">{item.quantity}</div>
-                          <button
-                            className="text-4xl"
-                            onClick={() =>
-                              addToCart({
-                                productId: item.productId ?? '',
-                                quantity: 1,
-                              })
-                            }
-                          >
-                            <CiSquarePlus />
-                          </button>
-                        </div>
-                      </td>
-                      <td className="border-b border-gray-700 px-4 py-2">
-                        {item.price}€
-                      </td>
-                    </tr>
-                  )
-                })}
+                {cart.products.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-700 transition hover:bg-gray-700/60"
+                  >
+                    <td className="px-4 py-3">
+                      <div className="relative h-16 w-16 overflow-hidden rounded-md border border-gray-700 bg-gray-900">
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${item.photos?.[0].slice(2) ?? ''}`}
+                          alt={item.name || ''}
+                          width={64}
+                          height={64}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 align-middle">{item.name}</td>
+                    <td className="px-4 py-3 align-middle">
+                      <div className="flex items-center justify-center gap-2">
+                        <button
+                          className="rounded p-1 text-2xl text-red-400 transition hover:bg-red-500 hover:text-white"
+                          onClick={() =>
+                            addToCart({
+                              productId: item.productId ?? '',
+                              quantity: 0,
+                            })
+                          }
+                          aria-label="Remover"
+                        >
+                          <CiSquareMinus />
+                        </button>
+                        <span className="w-8 text-center text-lg font-semibold text-gray-100">
+                          {item.quantity}
+                        </span>
+                        <button
+                          className="rounded p-1 text-2xl text-green-400 transition hover:bg-green-500 hover:text-white"
+                          onClick={() =>
+                            addToCart({
+                              productId: item.productId ?? '',
+                              quantity: 1,
+                            })
+                          }
+                          aria-label="Adicionar"
+                        >
+                          <CiSquarePlus />
+                        </button>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 align-middle font-semibold text-gray-100">
+                      {item.price}€
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-          <button
-            onClick={() => router.push('/cart/checkout')}
-            className="text-end text-xl text-red-500"
-          >
-            Finalizar Encomenda
-          </button>
+          <div className="mt-8 flex flex-row flex-wrap items-center justify-between gap-4">
+            <Link
+              href="/"
+              className="rounded bg-gray-700 px-4 py-2 font-semibold text-gray-200 shadow transition hover:bg-gray-600"
+            >
+              Continuar Comprando
+            </Link>
+            <button
+              onClick={() => router.push(routes.checkout)}
+              className="rounded bg-red-500 px-4 py-2 text-lg font-bold text-white shadow transition hover:bg-red-600"
+            >
+              Finalizar Encomenda
+            </button>
+          </div>
         </Fragment>
       )}
-      <div className="mt-8">
-        <Link href="/" className="text-red-500 hover:underline">
-          Continuar Comprando
-        </Link>
-      </div>
-    </Fragment>
+    </>
   )
 }
 

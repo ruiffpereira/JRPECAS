@@ -6,6 +6,7 @@ import { FaBox } from 'react-icons/fa'
 import { LoginAndAddToCart } from '@/components/auth'
 import Image from 'next/image'
 import { useSession, signOut, signIn } from 'next-auth/react'
+import routes from '@/routes'
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -25,6 +26,8 @@ const Header: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-20 flex-shrink-0 bg-black py-4 text-white">
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] w-full bg-gradient-to-r from-red-500 via-yellow-400 to-red-500 opacity-70" />
+
       <div className="container mx-auto flex items-center gap-4 px-4 md:justify-between">
         <button
           className="mr-2 md:hidden"
@@ -49,17 +52,22 @@ const Header: React.FC = () => {
         <nav className="hidden items-center space-x-4 md:flex">
           <Link href="/about">Sobre Nós</Link>
           {session ? (
-            <Link href="/user">
-              {session.user.image && (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || 'No name provided'}
-                  width={20}
-                  height={20}
-                  className="rounded-full"
-                />
-              )}
-            </Link>
+            <>
+              <Link href={routes.user}>
+                {session.user.image && (
+                  <Image
+                    src={session.user.image}
+                    alt={session.user.name || 'No name provided'}
+                    width={20}
+                    height={20}
+                    className="rounded-full"
+                  />
+                )}
+              </Link>
+              <Link href={routes.orders}>
+                <FaBox />
+              </Link>
+            </>
           ) : (
             <button className="flex items-center gap-2" onClick={handleSignIn}>
               <FiUser />

@@ -22,7 +22,12 @@ const Body: React.FC<BodyProps> = ({ children }) => {
           alt="Banner"
           fill
           priority
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          style={{
+            objectFit: 'cover',
+            width: '100%',
+            height: '100%',
+            objectPosition: 'top',
+          }}
           className="h-full w-full"
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
