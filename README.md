@@ -1,43 +1,48 @@
 # JR-PECAS
 
-## 🚗 Sobre o Projeto
+## 🚗 About the Project
 
-O **JR-PECAS** é uma plataforma web para venda de peças automóveis usadas, focada em simplicidade, rapidez e confiança. O objetivo é facilitar a procura, compra e gestão de peças para profissionais e entusiastas do setor automóvel, com atendimento personalizado e suporte técnico.
-
----
-
-## 🎯 Funcionalidades Principais
-
-- **Catálogo de produtos**: Pesquisa, visualização e filtragem de peças usadas.
-- **Carrinho de compras**: Adição, remoção e ajuste de quantidades.
-- **Checkout seguro**: Integração com Stripe para pagamentos online.
-- **Gestão de encomendas**: Histórico de compras e acompanhamento.
-- **Autenticação**: Login com Google (NextAuth).
-- **Página de empresa, política de privacidade, cookies e RAL**.
-- **Responsivo**: Totalmente adaptado a dispositivos móveis e desktop.
-- **PWA**: Instalação como app no telemóvel.
-- **SEO otimizado**.
+**JR-PECAS** is a web platform for selling used car parts, focused on simplicity, speed, and trust. The goal is to make it easy for professionals and car enthusiasts to search, buy, and manage parts, with personalized service and technical support.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🎯 Main Features
 
-- **Next.js 15** (React 18) — Framework principal
-- **TypeScript** — Tipagem estática
-- **Tailwind CSS** — Estilização rápida e responsiva
-- **React Icons** — Ícones modernos
-- **NextAuth.js** — Autenticação (Google)
-- **Stripe** — Pagamentos online
-- **React Hook Form** — Formulários
-- **React Query** — Gestão de dados assíncronos
-- **Axios** — Requisições HTTP
-- **PWA** — Suporte offline e instalação
-- **Caddy** — Servidor web (produção)
-- **Coolify** — Deploy automatizado com webhooks
-- **Kubb** — Geração automática de código para API
+- **Product catalog**: Search, view, and filter used parts.
+- **Shopping cart**: Add, remove, and adjust quantities.
+- **Secure checkout**: Stripe integration for online payments.
+- **Order management**: Purchase history and tracking.
+- **Authentication**: Google login (NextAuth).
+- **Company, privacy policy, cookies, and RAL pages**.
+- **Responsive**: Fully adapted for mobile and desktop.
+- **PWA**: Installable as a mobile app.
+- **SEO optimized**.
 
 ---
 
-## 📦 Como executar localmente
+## 🛠️ Technologies Used
 
-pnpm
+- **Next.js 15** (React 18) — Main framework
+- **TypeScript** — Static typing
+- **Tailwind CSS** — Fast and responsive styling
+- **React Icons** — Modern icons
+- **NextAuth.js** — Authentication (Google)
+- **Stripe** — Online payments
+- **React Hook Form** — Forms
+- **React Query** — Async data management
+- **Axios** — HTTP requests
+- **PWA** — Offline support and installability
+- **Caddy** — Web server (production)
+- **Coolify** — Automated deploy with webhooks
+- **Kubb** — Automatic API code generation
+
+---
+
+## 📦 How to run locally
+
+```bash
+git clone https://github.com/your-user/jrpecas.git
+cd jrpecas
+pnpm install
+pnpm dev
+```
