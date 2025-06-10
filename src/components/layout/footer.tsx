@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
         {/* Identificação da Empresa */}
         <div>
           <h2 className="mb-3 flex items-center gap-2 text-xl font-bold text-red-500">
-            <FiFileText /> JR-PECASCOMPLETE
+            <FiFileText /> Complete Peças Usadas
           </h2>
           <ul className="space-y-1 text-sm text-gray-300">
             <li>

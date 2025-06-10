@@ -39,7 +39,7 @@ const Header: React.FC = () => {
         </button>
         <Link className="truncate" href="/">
           <h1 className="truncate text-xl font-bold text-red-500 md:text-3xl">
-            JRPECASCOMPLETE
+            Complete Peças Usadas
           </h1>
         </Link>
         <input
