@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
           </h2>
           <ul className="space-y-1 text-sm text-gray-300">
             <li>
-              <span className="font-semibold">NIF:</span> 123456789
+              <span className="font-semibold">NIF:</span> 123456788
             </li>
             <li>
               <span className="font-semibold">Registo Comercial:</span>{' '}
