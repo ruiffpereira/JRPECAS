@@ -1,40 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# JR-PECAS
 
-## Getting Started
+## 🚗 Sobre o Projeto
 
-First, run the development server:
+O **JR-PECAS** é uma plataforma web para venda de peças automóveis usadas, focada em simplicidade, rapidez e confiança. O objetivo é facilitar a procura, compra e gestão de peças para profissionais e entusiastas do setor automóvel, com atendimento personalizado e suporte técnico.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Funcionalidades Principais
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- **Catálogo de produtos**: Pesquisa, visualização e filtragem de peças usadas.
+- **Carrinho de compras**: Adição, remoção e ajuste de quantidades.
+- **Checkout seguro**: Integração com Stripe para pagamentos online.
+- **Gestão de encomendas**: Histórico de compras e acompanhamento.
+- **Autenticação**: Login com Google (NextAuth).
+- **Página de empresa, política de privacidade, cookies e RAL**.
+- **Responsivo**: Totalmente adaptado a dispositivos móveis e desktop.
+- **PWA**: Instalação como app no telemóvel.
+- **SEO otimizado**.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 🛠️ Tecnologias Utilizadas
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Next.js 15** (React 18) — Framework principal
+- **TypeScript** — Tipagem estática
+- **Tailwind CSS** — Estilização rápida e responsiva
+- **React Icons** — Ícones modernos
+- **NextAuth.js** — Autenticação (Google)
+- **Stripe** — Pagamentos online
+- **React Hook Form** — Formulários
+- **React Query** — Gestão de dados assíncronos
+- **Axios** — Requisições HTTP
+- **PWA** — Suporte offline e instalação
+- **Caddy** — Servidor web (produção)
+- **Coolify** — Deploy automatizado com webhooks
+- **Kubb** — Geração automática de código para API
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Como executar localmente
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+pnpm
