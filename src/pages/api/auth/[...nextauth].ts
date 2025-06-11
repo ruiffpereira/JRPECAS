@@ -53,8 +53,6 @@ export default NextAuth({
           if (user && customer && customer.customerId) {
             user.token = customer.token || ''
             user.customerId = customer.customerId
-
-            console.log('Session callback:', customer)
             return true
           } else {
             console.error('Failed to authenticate user')
