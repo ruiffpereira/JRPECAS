@@ -9,6 +9,7 @@ import {
   isServer,
 } from '@tanstack/react-query'
 import Head from 'next/head'
+import ScrollToTop from '@/components/scrolltop'
 
 let browserQueryClient: QueryClient | undefined
 
@@ -45,6 +46,7 @@ export default function App({
             <Head>
               <title>Complete Comercio de Peças Usadas</title>
             </Head>
+            <ScrollToTop />
             <Component {...pageProps} />
           </Body>
         </ProductsProvider>

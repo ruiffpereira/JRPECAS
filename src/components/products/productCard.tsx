@@ -13,8 +13,8 @@ const ProductCard: React.FC<Product> = ({
   const { addToCart } = useProducts()
 
   return (
-    <div className="group relative flex flex-col rounded-2xl border border-gray-700 bg-gray-800 p-4 shadow-lg transition hover:-translate-y-1 hover:shadow-2xl">
-      <div className="relative mb-3 flex h-24 items-center justify-center rounded-lg bg-gray-900">
+    <div className="group relative flex flex-col rounded-md border border-gray-700 bg-gray-800 p-4 shadow-lg transition hover:-translate-y-1 hover:shadow-2xl">
+      <div className="relative mb-3 flex h-24 items-center justify-center rounded-lg">
         {Array.isArray(photos) && photos.length > 0 ? (
           <Image
             src={`${process.env.NEXT_PUBLIC_CONTAINERRAIZ}/${photos?.[0].slice(2) ?? ''}`}

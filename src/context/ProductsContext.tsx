@@ -16,6 +16,7 @@ import {
   Product,
 } from '@/servers/ecommerce'
 import { postWebsitesEcommerceCarts } from '@/servers/ecommerce/hooks/usePostWebsitesEcommerceCarts'
+import { useRouter } from 'next/router'
 
 interface ProductsContextProps {
   products: Product[]
@@ -43,6 +44,7 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   })
   const [searchProduct, setSearchProduct] = useState('')
   const { data: session } = useSession()
+  const router = useRouter()
 
   useEffect(() => {
     const fetchCartProducts = async () => {
@@ -127,8 +129,11 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearchProduct(e.target.value)
+      if (router.pathname !== '/') {
+        router.push('/')
+      }
     },
-    [],
+    [router],
   )
 
   const providerValue = useMemo(
