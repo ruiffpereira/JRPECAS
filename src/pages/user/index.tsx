@@ -1,4 +1,3 @@
-import { LoginAndAddToCart } from '@/components/auth'
 import { signOut, getSession } from 'next-auth/react'
 import { Address } from '@/servers/customers'
 import { GetServerSidePropsContext } from 'next'
@@ -18,13 +17,7 @@ const User = ({
   if (!sessionNext) {
     return (
       <div>
-        <button
-          onClick={(event) => {
-            LoginAndAddToCart(event)
-          }}
-        >
-          Login
-        </button>
+        <Link href={routes.login}>Login</Link>
       </div>
     )
   }

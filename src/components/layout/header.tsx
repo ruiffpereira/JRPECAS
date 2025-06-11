@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
 import { FaBox } from 'react-icons/fa'
-import { LoginAndAddToCart } from '@/components/auth'
 import Image from 'next/image'
 import { useSession, signOut, signIn } from 'next-auth/react'
 import routes from '@/routes'
@@ -13,11 +12,6 @@ const Header: React.FC = () => {
   const [cartOpen, setCartOpen] = useState(false)
   const { cart, handleSearchChange, searchProduct } = useProducts()
   const { data: session } = useSession()
-
-  const handleSignIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    await signIn('google', { redirect: false })
-  }
 
   const totalCart = cart.products.reduce(
     (acc, item) => acc + (item.quantity || 0),
@@ -69,10 +63,10 @@ const Header: React.FC = () => {
               </Link>
             </>
           ) : (
-            <button className="flex items-center gap-2" onClick={handleSignIn}>
+            <Link href={routes.login} className="flex items-center gap-2">
               <FiUser />
-              <p>Login</p>
-            </button>
+              Login
+            </Link>
           )}
           <Link href="/cart">
             <div className="relative flex items-center space-x-2">
@@ -97,15 +91,10 @@ const Header: React.FC = () => {
               )}
             </Link>
           ) : (
-            <button
-              className="flex items-center gap-2"
-              onClick={(event) => {
-                LoginAndAddToCart(event)
-              }}
-            >
+            <Link href={routes.login} className="flex items-center gap-2">
               <FiUser />
-              <p>Login</p>
-            </button>
+              Login
+            </Link>
           )}
           <button
             className="relative mr-2"
@@ -182,15 +171,14 @@ const Header: React.FC = () => {
               </button>
             </div>
           ) : (
-            <button
+            <Link
+              href={routes.login}
               className="flex items-center gap-2"
-              onClick={(event) => {
-                LoginAndAddToCart(event)
-              }}
+              onClick={() => setMenuOpen(false)}
             >
               <FiUser />
-              <p>Login</p>
-            </button>
+              Login
+            </Link>
           )}
 
           <Link

@@ -22,9 +22,7 @@ const OrdersPage = ({ sessionNext }: { sessionNext: Session }) => {
     return (
       <div className="container mx-auto p-4">
         <h1 className="mb-6 text-3xl font-bold">Minhas Encomendas</h1>
-        <Link href={routes.user} className="text-blue-500 hover:underline">
-          Faça login para ver suas encomendas
-        </Link>
+        <Link href={routes.login}>Faça login para ver suas encomendas</Link>
       </div>
     )
   }

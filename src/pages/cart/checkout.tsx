@@ -32,9 +32,7 @@ export default function CheckoutPage({
     return (
       <div className="container mx-auto p-4">
         <h1 className="mb-6 text-3xl font-bold">Minhas Encomendas</h1>
-        <Link href={routes.user} className="text-blue-500 hover:underline">
-          Faça login para continuar
-        </Link>
+        <Link href={routes.login}>LoFaça login para continuargin</Link>
       </div>
     )
   }

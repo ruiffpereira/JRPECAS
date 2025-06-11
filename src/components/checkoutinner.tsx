@@ -6,8 +6,9 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import AdressContainer from './adress/adressContainer'
-import { LoginAndAddToCart } from './auth'
 import { Address } from '@/servers/customers/types/Address'
+import Link from 'next/link'
+import { FiUser } from 'react-icons/fi'
 
 type SessionWithUser = {
   user: {
@@ -47,13 +48,7 @@ const Checkout = ({
   if (!sessionNext) {
     return (
       <div>
-        <button
-          onClick={(event) => {
-            LoginAndAddToCart(event)
-          }}
-        >
-          Login
-        </button>
+        <Link href={routes.login}>Login</Link>
       </div>
     )
   }

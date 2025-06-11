@@ -2,6 +2,8 @@ import { useGetWebsitesEcommerceOrdersId } from '@/servers/ecommerce/hooks/useGe
 import { GetServerSidePropsContext } from 'next'
 import { getSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import routes from '@/routes'
+import Link from 'next/link'
 
 export default function OrderIdPage({
   sessionNext,
@@ -26,9 +28,9 @@ export default function OrderIdPage({
     return (
       <div className="container mx-auto p-4">
         <h1 className="mb-6 text-3xl font-bold">Detalhes da Encomenda</h1>
-        <p className="text-gray-700">
+        <Link href={routes.login}>
           Faça login para ver os detalhes da encomenda.
-        </p>
+        </Link>
       </div>
     )
   }

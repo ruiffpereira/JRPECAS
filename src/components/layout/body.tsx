@@ -17,7 +17,7 @@ const Body: React.FC<BodyProps> = ({ children }) => {
     >
       <Header />
       <section
-        className={`relative mb-4 h-96 flex-shrink-0 ${searchProduct.length > 0 && 'hidden md:block'}`}
+        className={`relative mb-4 h-56 flex-shrink-0 lg:h-96 ${searchProduct.length > 0 && 'hidden md:block'}`}
       >
         <Image
           src="/3.jpg"
