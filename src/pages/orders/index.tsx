@@ -48,8 +48,6 @@ const OrdersPage = ({ sessionNext }: { sessionNext: Session }) => {
     )
   }
 
-  console.log('Orders data:', orders)
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="mb-6 text-3xl font-bold">Minhas Encomendas</h1>
