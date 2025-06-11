@@ -63,9 +63,6 @@ const OrdersPage = ({ sessionNext }: { sessionNext: Session }) => {
                 key={order.orderId}
                 className="rounded-lg border border-gray-200 bg-gray-800 p-4 shadow-md"
               >
-                <h2 className="mb-2 text-xl font-bold">
-                  Encomenda {order.orderId}
-                </h2>
                 <p className="mb-2 text-white">
                   <strong className="text-gray-400">Data:</strong>{' '}
                   {new Date(order.createdAt ?? '').toLocaleString('pt-PT', {

@@ -52,29 +52,32 @@ export default function OrderIdPage({
   return (
     <div className="container mx-auto mt-8 max-w-2xl rounded-xl border border-slate-600 p-6 shadow-lg">
       <h1 className="mb-6 text-center text-3xl font-bold text-green-400">
-        Detalhes da Encomenda
+        Detalhes da Encomenda <br />
+        <span className="block text-sm text-gray-400">
+          {orderDetails?.orderId}
+        </span>
       </h1>
       {orderDetails && (
-        <div key={orderDetails.orderId} className="mb-6">
-          <div className="mb-4 flex flex-col md:flex-row md:justify-between">
+        <div key={orderDetails.orderId}>
+          <div className="mb-5 flex flex-col md:flex-row md:justify-between">
             <div>
-              <h2 className="mb-2 text-xl font-semibold text-white">
-                Encomenda #{orderDetails.orderId}
+              <h2 className="mb-2 font-semibold text-gray-400">
+                Data:{' '}
+                <span className="text-lg text-white">
+                  {orderDetails.createdAt
+                    ? new Date(orderDetails.createdAt).toLocaleString('pt-PT', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })
+                    : 'Data indisponível'}{' '}
+                </span>
+                <br />
               </h2>
-              <p className="text-gray-400">
-                <span className="font-semibold">Data:</span>{' '}
-                {orderDetails.createdAt
-                  ? new Date(orderDetails.createdAt).toLocaleString('pt-PT', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })
-                  : 'Data indisponível'}
-              </p>
             </div>
-            <div className="mt-4 md:mt-0">
+            <div>
               <p className="text-lg text-gray-300">
                 <span className="font-semibold text-white">Total:</span>{' '}
                 <span className="text-2xl font-bold text-green-400">
@@ -83,9 +86,7 @@ export default function OrderIdPage({
               </p>
             </div>
           </div>
-          <h3 className="mb-2 mt-6 text-lg font-semibold text-white">
-            Produtos
-          </h3>
+          <h3 className="mb-2 text-lg font-semibold text-white">Produtos</h3>
           <ul className="divide-y divide-gray-700 rounded-lg bg-gray-800 shadow">
             {orderDetails.orderProducts?.map((product) => (
               <li
@@ -108,13 +109,6 @@ export default function OrderIdPage({
                       {product.product?.price}€
                     </span>
                   </div>
-                </div>
-                <div className="text-lg font-bold text-green-400">
-                  Subtotal:{' '}
-                  {product.quantity && product.product?.price
-                    ? (product.quantity * product.product.price).toFixed(2)
-                    : '—'}
-                  €
                 </div>
               </li>
             ))}

@@ -16,7 +16,7 @@ import {
 const Footer: React.FC = () => {
   return (
     <footer className="mt-auto border-t border-gray-900 bg-gray-950 pb-4 pt-10 text-white shadow-[0_-4px_24px_0_rgba(0,0,0,0.4)]">
-      <div className="container mx-auto grid grid-cols-2 gap-10 px-4 md:grid-cols-4">
+      <div className="container mx-auto grid grid-cols-1 gap-10 px-4 md:grid-cols-4">
         {/* Identificação da Empresa */}
         <div>
           <h2 className="mb-3 flex items-center gap-2 text-xl font-bold text-red-500">

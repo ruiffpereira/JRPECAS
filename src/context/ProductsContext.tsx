@@ -4,6 +4,8 @@ import React, {
   useState,
   ReactNode,
   useEffect,
+  useCallback,
+  useMemo,
 } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import { getWebsitesEcommerceCarts } from '@/servers/ecommerce/hooks/useGetWebsitesEcommerceCarts'
@@ -84,57 +86,74 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
     fetchCartProducts()
   }, [session])
 
-  const addToCart = async (item: PostWebsitesEcommerceCartsMutationRequest) => {
-    if (session) {
-      const token = session.user.token
-      if (token) {
-        try {
-          const response = await postWebsitesEcommerceCarts(
-            {
-              productId: item.productId,
-              quantity: item.quantity,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
+  const addToCart = useCallback(
+    async (item: PostWebsitesEcommerceCartsMutationRequest) => {
+      if (session) {
+        const token = session.user.token
+        if (token) {
+          try {
+            const response = await postWebsitesEcommerceCarts(
+              {
+                productId: item.productId,
+                quantity: item.quantity,
               },
-            },
-          )
-          if (response && response.products) {
-            setCart({
-              cartId: response.cartId || '',
-              customerId: response.customerId || '',
-              products: response.products || [],
-              shipPrice: response.shipPrice || 0,
-            })
-          } else {
-            console.error('Failed to add product to cart')
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            )
+            if (response && response.products) {
+              setCart({
+                cartId: response.cartId || '',
+                customerId: response.customerId || '',
+                products: response.products || [],
+                shipPrice: response.shipPrice || 0,
+              })
+            } else {
+              console.error('Failed to add product to cart')
+            }
+          } catch {
+            // console.error('Error adding product to cart:', error)
           }
-        } catch {
-          // console.error('Error adding product to cart:', error)
         }
+      } else {
+        await signIn('google', { redirect: false })
       }
-    } else {
-      await signIn('google', { redirect: false })
-    }
-  }
+    },
+    [session, setCart],
+  )
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchProduct(e.target.value)
-  }
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchProduct(e.target.value)
+    },
+    [],
+  )
+
+  const providerValue = useMemo(
+    () => ({
+      products,
+      setProducts,
+      cart,
+      setCart,
+      addToCart,
+      searchProduct,
+      handleSearchChange,
+    }),
+    [
+      products,
+      setProducts,
+      cart,
+      setCart,
+      addToCart,
+      searchProduct,
+      handleSearchChange,
+    ],
+  )
 
   return (
-    <ProductsContext.Provider
-      value={{
-        products,
-        setProducts,
-        cart,
-        setCart,
-        addToCart,
-        searchProduct,
-        handleSearchChange,
-      }}
-    >
+    <ProductsContext.Provider value={providerValue}>
       {children}
     </ProductsContext.Provider>
   )
