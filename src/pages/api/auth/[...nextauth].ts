@@ -53,6 +53,8 @@ export default NextAuth({
           if (user && customer && customer.customerId) {
             user.token = customer.token || ''
             user.customerId = customer.customerId
+
+            console.log('Session callback:', customer)
             return true
           } else {
             console.error('Failed to authenticate user')
@@ -77,7 +79,6 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
-      console.log('Session callback:', token.token)
       session.user.token = token.token as string
       session.user.customerId = token.customerId as string
       return session
