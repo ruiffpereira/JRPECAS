@@ -61,9 +61,6 @@ export const getServerSideProps = async (
       props: {},
     }
   }
-
-  console.log('session', session)
-
   const adresss = await getWebsitesCustomersAddresses({
     headers: { Authorization: `Bearer ${session?.user?.token}` },
   })

@@ -31,9 +31,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
     )
   })
 
-  // podia filtra  por aqui tambem
-  // console.log('aqiu: ', filteredProducts.length)
-
   return (
     <Fragment>
       <div className="flex gap-1">

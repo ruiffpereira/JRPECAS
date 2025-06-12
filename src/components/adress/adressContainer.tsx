@@ -150,7 +150,6 @@ const AdressContainer = ({
       }
       updateAddress({ addressId, data }) // Chama o hook para atualizar a morada
     } else {
-      console.log('Adicionando nova morada:', data)
       newAdress({ data }) // Chama o hook para adicionar uma nova morada
     }
   }

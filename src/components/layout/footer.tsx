@@ -1,5 +1,6 @@
 import routes from '@/routes'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   FiFacebook,
   FiTwitter,
@@ -12,6 +13,8 @@ import {
   FiShield,
   FiAlertCircle,
 } from 'react-icons/fi'
+
+import { SiVisa, SiMastercard } from 'react-icons/si'
 
 const Footer: React.FC = () => {
   return (
@@ -104,22 +107,22 @@ const Footer: React.FC = () => {
             <li>Garantia legal de 3 anos</li>
             <li>
               <span className="font-semibold">Pagamentos:</span>
-              <div className="mt-1 flex gap-2">
-                <FiCreditCard
-                  size={22}
-                  className="text-blue-400"
-                  title="Cartão"
+              <div className="mt-1 flex items-center gap-2">
+                <SiVisa size={28} className="text-blue-600" title="Visa" />
+                <SiMastercard
+                  size={28}
+                  className="text-orange-500"
+                  title="Mastercard"
                 />
-                <FiCreditCard
-                  size={22}
-                  className="text-red-400"
-                  title="MB WAY"
-                />
-                <FiCreditCard
-                  size={22}
-                  className="text-green-400"
-                  title="Transferência"
-                />
+                <div className="rounded-full bg-white p-1">
+                  <Image
+                    src="/mbway.svg"
+                    alt="MB WAY"
+                    width={32}
+                    height={32}
+                    className="h-8 w-8"
+                  />
+                </div>
               </div>
             </li>
           </ul>
@@ -129,19 +132,10 @@ const Footer: React.FC = () => {
         <div>
           <h2 className="mb-3 text-xl font-bold text-red-500">Siga-nos</h2>
           <div className="mb-3 flex gap-4">
-            <Link href="https://www.facebook.com" target="_blank">
-              <FiFacebook
-                className="text-blue-500 transition hover:text-blue-300"
-                size={28}
-              />
-            </Link>
-            <Link href="https://www.twitter.com" target="_blank">
-              <FiTwitter
-                className="text-blue-300 transition hover:text-blue-100"
-                size={28}
-              />
-            </Link>
-            <Link href="https://www.instagram.com" target="_blank">
+            <Link
+              href="https://www.instagram.com/complete_comerciopecasusadas/"
+              target="_blank"
+            >
               <FiInstagram
                 className="text-pink-500 transition hover:text-pink-300"
                 size={28}
