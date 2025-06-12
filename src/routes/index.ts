@@ -1,5 +1,3 @@
-import { log } from 'console'
-
 const routes = {
   orders: '/orders',
   user: '/user',
@@ -10,6 +8,7 @@ const routes = {
   ral: '/ral',
   checkout: '/cart/checkout',
   login: '/login',
+  home: '/',
 }
 
 export default routes

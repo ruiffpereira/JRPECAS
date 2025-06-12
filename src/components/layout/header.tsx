@@ -2,6 +2,8 @@ import { useProducts } from '@/context/ProductsContext'
 import Link from 'next/link'
 import { useState } from 'react'
 import { FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi'
+import { FaUserCircle } from 'react-icons/fa'
+
 import { FaBox } from 'react-icons/fa'
 import Image from 'next/image'
 import { useSession, signOut, signIn } from 'next-auth/react'
@@ -17,6 +19,8 @@ const Header: React.FC = () => {
     (acc, item) => acc + (item.quantity || 0),
     0,
   )
+
+  console.log('Cart:', session)
 
   return (
     <header className="sticky top-0 z-20 flex-shrink-0 bg-black py-4 text-white">
@@ -48,7 +52,7 @@ const Header: React.FC = () => {
           {session ? (
             <>
               <Link href={routes.user}>
-                {session.user.image && (
+                {session.user.image && session.user.image !== 'N/A' ? (
                   <Image
                     src={session.user.image}
                     alt={session.user.name || 'No name provided'}
@@ -56,6 +60,8 @@ const Header: React.FC = () => {
                     height={20}
                     className="rounded-full"
                   />
+                ) : (
+                  <FaUserCircle className="text-white" />
                 )}
               </Link>
               <Link href={routes.orders}>
@@ -80,15 +86,19 @@ const Header: React.FC = () => {
         <div className="ml-auto flex items-center gap-4 md:hidden">
           {session ? (
             <Link href="/user">
-              {session.user.image && (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || 'No name provided'}
-                  width={20}
-                  height={20}
-                  className="rounded-full"
-                />
-              )}
+              <Link href={routes.user}>
+                {session.user.image && session.user.image !== 'N/A' ? (
+                  <Image
+                    src={session.user.image}
+                    alt={session.user.name || 'No name provided'}
+                    width={20}
+                    height={20}
+                    className="rounded-full"
+                  />
+                ) : (
+                  <FaUserCircle className="text-white" />
+                )}
+              </Link>
             </Link>
           ) : (
             <Link href={routes.login} className="flex items-center gap-2">
@@ -131,15 +141,19 @@ const Header: React.FC = () => {
               >
                 <p>Bem Vindo</p>
                 <div className="mb-4 flex items-center gap-2">
-                  {session.user.image && (
-                    <Image
-                      src={session.user.image}
-                      alt={session.user.name || 'No name provided'}
-                      width={20}
-                      height={20}
-                      className="rounded-full"
-                    />
-                  )}
+                  <Link href={routes.user}>
+                    {session.user.image && session.user.image !== 'N/A' ? (
+                      <Image
+                        src={session.user.image}
+                        alt={session.user.name || 'No name provided'}
+                        width={20}
+                        height={20}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <FaUserCircle className="text-white" />
+                    )}
+                  </Link>
                   <p>{session.user.name}</p>
                 </div>
               </Link>
@@ -219,9 +233,11 @@ const Header: React.FC = () => {
                       </div>
                       <div className="flex flex-grow flex-col gap-2">
                         <p>{item.name}</p>
-                        <div className="flex justify-between gap-2">
-                          <div>{item.price}€</div>
-                          <div>{item.quantity}€</div>
+                        <div className="flex flex-col justify-between gap-2">
+                          <div>{item.quantity} unidade</div>
+                          <div className="font-bold text-red-500">
+                            {item.price}€
+                          </div>
                         </div>
                       </div>
                     </div>

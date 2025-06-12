@@ -1,6 +1,7 @@
-import { postWebsitesCustomerslogin } from '@/servers/customers/hooks/usePostWebsitesCustomerslogin'
+import { postWebsitesCustomersAutenticationLogin } from '@/servers/customers/hooks/usePostWebsitesCustomersAutenticationLogin'
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from 'next-auth/providers/credentials'
 
 declare module 'next-auth' {
   interface User {
@@ -31,7 +32,39 @@ export default NextAuth({
         },
       },
     }),
-    // Adicione mais provedores conforme necessário
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'your@email.com' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        // Aqui deve chamar a sua API/backend para validar o utilizador
+        const customer = await postWebsitesCustomersAutenticationLogin(
+          {
+            provider: 'credentials',
+            email: credentials?.email,
+            password: credentials?.password,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+            },
+          },
+        )
+        if (customer && customer.customerId && customer.token) {
+          return {
+            id: customer.customerId,
+            name: customer.name,
+            email: customer.email,
+            image: customer.photo,
+            token: customer.token,
+            customerId: customer.customerId,
+          }
+        }
+        return null
+      },
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
@@ -40,8 +73,9 @@ export default NextAuth({
         try {
           if (!account.id_token) return false
 
-          const customer = await postWebsitesCustomerslogin(
+          const customer = await postWebsitesCustomersAutenticationLogin(
             {
+              provider: 'google',
               idToken: account.id_token,
             },
             {
@@ -63,7 +97,6 @@ export default NextAuth({
           return false
         }
       }
-
       return true
     },
     async redirect({ baseUrl }) {
@@ -87,6 +120,6 @@ export default NextAuth({
   },
   session: {
     strategy: 'jwt',
-    maxAge: 5 * 24 * 60 * 60, // 6 dias
+    maxAge: 3 * 24 * 60 * 60, // 3 dias
   },
 })

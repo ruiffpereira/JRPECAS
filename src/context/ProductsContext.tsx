@@ -17,6 +17,7 @@ import {
 } from '@/servers/ecommerce'
 import { postWebsitesEcommerceCarts } from '@/servers/ecommerce/hooks/usePostWebsitesEcommerceCarts'
 import { useRouter } from 'next/router'
+import routes from '@/routes'
 
 interface ProductsContextProps {
   products: Product[]
@@ -120,7 +121,7 @@ export const ProductsProvider: React.FC<{ children: ReactNode }> = ({
           }
         }
       } else {
-        await signIn('google', { redirect: false })
+        router.push(routes.login)
       }
     },
     [session, setCart],

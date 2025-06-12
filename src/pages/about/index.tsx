@@ -15,7 +15,7 @@ const About: React.FC = () => {
         Sobre Nós
       </h1>
 
-      <div className="mb-8 grid gap-6 md:grid-cols-2">
+      <div className="mb-8 grid gap-10 md:grid-cols-2">
         <div className="relative rounded-xl border border-gray-700 bg-gray-800/80 p-5 shadow">
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 rounded-full bg-gray-700 p-2 shadow">
             <FaHandshake size={22} className="text-gray-200" />

@@ -1,10 +1,15 @@
-import { signIn } from 'next-auth/react'
+import { getSession, signIn } from 'next-auth/react'
 import { FiUser, FiLock, FiMail, FiPhone } from 'react-icons/fi'
-import { FaGoogle, FaFacebook } from 'react-icons/fa'
+import { FaGoogle } from 'react-icons/fa'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { postWebsitesCustomersAutenticationRegister } from '@/servers/customers/hooks/usePostWebsitesCustomersAutenticationRegister'
+import { GetServerSidePropsContext } from 'next'
+import { Session } from 'next-auth'
+import router from 'next/router'
+import routes from '@/routes'
 
 // Types
 const loginSchema = z.object({
@@ -17,7 +22,7 @@ type LoginForm = z.infer<typeof loginSchema>
 
 const registerSchema = z.object({
   name: z.string().min(2, { message: 'Name is required' }),
-  phone: z.string().min(6, { message: 'Phone is required' }),
+  contact: z.string().min(9, { message: 'Phone is required' }),
   email: z.string().email({ message: 'Invalid email' }),
   password: z
     .string()
@@ -25,7 +30,7 @@ const registerSchema = z.object({
 })
 type RegisterForm = z.infer<typeof registerSchema>
 
-export default function LoginPage() {
+export default function LoginPage({ sessionNext }: { sessionNext: Session }) {
   const [isRegister, setIsRegister] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -59,15 +64,37 @@ export default function LoginPage() {
       password: data.password,
     })
     if (res?.error) setError('Invalid credentials')
+    else router.push(routes.home)
   }
 
   const onRegisterSubmit = async (data: RegisterForm) => {
     setError('')
     setSuccess('')
-    // Simulação de registo (substitua por chamada real à API)
+    try {
+      const res = await postWebsitesCustomersAutenticationRegister(
+        {
+          name: data.name,
+          contact: data.contact,
+          email: data.email,
+          password: data.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+          },
+        },
+      )
+    } catch (error) {
+      setError('Failed to create account. Please try again.')
+      return
+    }
     setSuccess('Account created! You can now log in.')
     setIsRegister(false)
     resetRegister()
+  }
+
+  if (sessionNext) {
+    router.push(routes.home)
   }
 
   return (
@@ -100,14 +127,14 @@ export default function LoginPage() {
             <FiPhone className="mr-2 text-gray-400" />
             <input
               type="tel"
-              placeholder="Phone"
+              placeholder="contact"
               className="w-full bg-transparent text-white outline-none"
-              {...registerRegister('phone')}
+              {...registerRegister('contact')}
             />
           </div>
-          {registerErrors.phone && (
+          {registerErrors.contact && (
             <div className="px-1 text-xs text-red-400">
-              {registerErrors.phone.message as string}
+              {registerErrors.contact.message as string}
             </div>
           )}
           <div className="flex items-center rounded bg-gray-700 px-3 py-2">
@@ -152,7 +179,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full rounded bg-red-500 py-2 font-bold text-white transition hover:bg-red-600"
           >
-            Create Account
+            Criar Conta
           </button>
         </form>
       )}
@@ -209,7 +236,7 @@ export default function LoginPage() {
 
       <div className="my-6 flex items-center justify-center gap-2 text-gray-400">
         <span className="h-px w-10 bg-gray-600" />
-        <span className="text-xs">or continue with</span>
+        <span className="text-xs">ou continua com</span>
         <span className="h-px w-10 bg-gray-600" />
       </div>
       <div className="flex flex-col gap-3">
@@ -217,13 +244,7 @@ export default function LoginPage() {
           onClick={() => signIn('google')}
           className="flex items-center justify-center gap-2 rounded bg-white/90 py-2 font-semibold text-gray-900 shadow transition hover:bg-white"
         >
-          <FaGoogle className="text-lg" /> Login with Google
-        </button>
-        <button
-          onClick={() => signIn('facebook')}
-          className="flex items-center justify-center gap-2 rounded bg-blue-600 py-2 font-semibold text-white shadow transition hover:bg-blue-700"
-        >
-          <FaFacebook className="text-lg" /> Login with Facebook
+          <FaGoogle className="text-lg" /> Login com Google
         </button>
       </div>
       <div className="mt-6 text-center">
@@ -245,4 +266,22 @@ export default function LoginPage() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      props: {},
+    }
+  }
+
+  const { id } = context.params as { id: string }
+
+  return {
+    props: { sessionNext: session, id },
+  }
 }
