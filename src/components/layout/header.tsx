@@ -6,7 +6,7 @@ import { FaUserCircle } from 'react-icons/fa'
 
 import { FaBox } from 'react-icons/fa'
 import Image from 'next/image'
-import { useSession, signOut, signIn } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import routes from '@/routes'
 
 const Header: React.FC = () => {

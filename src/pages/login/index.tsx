@@ -71,7 +71,7 @@ export default function LoginPage({ sessionNext }: { sessionNext: Session }) {
     setError('')
     setSuccess('')
     try {
-      const res = await postWebsitesCustomersAutenticationRegister(
+      await postWebsitesCustomersAutenticationRegister(
         {
           name: data.name,
           contact: data.contact,
@@ -86,7 +86,7 @@ export default function LoginPage({ sessionNext }: { sessionNext: Session }) {
       )
     } catch (error) {
       setError('Failed to create account. Please try again.')
-      return
+      return error
     }
     setSuccess('Account created! You can now log in.')
     setIsRegister(false)

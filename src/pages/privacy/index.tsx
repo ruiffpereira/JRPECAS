@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { FiShield, FiUser, FiMail, FiLock } from 'react-icons/fi'
 
@@ -110,9 +111,9 @@ const Privacidade: React.FC = () => {
           Utilizamos cookies para melhorar a sua experiência de navegação. Pode
           gerir as preferências de cookies no seu navegador. Para mais detalhes,
           consulte a nossa{' '}
-          <a href="/cookies" className="text-red-400 underline">
+          <Link href="/cookies" className="text-red-400 underline">
             Política de Cookies
-          </a>
+          </Link>
           .
         </div>
       </section>

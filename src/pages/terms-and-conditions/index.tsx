@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import {
   FiFileText,
@@ -100,9 +101,9 @@ export default function TermosCondicoes() {
         <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
           Em caso de litígio, o consumidor pode recorrer à entidade de Resolução
           Alternativa de Litígios (RAL). Consulte a nossa página de{' '}
-          <a href="/ral" className="text-red-400 underline">
+          <Link href="/ral" className="text-red-400 underline">
             RAL
-          </a>
+          </Link>
           .
         </div>
       </section>

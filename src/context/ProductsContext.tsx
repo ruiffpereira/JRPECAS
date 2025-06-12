@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { getWebsitesEcommerceCarts } from '@/servers/ecommerce/hooks/useGetWebsitesEcommerceCarts'
 import {
   Cart,

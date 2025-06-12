@@ -8,7 +8,6 @@ import { useState } from 'react'
 import AdressContainer from './adress/adressContainer'
 import { Address } from '@/servers/customers/types/Address'
 import Link from 'next/link'
-import { FiUser } from 'react-icons/fi'
 
 type SessionWithUser = {
   user: {
