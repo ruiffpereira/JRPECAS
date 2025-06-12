@@ -48,7 +48,9 @@ const OrdersPage = ({ sessionNext }: { sessionNext: Session }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="mb-6 text-3xl font-bold">Minhas Encomendas</h1>
+      <h1 className="mb-6 text-3xl font-bold text-gray-100">
+        Minhas Encomendas
+      </h1>
       {orders && orders.length === 0 ? (
         <p className="text-gray-700">Não há encomendas para exibir.</p>
       ) : (

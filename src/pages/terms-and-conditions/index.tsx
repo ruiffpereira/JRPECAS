@@ -23,8 +23,8 @@ export default function TermosCondicoes() {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiCheckCircle className="text-gray-400" /> 1. Identificação
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
-          <strong className="text-gray-100">JR-PECASCOMPLETE</strong>
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
+          <strong>JR-PECASCOMPLETE</strong>
           <br />
           NIF: 123456789
           <br />
@@ -45,7 +45,7 @@ export default function TermosCondicoes() {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiCheckCircle className="text-gray-400" /> 2. Produtos e Preços
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Todos os preços incluem IVA à taxa legal em vigor. As descrições dos
           produtos são as mais precisas possíveis. Reservamo-nos o direito de
           corrigir erros ou omissões.
@@ -56,7 +56,7 @@ export default function TermosCondicoes() {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiCheckCircle className="text-gray-400" /> 3. Encomendas e Pagamento
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           O cliente pode encomendar online, escolhendo os produtos e seguindo o
           processo de checkout. Aceitamos pagamentos por cartão, MB WAY e
           transferência bancária.
@@ -67,7 +67,7 @@ export default function TermosCondicoes() {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiTruck className="text-gray-400" /> 4. Entregas
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           As encomendas são enviadas para todo o país, normalmente em 1-3 dias
           úteis. O custo de envio é apresentado no checkout.
         </div>
@@ -77,7 +77,7 @@ export default function TermosCondicoes() {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiRefreshCw className="text-gray-400" /> 5. Devoluções e Reembolsos
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           O cliente tem direito a devolver os produtos no prazo de 14 dias após
           a receção, sem necessidade de justificação. Para mais informações,
           contacte-nos.
@@ -88,7 +88,7 @@ export default function TermosCondicoes() {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiShield className="text-gray-400" /> 6. Garantias
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Todos os produtos têm garantia legal de 3 anos, salvo indicação em
           contrário.
         </div>
@@ -98,7 +98,7 @@ export default function TermosCondicoes() {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiAlertCircle className="text-gray-400" /> 7. Resolução de Litígios
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Em caso de litígio, o consumidor pode recorrer à entidade de Resolução
           Alternativa de Litígios (RAL). Consulte a nossa página de{' '}
           <Link href="/ral" className="text-red-400 underline">

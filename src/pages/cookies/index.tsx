@@ -15,7 +15,7 @@ const CookiesPolicy: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiInfo className="text-gray-400" /> O que são cookies?
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Cookies são pequenos ficheiros de texto armazenados no seu dispositivo
           quando visita um website. Estes ficheiros permitem reconhecer o seu
           dispositivo e melhorar a sua experiência de navegação.
@@ -26,7 +26,7 @@ const CookiesPolicy: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiInfo className="text-gray-400" /> Para que usamos cookies?
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Utilizamos cookies para:
           <ul className="ml-4 mt-2 list-disc">
             <li>Garantir o funcionamento correto do site</li>
@@ -41,7 +41,7 @@ const CookiesPolicy: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiLock className="text-gray-400" /> Gestão de cookies
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Pode gerir ou desativar cookies nas definições do seu navegador. No
           entanto, a desativação de cookies essenciais pode afetar o
           funcionamento do site.
@@ -52,7 +52,7 @@ const CookiesPolicy: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiInfo className="text-gray-400" /> Consentimento
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Ao continuar a navegar no nosso site, está a consentir a utilização de
           cookies, exceto se os desativar nas definições do seu navegador.
         </div>

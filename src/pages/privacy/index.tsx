@@ -16,7 +16,7 @@ const Privacidade: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiUser className="text-gray-400" /> 1. Responsável pelo Tratamento
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           <strong>JR-PECASCOMPLETE</strong> é responsável pelo tratamento dos
           seus dados pessoais.
           <br />
@@ -33,7 +33,7 @@ const Privacidade: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiMail className="text-gray-400" /> 2. Dados Recolhidos
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Recolhemos apenas os dados necessários para processar encomendas,
           prestar apoio ao cliente e melhorar o nosso serviço, nomeadamente:
           <ul className="ml-4 mt-2 list-disc">
@@ -51,7 +51,7 @@ const Privacidade: React.FC = () => {
           <FiLock className="text-gray-400" /> 3. Finalidade e Utilização dos
           Dados
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Os dados são utilizados para:
           <ul className="ml-4 mt-2 list-disc">
             <li>Processar e entregar encomendas</li>
@@ -67,7 +67,7 @@ const Privacidade: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiLock className="text-gray-400" /> 4. Partilha de Dados
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Não partilhamos os seus dados com terceiros, exceto quando necessário
           para:
           <ul className="ml-4 mt-2 list-disc">
@@ -82,7 +82,7 @@ const Privacidade: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiUser className="text-gray-400" /> 5. Direitos do Utilizador
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Tem o direito de aceder, corrigir, eliminar ou limitar o tratamento
           dos seus dados pessoais. Para exercer estes direitos, contacte-nos por
           email.
@@ -96,7 +96,7 @@ const Privacidade: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiLock className="text-gray-400" /> 6. Segurança
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Adotamos medidas técnicas e organizativas adequadas para proteger os
           seus dados pessoais contra perda, acesso não autorizado ou uso
           indevido.
@@ -107,7 +107,7 @@ const Privacidade: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiLock className="text-gray-400" /> 7. Cookies
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Utilizamos cookies para melhorar a sua experiência de navegação. Pode
           gerir as preferências de cookies no seu navegador. Para mais detalhes,
           consulte a nossa{' '}
@@ -123,7 +123,7 @@ const Privacidade: React.FC = () => {
           <FiShield className="text-gray-400" /> 8. Alterações à Política de
           Privacidade
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Reservamo-nos o direito de atualizar esta política a qualquer momento.
           Recomendamos que consulte esta página regularmente.
         </div>

@@ -15,7 +15,7 @@ const RAL: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiAlertCircle className="text-gray-400" /> O que é a RAL?
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           A Resolução Alternativa de Litígios (RAL) permite aos consumidores e
           empresas resolverem conflitos de consumo fora dos tribunais, de forma
           mais rápida, simples e económica. Em caso de litígio, o consumidor
@@ -28,7 +28,7 @@ const RAL: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiShield className="text-gray-400" /> Entidades RAL disponíveis
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           <ul className="ml-4 list-disc">
             <li>
               <strong>
@@ -68,7 +68,7 @@ const RAL: React.FC = () => {
         <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-300">
           <FiAlertCircle className="text-gray-400" /> Mais informações
         </h2>
-        <div className="rounded bg-gray-800/60 p-4 text-sm shadow">
+        <div className="rounded bg-gray-800/60 p-4 text-sm text-gray-100 shadow">
           Para mais informações sobre entidades de resolução alternativa de
           litígios, consulte o Portal do Consumidor em{' '}
           <a

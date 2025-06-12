@@ -20,8 +20,6 @@ const Header: React.FC = () => {
     0,
   )
 
-  console.log('Cart:', session)
-
   return (
     <header className="sticky top-0 z-20 flex-shrink-0 bg-black py-4 text-white">
       <div className="absolute bottom-0 left-0 right-0 h-[1px] w-full bg-gradient-to-r from-red-500 via-yellow-400 to-red-500 opacity-70" />
